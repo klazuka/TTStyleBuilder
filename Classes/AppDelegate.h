@@ -8,7 +8,7 @@
 
 #import "TTStyleBuilderGlobal.h"
 
-@interface AppDelegate : NSObject <UIApplicationDelegate>
+@interface AppDelegate : NSObject <UIApplicationDelegate, TTNavigationDelegate>
 {    
     UIWindow *window;
     UINavigationController *navigationController;

@@ -13,8 +13,8 @@
 //
 @interface TTStyle (TTStyleBuilderAdditions)
 
-- (NSArray *)pipelineClassNames;    // the name of each style's class in the order of the rendering pipeline.
-- (NSString *)className;            // this style's class's name
-- (NSArray *)propertyNames;         // the properties declared by the receiver's class (but NOT its superclasses)
+- (NSArray *)pipeline;          // the rendering pipeline from this style onwards, flattened into an array of TTStyles.
+- (NSString *)className;        // this style's class name.
+- (NSArray *)propertyNames;     // the properties declared by the receiver's class (but NOT its superclasses).
 
 @end

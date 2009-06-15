@@ -18,21 +18,21 @@
 }
 
 // a private helper method for accumulating values as we walk the linked list
-- (void)pipelineClassNamesHelper:(NSMutableArray *)names
+- (void)pipelineHelper:(NSMutableArray *)names
 {
-    [names addObject:[self className]];
+    [names addObject:self];
     
     if (!self.next)
         return;
     
-    [self.next pipelineClassNamesHelper:names];
+    [self.next pipelineHelper:names];
 }
 
-- (NSArray *)pipelineClassNames
+- (NSArray *)pipeline
 {
-    NSMutableArray *names = [NSMutableArray array];
-    [self pipelineClassNamesHelper:names];
-    return names;
+    NSMutableArray *styles = [NSMutableArray array];
+    [self pipelineHelper:styles];
+    return styles;
 }
 
 - (NSArray *)propertyNames
@@ -46,7 +46,7 @@
     
     for (unsigned int i = 0; i < numProperties; i++) {
         NSString *name = [NSString stringWithCString:property_getName(properties[i]) encoding:NSUTF8StringEncoding];
-        KLog(@"Style %@ has property named %@", name);
+        KLog(@"Style %@ has property named %@", self, name);
         [names addObject:name];
     }
     

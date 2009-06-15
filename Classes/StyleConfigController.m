@@ -1,19 +1,22 @@
 //
-//  StyleStructureController.m
+//  StyleConfigController.m
 //  TTStyleBuilder
 //
 //  Created by Keith Lazuka on 6/15/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "StyleStructureController.h"
+#import "StyleConfigController.h"
 
-@implementation StyleStructureController
 
-- (id)initForRootStyle:(TTStyle *)style
+@implementation StyleConfigController
+
+@synthesize style;
+
+- (id)initForStyle:(TTStyle *)aStyle
 {
     if ((self = [super init])) {
-        rootStyle = [style retain];
+        style = [aStyle retain];
     }
     return self;
 }
@@ -21,7 +24,7 @@
 - (id)init
 {
     // choose an arbitrary style from the system as an example.
-    return [self initForRootStyle:TTSTYLE(tabBar)];
+    return [self initForStyle:TTSTYLE(tabBar)];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,21 +38,25 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)showObject:(id)object inView:(NSString*)viewType withState:(NSDictionary*)state
+{
+    [super showObject:object inView:viewType withState:state];
+    KLog(@"showObject:%@", object);
+    self.style = object;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewController
 
 - (id<TTTableViewDataSource>)createDataSource
 {
-    NSMutableArray *styleNames = [NSMutableArray array];
+    NSMutableArray *propNames = [NSMutableArray array];
     
-    for (TTStyle *style in [rootStyle pipeline]) {
-        NSString *name = [style className];
-        NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
-        KLog(@"Creating row for style %@ with url %@", style, url);
-        [styleNames addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
+    for (NSString *name in [style propertyNames]) {
+        [propNames addObject:[[[TTTableField alloc] initWithText:name url:nil] autorelease]];
     }
     
-    return [TTListDataSource dataSourceWithItems:styleNames];
+    return [TTListDataSource dataSourceWithItems:propNames];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,9 +64,8 @@
 
 - (void)dealloc
 {
-    [rootStyle release];
+    [style release];
     [super dealloc];
 }
-
 
 @end

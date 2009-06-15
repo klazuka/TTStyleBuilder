@@ -13,6 +13,6 @@
     TTStyle *rootStyle;
 }
 
-- (id)initForStyle:(TTStyle *)style;
+- (id)initForRootStyle:(TTStyle *)style;    // designated initializer
 
 @end
