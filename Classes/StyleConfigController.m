@@ -7,6 +7,7 @@
 //
 
 #import "StyleConfigController.h"
+#import "PropertyField.h"
 #import <objc/runtime.h>
 
 @implementation StyleConfigController
@@ -50,16 +51,19 @@
 
 - (id<TTTableViewDataSource>)createDataSource
 {
-    NSMutableArray *propNames = [NSMutableArray array];
     
-    for (NSString *name in [style propertyNames]) {
-//        NSString *value = [[style valueForKey:name] description];
-        const char *attributes = property_getAttributes(class_getProperty([style class], [name cStringUsingEncoding:NSUTF8StringEncoding]));
-        NSString *value = [NSString stringWithCString:attributes encoding:NSUTF8StringEncoding];
-        [propNames addObject:[[[TTTitledTableField alloc] initWithTitle:name text:value url:nil] autorelease]];
+    NSMutableArray *items = [NSMutableArray array];
+    
+    unsigned int numProperties = -1;
+    objc_property_t *properties = class_copyPropertyList([style class], &numProperties);
+    
+    for (unsigned int i = 0; i < numProperties; i++) {
+        objc_property_t prop = properties[i];
+        [items addObject:[[[PropertyField alloc] initWithProperty:prop url:nil] autorelease]];
     }
     
-    return [TTListDataSource dataSourceWithItems:propNames];
+    free(properties);
+    return [TTListDataSource dataSourceWithItems:items];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

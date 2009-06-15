@@ -35,24 +35,4 @@
     return styles;
 }
 
-- (NSArray *)propertyNames
-{
-    NSMutableArray *names = [NSMutableArray array];
-    
-    unsigned int numProperties = -1;
-    objc_property_t *properties = class_copyPropertyList([self class], &numProperties);
-    if (!properties)
-        return [NSArray array];
-    
-    for (unsigned int i = 0; i < numProperties; i++) {
-        NSString *name = [NSString stringWithCString:property_getName(properties[i]) encoding:NSUTF8StringEncoding];
-        KLog(@"Style %@ has property named %@", self, name);
-        [names addObject:name];
-    }
-    
-    free(properties);
-    
-    return names;
-}
-
 @end
