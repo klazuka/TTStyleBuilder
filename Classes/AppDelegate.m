@@ -21,7 +21,7 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     // setup the initial view of the style structure
-    TTStyle *styleToBeEdited = TTSTYLE(searchTableShadow);
+    TTStyle *styleToBeEdited = TTSTYLE(badge);
     UIViewController *rootController = [[StyleStructureController alloc] initForRootStyle:styleToBeEdited];
     navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];
     
@@ -29,8 +29,13 @@
     TTNavigationCenter *nav = [TTNavigationCenter defaultCenter];
     nav.mainViewController = navigationController;
     nav.delegate = self;
-    nav.urlSchemes = [NSArray arrayWithObject:@"builder"];
-    [nav addObjectLoader:[TTStyle class] name:@"style"];
+    
+    // hookup the in-memory object URL loading system
+    // (This should belong in TTNavigationCenter initialization)
+    nav.urlSchemes = [NSArray arrayWithObject:[NSObject inMemoryUrlScheme]];
+    [nav addObjectLoader:[NSObject class] name:[NSObject inMemoryUrlHost]];
+    
+    // define the view controllers for TTStyle objects
     [nav addView:@"style_structure" controller:[StyleStructureController class]];
     [nav addView:@"style_config" controller:[StyleConfigController class]];
     

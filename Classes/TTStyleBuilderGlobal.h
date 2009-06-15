@@ -11,6 +11,7 @@
 
 // class extensions
 #import "TTStyleAdditions.h"
+#import "NSObjectAdditions.h"
 
 // why can't I define this in Xcode Project Settings anymore?
 #define DEBUG 1

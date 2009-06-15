@@ -7,7 +7,7 @@
 //
 
 #import "StyleConfigController.h"
-
+#import <objc/runtime.h>
 
 @implementation StyleConfigController
 
@@ -53,7 +53,10 @@
     NSMutableArray *propNames = [NSMutableArray array];
     
     for (NSString *name in [style propertyNames]) {
-        [propNames addObject:[[[TTTableField alloc] initWithText:name url:nil] autorelease]];
+//        NSString *value = [[style valueForKey:name] description];
+        const char *attributes = property_getAttributes(class_getProperty([style class], [name cStringUsingEncoding:NSUTF8StringEncoding]));
+        NSString *value = [NSString stringWithCString:attributes encoding:NSUTF8StringEncoding];
+        [propNames addObject:[[[TTTitledTableField alloc] initWithTitle:name text:value url:nil] autorelease]];
     }
     
     return [TTListDataSource dataSourceWithItems:propNames];
