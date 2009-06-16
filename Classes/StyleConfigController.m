@@ -9,6 +9,7 @@
 #import "StyleConfigController.h"
 #import "PropertyField.h"
 #import "PropertyFieldCell.h"
+#import "PropertyEditorController.h"
 #import <objc/runtime.h>
 
 @interface StyleConfigDataSource : TTListDataSource {} @end
@@ -81,7 +82,16 @@
 
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
 {
-    KLog(@"User tapped property %@", object);
+    if (![PropertyEditorController canEdit:[object propertyType]]) {
+        UIAlertView *prompt = [[[UIAlertView alloc] initWithTitle:@"No Editor Available" message:[object propertyType] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil] autorelease];
+        [prompt show];
+        return;
+    }
+    
+    PropertyEditorController *editor = [PropertyEditorController editorForPropertyType:[object propertyType]];
+    editor.object = [object object]; // TODO yes this is weird, but that's how they're named!
+    editor.propertyName = [object propertyName];
+    [self.navigationController pushViewController:editor animated:YES];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

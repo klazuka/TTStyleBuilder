@@ -21,7 +21,11 @@
     if (self = [self initWithText:propName url:url]) {
         object = [anObject retain];
         propertyName = [propName retain];
-        propertyType = [[NSString alloc] initWithCString:property_getAttributes(aProperty) encoding:NSUTF8StringEncoding];
+        NSString *propertyAttributes = [[NSString alloc] initWithCString:property_getAttributes(aProperty) encoding:NSUTF8StringEncoding];
+        NSArray *components = [propertyAttributes componentsSeparatedByString:@","];
+        NSString *encodeDirective = [[components objectAtIndex:0] substringFromIndex:1]; // strip off the leading "T"
+        propertyType = [encodeDirective retain];
+        KLog(@"Extracted property type %@ from attributes %@", propertyType, propertyAttributes);
     }
     return self;
 }

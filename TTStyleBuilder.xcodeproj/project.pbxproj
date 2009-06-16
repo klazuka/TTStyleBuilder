@@ -21,6 +21,7 @@
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
+		53AD84B30FE7F3F100160175 /* PropertyEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AD84B20FE7F3F100160175 /* PropertyEditorController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,8 @@
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		53AD84B10FE7F3F100160175 /* PropertyEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyEditorController.h; sourceTree = "<group>"; };
+		53AD84B20FE7F3F100160175 /* PropertyEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyEditorController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TTStyleBuilder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTStyleBuilder-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +97,7 @@
 				53049EE20FE6825700DD937B /* StyleConfigController.m */,
 				5304A44B0FE6E2C700DD937B /* PropertyField.m */,
 				5304A4940FE6E91500DD937B /* PropertyFieldCell.m */,
+				53AD84B20FE7F3F100160175 /* PropertyEditorController.m */,
 				53049E870FE67B4E00DD937B /* TTStyleBuilderGlobal.h */,
 			);
 			path = Classes;
@@ -173,6 +177,7 @@
 		5398FA490FE507E30041DFF8 /* .h */ = {
 			isa = PBXGroup;
 			children = (
+				53AD84B10FE7F3F100160175 /* PropertyEditorController.h */,
 				5304A4930FE6E91500DD937B /* PropertyFieldCell.h */,
 				5304A44A0FE6E2C700DD937B /* PropertyField.h */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
@@ -267,6 +272,7 @@
 				5304A1E40FE6C37100DD937B /* NSObjectAdditions.m in Sources */,
 				5304A44C0FE6E2C700DD937B /* PropertyField.m in Sources */,
 				5304A4950FE6E91500DD937B /* PropertyFieldCell.m in Sources */,
+				53AD84B30FE7F3F100160175 /* PropertyEditorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

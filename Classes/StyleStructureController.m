@@ -46,7 +46,6 @@
     for (TTStyle *style in [rootStyle pipeline]) {
         NSString *name = [style className];
         NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
-        KLog(@"Creating row for style %@ with url %@", style, url);
         [styleNames addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
     }
     
