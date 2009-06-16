@@ -30,4 +30,19 @@
     return [TTListDataSource dataSourceWithItems:fields];
 }
 
+- (void)didSelectObject:(id)anObject atIndexPath:(NSIndexPath*)indexPath
+{
+    NSString *selectedColorName = [anObject text];
+    NSDictionary *colors = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [UIColor redColor], @"Red",
+                            [UIColor greenColor], @"Green",
+                            [UIColor blueColor], @"Blue",
+                            nil];
+    
+    UIColor *selectedColor = [colors objectForKey:selectedColorName];
+    [self.object setValue:selectedColor forKey:self.propertyName];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 @end

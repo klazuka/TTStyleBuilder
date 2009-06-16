@@ -20,7 +20,7 @@
     if (self = [super initWithFrame:frame reuseIdentifier:identifier]) {
         valueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [valueLabel setText:@"unset"];
-        [valueLabel setFont:[UIFont systemFontOfSize:17.0f]];
+        [valueLabel setFont:[UIFont systemFontOfSize:12.0f]];
         [valueLabel setBackgroundColor:[UIColor clearColor]];
         [valueLabel setHighlightedTextColor:[UIColor whiteColor]];
         [valueLabel setTextAlignment:UITextAlignmentRight];

@@ -53,16 +53,21 @@
     [self.view addSubview:self.tableView];
 }
 
-- (void)showObject:(id)object inView:(NSString*)viewType withState:(NSDictionary*)state
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super showObject:object inView:viewType withState:state];
-    KLog(@"showObject:%@", object);
-    self.style = object;
-    self.title = [object className];
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];    // ensure that the displayed values are up-to-date.
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewController
+
+- (void)showObject:(id)object inView:(NSString*)viewType withState:(NSDictionary*)state
+{
+    [super showObject:object inView:viewType withState:state];
+    self.style = object;
+    self.title = [object className];
+}
 
 - (id<TTTableViewDataSource>)createDataSource
 {
