@@ -23,8 +23,7 @@
         propertyName = [propName retain];
         NSString *propertyAttributes = [[NSString alloc] initWithCString:property_getAttributes(aProperty) encoding:NSUTF8StringEncoding];
         NSArray *components = [propertyAttributes componentsSeparatedByString:@","];
-        NSString *encodeDirective = [[components objectAtIndex:0] substringFromIndex:1]; // strip off the leading "T"
-        propertyType = [encodeDirective retain];
+        propertyType = [[components objectAtIndex:0] retain];
         KLog(@"Extracted property type %@ from attributes %@", propertyType, propertyAttributes);
     }
     return self;

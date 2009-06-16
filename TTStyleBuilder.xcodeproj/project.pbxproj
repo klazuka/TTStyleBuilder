@@ -18,6 +18,7 @@
 		5304A1E40FE6C37100DD937B /* NSObjectAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A1E30FE6C37100DD937B /* NSObjectAdditions.m */; };
 		5304A44C0FE6E2C700DD937B /* PropertyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A44B0FE6E2C700DD937B /* PropertyField.m */; };
 		5304A4950FE6E91500DD937B /* PropertyFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A4940FE6E91500DD937B /* PropertyFieldCell.m */; };
+		536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E028C0FE80F7200C159E7 /* ColorEditorController.m */; };
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
@@ -64,6 +65,8 @@
 		5304A44B0FE6E2C700DD937B /* PropertyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyField.m; sourceTree = "<group>"; };
 		5304A4930FE6E91500DD937B /* PropertyFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyFieldCell.h; sourceTree = "<group>"; };
 		5304A4940FE6E91500DD937B /* PropertyFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyFieldCell.m; sourceTree = "<group>"; };
+		536E028B0FE80F7200C159E7 /* ColorEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditorController.h; sourceTree = "<group>"; };
+		536E028C0FE80F7200C159E7 /* ColorEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorEditorController.m; sourceTree = "<group>"; };
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -114,6 +117,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				536E028A0FE80F2A00C159E7 /* Editors */,
 				53049E820FE6798000DD937B /* Additions */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -164,6 +168,15 @@
 				5304A2150FE6C7D600DD937B /* NSDebug.h */,
 			);
 			name = Additions;
+			sourceTree = "<group>";
+		};
+		536E028A0FE80F2A00C159E7 /* Editors */ = {
+			isa = PBXGroup;
+			children = (
+				536E028B0FE80F7200C159E7 /* ColorEditorController.h */,
+				536E028C0FE80F7200C159E7 /* ColorEditorController.m */,
+			);
+			name = Editors;
 			sourceTree = "<group>";
 		};
 		5398F9EC0FE505ED0041DFF8 /* Products */ = {
@@ -273,6 +286,7 @@
 				5304A44C0FE6E2C700DD937B /* PropertyField.m in Sources */,
 				5304A4950FE6E91500DD937B /* PropertyFieldCell.m in Sources */,
 				53AD84B30FE7F3F100160175 /* PropertyEditorController.m in Sources */,
+				536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
