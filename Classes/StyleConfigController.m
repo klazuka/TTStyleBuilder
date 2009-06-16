@@ -57,6 +57,7 @@
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];    // ensure that the displayed values are up-to-date.
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Refresh Style Preview" object:nil];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,6 +11,7 @@
 @interface StyleStructureController : TTTableViewController
 {
     TTStyle *rootStyle;
+    TTView *previewView;
 }
 
 - (id)initForRootStyle:(TTStyle *)style;    // designated initializer

@@ -15,6 +15,7 @@
     if ((self = [super init])) {
         rootStyle = [style retain];
         self.title = @"Style Builder";
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redrawStylePreview) name:@"Refresh Style Preview" object:nil];
     }
     return self;
 }
@@ -25,15 +26,33 @@
     return [self initForRootStyle:TTSTYLE(tabBar)];
 }
 
+- (void)redrawStylePreview
+{
+    [previewView setNeedsDisplay];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIViewController
 
 - (void)loadView
 {
     [super loadView];
-    self.tableView = [[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain] autorelease];
+    
+    const CGFloat stylePreviewHeight = 80.f;
+    
+    CGRect tableFrame = self.view.bounds;
+    tableFrame.size.height -= stylePreviewHeight;
+    self.tableView = [[[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain] autorelease];
 	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.tableView];
+    
+    CGRect previewFrame = self.view.bounds;
+    previewFrame.origin.y = self.view.height - stylePreviewHeight;
+    previewFrame.size.height = stylePreviewHeight;
+    previewFrame = CGRectInset(previewFrame, 4.f, 4.f);
+    previewView = [[TTView alloc] initWithFrame:previewFrame];
+    previewView.style = rootStyle;
+    [self.view addSubview:previewView];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,6 +76,7 @@
 
 - (void)dealloc
 {
+    [previewView release];
     [rootStyle release];
     [super dealloc];
 }
