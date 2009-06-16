@@ -19,6 +19,8 @@
 		5304A44C0FE6E2C700DD937B /* PropertyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A44B0FE6E2C700DD937B /* PropertyField.m */; };
 		5304A4950FE6E91500DD937B /* PropertyFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A4940FE6E91500DD937B /* PropertyFieldCell.m */; };
 		536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E028C0FE80F7200C159E7 /* ColorEditorController.m */; };
+		536E02DF0FE826F300C159E7 /* IntEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E02DE0FE826F300C159E7 /* IntEditorController.m */; };
+		536E030D0FE82D5B00C159E7 /* FloatEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E030B0FE82D5B00C159E7 /* FloatEditorController.m */; };
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
@@ -67,6 +69,10 @@
 		5304A4940FE6E91500DD937B /* PropertyFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyFieldCell.m; sourceTree = "<group>"; };
 		536E028B0FE80F7200C159E7 /* ColorEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditorController.h; sourceTree = "<group>"; };
 		536E028C0FE80F7200C159E7 /* ColorEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorEditorController.m; sourceTree = "<group>"; };
+		536E02DD0FE826F300C159E7 /* IntEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntEditorController.h; sourceTree = "<group>"; };
+		536E02DE0FE826F300C159E7 /* IntEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntEditorController.m; sourceTree = "<group>"; };
+		536E030B0FE82D5B00C159E7 /* FloatEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatEditorController.m; sourceTree = "<group>"; };
+		536E030C0FE82D5B00C159E7 /* FloatEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatEditorController.h; sourceTree = "<group>"; };
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -175,6 +181,10 @@
 			children = (
 				536E028B0FE80F7200C159E7 /* ColorEditorController.h */,
 				536E028C0FE80F7200C159E7 /* ColorEditorController.m */,
+				536E02DD0FE826F300C159E7 /* IntEditorController.h */,
+				536E02DE0FE826F300C159E7 /* IntEditorController.m */,
+				536E030C0FE82D5B00C159E7 /* FloatEditorController.h */,
+				536E030B0FE82D5B00C159E7 /* FloatEditorController.m */,
 			);
 			name = Editors;
 			sourceTree = "<group>";
@@ -287,6 +297,8 @@
 				5304A4950FE6E91500DD937B /* PropertyFieldCell.m in Sources */,
 				53AD84B30FE7F3F100160175 /* PropertyEditorController.m in Sources */,
 				536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */,
+				536E02DF0FE826F300C159E7 /* IntEditorController.m in Sources */,
+				536E030D0FE82D5B00C159E7 /* FloatEditorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
