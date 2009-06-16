@@ -15,6 +15,5 @@
 
 - (NSArray *)pipeline;          // the rendering pipeline from this style onwards, flattened into an array of TTStyles.
 - (NSString *)className;        // this style's class name.
-- (NSArray *)propertyNames;     // the properties declared by the receiver's class (but NOT its superclasses).
 
 @end

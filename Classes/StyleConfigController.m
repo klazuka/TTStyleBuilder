@@ -8,7 +8,20 @@
 
 #import "StyleConfigController.h"
 #import "PropertyField.h"
+#import "PropertyFieldCell.h"
 #import <objc/runtime.h>
+
+@interface StyleConfigDataSource : TTListDataSource {} @end
+@implementation StyleConfigDataSource
+- (Class)tableView:(UITableView*)tableView cellClassForObject:(id)object
+{
+    if ([object isKindOfClass:[PropertyField class]])
+        return [PropertyFieldCell class];
+    else
+        return [super tableView:tableView cellClassForObject:object];
+}
+@end
+
 
 @implementation StyleConfigController
 
@@ -44,6 +57,7 @@
     [super showObject:object inView:viewType withState:state];
     KLog(@"showObject:%@", object);
     self.style = object;
+    self.title = [object className];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +65,6 @@
 
 - (id<TTTableViewDataSource>)createDataSource
 {
-    
     NSMutableArray *items = [NSMutableArray array];
     
     unsigned int numProperties = -1;
@@ -59,11 +72,16 @@
     
     for (unsigned int i = 0; i < numProperties; i++) {
         objc_property_t prop = properties[i];
-        [items addObject:[[[PropertyField alloc] initWithProperty:prop url:nil] autorelease]];
+        [items addObject:[[[PropertyField alloc] initWithObject:style property:prop url:nil] autorelease]];
     }
     
     free(properties);
-    return [TTListDataSource dataSourceWithItems:items];
+    return [StyleConfigDataSource dataSourceWithItems:items];
+}
+
+- (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
+{
+    KLog(@"User tapped property %@", object);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

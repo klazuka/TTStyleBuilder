@@ -14,6 +14,7 @@
 {
     if ((self = [super init])) {
         rootStyle = [style retain];
+        self.title = @"Style Builder";
     }
     return self;
 }

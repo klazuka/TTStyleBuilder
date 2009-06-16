@@ -11,20 +11,32 @@
 
 @implementation PropertyField
 
-@synthesize property;
+@synthesize object;
+@synthesize propertyName;
+@synthesize propertyType;
 
-- (id)initWithProperty:(objc_property_t)aProperty
-{
-    return [self initWithProperty:aProperty url:nil];
-}
-
-- (id)initWithProperty:(objc_property_t)aProperty url:(NSString *)url
+- (id)initWithObject:(id)anObject property:(objc_property_t)aProperty url:(NSString *)url
 {
     NSString *propName = [NSString stringWithCString:property_getName(aProperty) encoding:NSUTF8StringEncoding];
     if (self = [self initWithText:propName url:url]) {
-        property = aProperty;
+        object = [anObject retain];
+        propertyName = [propName retain];
+        propertyType = [[NSString alloc] initWithCString:property_getAttributes(aProperty) encoding:NSUTF8StringEncoding];
     }
     return self;
+}
+
+- (NSString *)valueDescription
+{
+    return [[object valueForKey:propertyName] description];
+}
+
+- (void)dealloc
+{
+    [object release];
+    [propertyName release];
+    [propertyType release];
+    [super dealloc];
 }
 
 

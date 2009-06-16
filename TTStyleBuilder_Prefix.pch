@@ -12,3 +12,7 @@
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
 #endif
+
+
+// why can't I define this in Xcode Project Settings anymore?
+#define DEBUG 1

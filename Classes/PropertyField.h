@@ -12,12 +12,17 @@
 
 @interface PropertyField : TTTableField
 {
-    objc_property_t property;
+    id object;
+    NSString *propertyName;
+    NSString *propertyType;
 }
 
-@property (nonatomic, assign) objc_property_t property;
+@property (nonatomic, retain) id object;
+@property (nonatomic, retain) NSString *propertyName;
+@property (nonatomic, retain) NSString *propertyType;
 
-- (id)initWithProperty:(objc_property_t)property;
-- (id)initWithProperty:(objc_property_t)property url:(NSString *)url;
+- (id)initWithObject:(id)anObject property:(objc_property_t)aProperty url:(NSString *)url;  // designated initializer
+
+- (NSString *)valueDescription;
 
 @end
