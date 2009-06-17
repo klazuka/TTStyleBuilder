@@ -8,7 +8,7 @@
 
 #import "StyleStructureController.h"
 
-@interface StylePreview : TTView <TTStyleDelegate>
+@interface StylePreview : TTView
 {
 }
 @end
@@ -111,6 +111,7 @@
         rootStyle = [style retain];
         self.title = @"Style Builder";
         self.navigationItem.leftBarButtonItem = [self editButtonItem];
+        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addStyle)] autorelease];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redrawStylePreview) name:kRefreshStylePreviewNotification object:nil];
     }
     return self;
@@ -120,6 +121,23 @@
 {
     // choose an arbitrary style from the system as an example.
     return [self initForRootStyle:TTSTYLE(tabBar)];
+}
+
+- (void)addStyle
+{
+    // create an arbitrary style (TODO launch the new style browser)
+    TTStyle *newStyle = [TTLinearGradientFillStyle styleWithColor1:RGBACOLOR(0, 0.5, 0.5, 0.75) color2:[UIColor clearColor] next:nil];
+    NSString *name = [newStyle className];
+    NSString *url = [NSString stringWithFormat:@"%@?style_config", [newStyle viewURL]];
+    
+    // update the table view
+    [((TTListDataSource*)self.dataSource).items addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
+    [self.tableView reloadData];
+    
+    // add the new style to the end of the rendering pipeline
+    NSArray *pipeline = [rootStyle pipeline];
+    [[pipeline lastObject] setNext:newStyle];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
 - (void)redrawStylePreview
