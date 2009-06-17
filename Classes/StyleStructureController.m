@@ -8,6 +8,72 @@
 
 #import "StyleStructureController.h"
 
+@interface StyleStructureDataSource : TTListDataSource 
+{
+    TTStyle *rootStyle;
+}
++ (StyleStructureDataSource*)dataSourceWithItems:(NSMutableArray*)items rootStyle:(TTStyle *)style;
+- (id)initWithItems:(NSMutableArray*)items rootStyle:(TTStyle *)style;
+@end
+
+@implementation StyleStructureDataSource
+
++ (StyleStructureDataSource*)dataSourceWithItems:(NSMutableArray*)items rootStyle:(TTStyle *)style
+{
+    return [[[[self class] alloc] initWithItems:items rootStyle:style] autorelease];
+}
+- (id)initWithItems:(NSMutableArray*)items rootStyle:(TTStyle *)style
+{
+    if ((self = [super initWithItems:items])) {
+        rootStyle = [style retain];
+    }
+    return self;
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.row != 0;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (indexPath.row == 0) {
+            KLog(@"Cannot delete the first style in the pipeline because it is the head of the linked list.");
+            return;
+        }
+        
+        // unlink the node from the TTStyle pipeline
+        KLog(@"Removing a node from the style pipeline");
+        NSArray *styles = [rootStyle pipeline];
+        TTStyle *toBeDeleted = [styles objectAtIndex:indexPath.row];
+        TTStyle *prevStyle = [styles objectAtIndex:indexPath.row - 1];
+        prevStyle.next = toBeDeleted.next;
+        KLog(@"Un-linking %@", toBeDeleted);
+        KLog(@"New style pipeline is:");
+        int i = 0;
+        for (TTStyle *style in [rootStyle pipeline])
+            KLog(@"%d - %@", i++, [style className]);
+        
+        // remove the item from the table view
+        [self.items removeObjectAtIndex:indexPath.row];
+        
+        // update the live style preview
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
+
+        // tell the tableview that a row has been removed from the datasource.
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	}
+}
+- (void)dealloc
+{
+    [rootStyle release];
+    [super dealloc];
+}
+
+@end
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+
 @implementation StyleStructureController
 
 - (id)initForRootStyle:(TTStyle *)style
@@ -15,7 +81,8 @@
     if ((self = [super init])) {
         rootStyle = [style retain];
         self.title = @"Style Builder";
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redrawStylePreview) name:@"Refresh Style Preview" object:nil];
+        self.navigationItem.leftBarButtonItem = [self editButtonItem];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redrawStylePreview) name:kRefreshStylePreviewNotification object:nil];
     }
     return self;
 }
@@ -55,6 +122,13 @@
     [self.view addSubview:previewView];
 }
 
+// TTTableViewController should do this for you but it doesn't
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    [self.tableView setEditing:editing animated:animated];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewController
 
@@ -68,7 +142,7 @@
         [styleNames addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
     }
     
-    return [TTListDataSource dataSourceWithItems:styleNames];
+    return [StyleStructureDataSource dataSourceWithItems:styleNames rootStyle:rootStyle];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

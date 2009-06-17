@@ -14,6 +14,9 @@
 #import "NSObjectAdditions.h"
 
 // macros
+
+#define kRefreshStylePreviewNotification @"Refresh Style Preview Notification"
+
 #ifndef KLog
 
 #ifdef DEBUG
