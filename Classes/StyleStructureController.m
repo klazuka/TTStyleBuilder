@@ -8,6 +8,35 @@
 
 #import "StyleStructureController.h"
 
+@interface StylePreview : TTView <TTStyleDelegate>
+{
+}
+@end
+
+@implementation StylePreview
+- (void)drawRect:(CGRect)rect
+{
+    // for some reason, if you don't explicitly fill the gfx context
+    // before you render the style, when you do something like
+    // setNeedsDisplay, the style will be rendered *over* the old
+    // image buffer. So if I were Joe, I would do this in -[TTView drawRect:]
+    // but since I'm not, I'll just do it here in my subclass.
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [[UIColor lightGrayColor] setFill];
+    CGContextFillRect(ctx, rect);
+    [super drawRect:rect];
+}
+- (NSString*)textForLayerWithStyle:(TTStyle*)style
+{
+    return @"42";
+}
+
+- (UIImage*)imageForLayerWithStyle:(TTStyle*)style
+{
+    return TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png");
+}
+@end
+
 @interface StyleStructureDataSource : TTListDataSource 
 {
     TTStyle *rootStyle;
@@ -117,7 +146,7 @@
     previewFrame.origin.y = self.view.height - stylePreviewHeight;
     previewFrame.size.height = stylePreviewHeight;
     previewFrame = CGRectInset(previewFrame, 4.f, 4.f);
-    previewView = [[TTView alloc] initWithFrame:previewFrame];
+    previewView = [[StylePreview alloc] initWithFrame:previewFrame];
     previewView.style = rootStyle;
     [self.view addSubview:previewView];
 }
