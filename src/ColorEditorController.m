@@ -23,7 +23,7 @@
 {
     NSMutableArray *fields = [NSMutableArray array];
     
-    for (NSString *colorName in [NSArray arrayWithObjects:@"Red", @"Green", @"Blue", nil]) {
+    for (NSString *colorName in [NSArray arrayWithObjects:@"Red", @"Green", @"Blue", @"Black", @"White", nil]) {
         [fields addObject:[[[TTTableField alloc] initWithText:colorName url:nil] autorelease]];
     }
     
@@ -34,9 +34,11 @@
 {
     NSString *selectedColorName = [anObject text];
     NSDictionary *colors = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [UIColor redColor], @"Red",
-                            [UIColor greenColor], @"Green",
-                            [UIColor blueColor], @"Blue",
+                            [UIColor colorWithRed:0.9f green:0.1f blue:0.1f alpha:1.f], @"Red",
+                            [UIColor colorWithRed:0.1f green:0.75f blue:0.1f alpha:1.f], @"Green",
+                            [UIColor colorWithRed:0.f green:0.5f blue:1.f alpha:1.f], @"Blue",
+                            [UIColor blackColor], @"Black",
+                            [UIColor whiteColor], @"White",
                             nil];
     
     UIColor *selectedColor = [colors objectForKey:selectedColorName];
