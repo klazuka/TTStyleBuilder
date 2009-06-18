@@ -12,19 +12,19 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
-		53049E4C0FE673F900DD937B /* StyleStructureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53049E4B0FE673F900DD937B /* StyleStructureController.m */; };
 		53049E850FE6799100DD937B /* TTStyleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 53049E840FE6799100DD937B /* TTStyleAdditions.m */; };
-		53049EE30FE6825700DD937B /* StyleConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53049EE20FE6825700DD937B /* StyleConfigController.m */; };
 		5304A1E40FE6C37100DD937B /* NSObjectAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A1E30FE6C37100DD937B /* NSObjectAdditions.m */; };
-		5304A44C0FE6E2C700DD937B /* PropertyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A44B0FE6E2C700DD937B /* PropertyField.m */; };
-		5304A4950FE6E91500DD937B /* PropertyFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A4940FE6E91500DD937B /* PropertyFieldCell.m */; };
 		536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E028C0FE80F7200C159E7 /* ColorEditorController.m */; };
 		536E02DF0FE826F300C159E7 /* IntEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E02DE0FE826F300C159E7 /* IntEditorController.m */; };
 		536E030D0FE82D5B00C159E7 /* FloatEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E030B0FE82D5B00C159E7 /* FloatEditorController.m */; };
+		536E0B090FEAB13500C159E7 /* PropertyEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B080FEAB13500C159E7 /* PropertyEditorController.m */; };
+		536E0B100FEAB15500C159E7 /* StyleStructureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */; };
+		536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B120FEAB16500C159E7 /* PropertyField.m */; };
+		536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */; };
+		536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B160FEAB16500C159E7 /* StyleConfigController.m */; };
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
-		53AD84B30FE7F3F100160175 /* PropertyEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AD84B20FE7F3F100160175 /* PropertyEditorController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,31 +53,31 @@
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AAE50D9B0CCF005BE974 /* TTStyleBuilder_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTStyleBuilder_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		53049E4A0FE673F900DD937B /* StyleStructureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleStructureController.h; sourceTree = "<group>"; };
-		53049E4B0FE673F900DD937B /* StyleStructureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleStructureController.m; sourceTree = "<group>"; };
 		53049E830FE6799100DD937B /* TTStyleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTStyleAdditions.h; sourceTree = "<group>"; };
 		53049E840FE6799100DD937B /* TTStyleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTStyleAdditions.m; sourceTree = "<group>"; };
 		53049E870FE67B4E00DD937B /* TTStyleBuilderGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTStyleBuilderGlobal.h; sourceTree = "<group>"; };
-		53049EE10FE6825700DD937B /* StyleConfigController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleConfigController.h; sourceTree = "<group>"; };
-		53049EE20FE6825700DD937B /* StyleConfigController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleConfigController.m; sourceTree = "<group>"; };
 		5304A1E20FE6C37100DD937B /* NSObjectAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectAdditions.h; sourceTree = "<group>"; };
 		5304A1E30FE6C37100DD937B /* NSObjectAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectAdditions.m; sourceTree = "<group>"; };
 		5304A2150FE6C7D600DD937B /* NSDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDebug.h; sourceTree = "<group>"; };
-		5304A44A0FE6E2C700DD937B /* PropertyField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyField.h; sourceTree = "<group>"; };
-		5304A44B0FE6E2C700DD937B /* PropertyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyField.m; sourceTree = "<group>"; };
-		5304A4930FE6E91500DD937B /* PropertyFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyFieldCell.h; sourceTree = "<group>"; };
-		5304A4940FE6E91500DD937B /* PropertyFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyFieldCell.m; sourceTree = "<group>"; };
 		536E028B0FE80F7200C159E7 /* ColorEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditorController.h; sourceTree = "<group>"; };
 		536E028C0FE80F7200C159E7 /* ColorEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorEditorController.m; sourceTree = "<group>"; };
 		536E02DD0FE826F300C159E7 /* IntEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntEditorController.h; sourceTree = "<group>"; };
 		536E02DE0FE826F300C159E7 /* IntEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntEditorController.m; sourceTree = "<group>"; };
 		536E030B0FE82D5B00C159E7 /* FloatEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatEditorController.m; sourceTree = "<group>"; };
 		536E030C0FE82D5B00C159E7 /* FloatEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatEditorController.h; sourceTree = "<group>"; };
+		536E0B070FEAB13500C159E7 /* PropertyEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyEditorController.h; sourceTree = "<group>"; };
+		536E0B080FEAB13500C159E7 /* PropertyEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyEditorController.m; sourceTree = "<group>"; };
+		536E0B0E0FEAB15500C159E7 /* StyleStructureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleStructureController.h; sourceTree = "<group>"; };
+		536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleStructureController.m; sourceTree = "<group>"; };
+		536E0B110FEAB16500C159E7 /* PropertyField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyField.h; sourceTree = "<group>"; };
+		536E0B120FEAB16500C159E7 /* PropertyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyField.m; sourceTree = "<group>"; };
+		536E0B130FEAB16500C159E7 /* PropertyFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyFieldCell.h; sourceTree = "<group>"; };
+		536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyFieldCell.m; sourceTree = "<group>"; };
+		536E0B150FEAB16500C159E7 /* StyleConfigController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleConfigController.h; sourceTree = "<group>"; };
+		536E0B160FEAB16500C159E7 /* StyleConfigController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleConfigController.m; sourceTree = "<group>"; };
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		53AD84B10FE7F3F100160175 /* PropertyEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyEditorController.h; path = Classes/PropertyEditorController.h; sourceTree = "<group>"; };
-		53AD84B20FE7F3F100160175 /* PropertyEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PropertyEditorController.m; path = Classes/PropertyEditorController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TTStyleBuilder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTStyleBuilder-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,18 +97,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
+		080E96DDFE201D6D7F000001 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				5398FA490FE507E30041DFF8 /* .h */,
+				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
-				53049E4B0FE673F900DD937B /* StyleStructureController.m */,
-				53049EE20FE6825700DD937B /* StyleConfigController.m */,
-				5304A44B0FE6E2C700DD937B /* PropertyField.m */,
-				5304A4940FE6E91500DD937B /* PropertyFieldCell.m */,
 				53049E870FE67B4E00DD937B /* TTStyleBuilderGlobal.h */,
 			);
-			path = Classes;
+			name = App;
+			path = src;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -122,9 +119,11 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				536E0AED0FEAAF8D00C159E7 /* Properties */,
+				536E0AEC0FEAAF8500C159E7 /* Structural */,
 				536E028A0FE80F2A00C159E7 /* Editors */,
 				53049E820FE6798000DD937B /* Additions */,
-				080E96DDFE201D6D7F000001 /* Classes */,
+				080E96DDFE201D6D7F000001 /* App */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -172,28 +171,69 @@
 				5304A1E30FE6C37100DD937B /* NSObjectAdditions.m */,
 				5304A2150FE6C7D600DD937B /* NSDebug.h */,
 			);
-			name = Additions;
+			path = Additions;
 			sourceTree = "<group>";
 		};
 		536E028A0FE80F2A00C159E7 /* Editors */ = {
 			isa = PBXGroup;
 			children = (
 				536E03340FE8307600C159E7 /* .h */,
-				53AD84B20FE7F3F100160175 /* PropertyEditorController.m */,
+				536E0B080FEAB13500C159E7 /* PropertyEditorController.m */,
 				536E028C0FE80F7200C159E7 /* ColorEditorController.m */,
 				536E02DE0FE826F300C159E7 /* IntEditorController.m */,
 				536E030B0FE82D5B00C159E7 /* FloatEditorController.m */,
 			);
 			name = Editors;
+			path = src;
 			sourceTree = "<group>";
 		};
 		536E03340FE8307600C159E7 /* .h */ = {
 			isa = PBXGroup;
 			children = (
-				53AD84B10FE7F3F100160175 /* PropertyEditorController.h */,
+				536E0B070FEAB13500C159E7 /* PropertyEditorController.h */,
 				536E028B0FE80F7200C159E7 /* ColorEditorController.h */,
 				536E02DD0FE826F300C159E7 /* IntEditorController.h */,
 				536E030C0FE82D5B00C159E7 /* FloatEditorController.h */,
+			);
+			name = .h;
+			sourceTree = "<group>";
+		};
+		536E0AEC0FEAAF8500C159E7 /* Structural */ = {
+			isa = PBXGroup;
+			children = (
+				536E0B1A0FEAB17700C159E7 /* .h */,
+				536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */,
+			);
+			name = Structural;
+			path = src;
+			sourceTree = "<group>";
+		};
+		536E0AED0FEAAF8D00C159E7 /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				536E0AEE0FEAAFB400C159E7 /* .h */,
+				536E0B120FEAB16500C159E7 /* PropertyField.m */,
+				536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */,
+				536E0B160FEAB16500C159E7 /* StyleConfigController.m */,
+			);
+			name = Properties;
+			path = src;
+			sourceTree = "<group>";
+		};
+		536E0AEE0FEAAFB400C159E7 /* .h */ = {
+			isa = PBXGroup;
+			children = (
+				536E0B110FEAB16500C159E7 /* PropertyField.h */,
+				536E0B130FEAB16500C159E7 /* PropertyFieldCell.h */,
+				536E0B150FEAB16500C159E7 /* StyleConfigController.h */,
+			);
+			name = .h;
+			sourceTree = "<group>";
+		};
+		536E0B1A0FEAB17700C159E7 /* .h */ = {
+			isa = PBXGroup;
+			children = (
+				536E0B0E0FEAB15500C159E7 /* StyleStructureController.h */,
 			);
 			name = .h;
 			sourceTree = "<group>";
@@ -204,18 +244,6 @@
 				5398F9F30FE505ED0041DFF8 /* libThree20.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		5398FA490FE507E30041DFF8 /* .h */ = {
-			isa = PBXGroup;
-			children = (
-				5304A4930FE6E91500DD937B /* PropertyFieldCell.h */,
-				5304A44A0FE6E2C700DD937B /* PropertyField.h */,
-				1D3623240D0F684500981E51 /* AppDelegate.h */,
-				53049E4A0FE673F900DD937B /* StyleStructureController.h */,
-				53049EE10FE6825700DD937B /* StyleConfigController.h */,
-			);
-			name = .h;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,16 +325,16 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
-				53049E4C0FE673F900DD937B /* StyleStructureController.m in Sources */,
 				53049E850FE6799100DD937B /* TTStyleAdditions.m in Sources */,
-				53049EE30FE6825700DD937B /* StyleConfigController.m in Sources */,
 				5304A1E40FE6C37100DD937B /* NSObjectAdditions.m in Sources */,
-				5304A44C0FE6E2C700DD937B /* PropertyField.m in Sources */,
-				5304A4950FE6E91500DD937B /* PropertyFieldCell.m in Sources */,
-				53AD84B30FE7F3F100160175 /* PropertyEditorController.m in Sources */,
 				536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */,
 				536E02DF0FE826F300C159E7 /* IntEditorController.m in Sources */,
 				536E030D0FE82D5B00C159E7 /* FloatEditorController.m in Sources */,
+				536E0B090FEAB13500C159E7 /* PropertyEditorController.m in Sources */,
+				536E0B100FEAB15500C159E7 /* StyleStructureController.m in Sources */,
+				536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */,
+				536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */,
+				536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
