@@ -1,0 +1,12 @@
+TTStyleBuilder is an interactive tool for creating and exploring Three20's TTStyle rendering pipelines. The tool can run in either the iPhone simulator or directly on the device.
+
+Current status is alpha. I have only been working on this for the last 3 days.
+
+Right now there is no provision for saving your work. Future versions will allow you to construct TTStyleSheet subclasses and archive them to disk in the same manner as Interface Builder archives view hierarchies. Eventually I will add support for reading these TTStyleSheet archives from disk directly into a running application.
+
+Also, many of the property editor plugins have not been implemented. 
+
+Basically, this is early alpha. Be warned :-)
+
+-keith
+(klazuka)
