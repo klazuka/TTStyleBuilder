@@ -7,16 +7,23 @@
  *
  */
 
+
+// ---- dependencies ----
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "Three20/Three20.h"
 
-// class extensions
+
+// ---- class extensions ----
 #import "TTStyleAdditions.h"
 #import "NSObjectAdditions.h"
 
-// macros
 
+// ---- notifications ----
 #define kRefreshStylePreviewNotification @"Refresh Style Preview Notification"
 
+
+// ---- macros -----
 #ifndef KLog
 
 #ifdef DEBUG

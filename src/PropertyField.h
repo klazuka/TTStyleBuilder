@@ -6,9 +6,8 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <objc/runtime.h>
 #import "TTStyleBuilderGlobal.h"
+#import <objc/runtime.h>
 
 @interface PropertyField : TTTableField
 {

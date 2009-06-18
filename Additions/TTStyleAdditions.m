@@ -8,7 +8,6 @@
 
 #import "TTStyleAdditions.h"
 #import "objc/runtime.h"
-#import "TTStyleBuilderGlobal.h"
 
 @implementation TTStyle (TTStyleBuilderAdditions)
 

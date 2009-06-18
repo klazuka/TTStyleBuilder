@@ -22,6 +22,8 @@
 		536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B120FEAB16500C159E7 /* PropertyField.m */; };
 		536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */; };
 		536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B160FEAB16500C159E7 /* StyleConfigController.m */; };
+		536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B2E0FEAB20A00C159E7 /* StylePreview.m */; };
+		536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */; };
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
@@ -75,6 +77,10 @@
 		536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyFieldCell.m; sourceTree = "<group>"; };
 		536E0B150FEAB16500C159E7 /* StyleConfigController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleConfigController.h; sourceTree = "<group>"; };
 		536E0B160FEAB16500C159E7 /* StyleConfigController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleConfigController.m; sourceTree = "<group>"; };
+		536E0B2D0FEAB20A00C159E7 /* StylePreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylePreview.h; sourceTree = "<group>"; };
+		536E0B2E0FEAB20A00C159E7 /* StylePreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StylePreview.m; sourceTree = "<group>"; };
+		536E0B300FEAB23800C159E7 /* StyleStructureDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleStructureDataSource.h; sourceTree = "<group>"; };
+		536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleStructureDataSource.m; sourceTree = "<group>"; };
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -203,6 +209,8 @@
 			children = (
 				536E0B1A0FEAB17700C159E7 /* .h */,
 				536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */,
+				536E0B2E0FEAB20A00C159E7 /* StylePreview.m */,
+				536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */,
 			);
 			name = Structural;
 			path = src;
@@ -234,6 +242,8 @@
 			isa = PBXGroup;
 			children = (
 				536E0B0E0FEAB15500C159E7 /* StyleStructureController.h */,
+				536E0B2D0FEAB20A00C159E7 /* StylePreview.h */,
+				536E0B300FEAB23800C159E7 /* StyleStructureDataSource.h */,
 			);
 			name = .h;
 			sourceTree = "<group>";
@@ -335,6 +345,8 @@
 				536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */,
 				536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */,
 				536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */,
+				536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */,
+				536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
