@@ -10,6 +10,8 @@
 
 @interface NSObject (TTStyleBuilderAdditions)
 
+- (NSString *)className;        // this object's class name.
+
 // added by Keith to support URL representation of in-memory objects
 + (NSString *)inMemoryUrlScheme;
 + (NSString *)inMemoryUrlHost;

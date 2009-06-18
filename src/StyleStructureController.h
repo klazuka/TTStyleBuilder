@@ -7,8 +7,9 @@
 //
 
 #import "TTStyleBuilderGlobal.h"
+#import "AddStyleController.h"  // needed for the AddStyleDelegate protocol
 
-@interface StyleStructureController : TTTableViewController
+@interface StyleStructureController : TTTableViewController <AddStyleDelegate>
 {
     TTStyle *rootStyle;
     TTView *previewView;

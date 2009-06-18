@@ -24,6 +24,7 @@
 		536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B160FEAB16500C159E7 /* StyleConfigController.m */; };
 		536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B2E0FEAB20A00C159E7 /* StylePreview.m */; };
 		536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */; };
+		536E0BAC0FEAB9BB00C159E7 /* AddStyleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0BAB0FEAB9BB00C159E7 /* AddStyleController.m */; };
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
@@ -81,6 +82,8 @@
 		536E0B2E0FEAB20A00C159E7 /* StylePreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StylePreview.m; sourceTree = "<group>"; };
 		536E0B300FEAB23800C159E7 /* StyleStructureDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleStructureDataSource.h; sourceTree = "<group>"; };
 		536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleStructureDataSource.m; sourceTree = "<group>"; };
+		536E0BAA0FEAB9BB00C159E7 /* AddStyleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStyleController.h; sourceTree = "<group>"; };
+		536E0BAB0FEAB9BB00C159E7 /* AddStyleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStyleController.m; sourceTree = "<group>"; };
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -125,8 +128,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				536E0AED0FEAAF8D00C159E7 /* Properties */,
 				536E0AEC0FEAAF8500C159E7 /* Structural */,
+				536E0AED0FEAAF8D00C159E7 /* Properties */,
 				536E028A0FE80F2A00C159E7 /* Editors */,
 				53049E820FE6798000DD937B /* Additions */,
 				080E96DDFE201D6D7F000001 /* App */,
@@ -209,8 +212,9 @@
 			children = (
 				536E0B1A0FEAB17700C159E7 /* .h */,
 				536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */,
-				536E0B2E0FEAB20A00C159E7 /* StylePreview.m */,
 				536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */,
+				536E0B2E0FEAB20A00C159E7 /* StylePreview.m */,
+				536E0BAB0FEAB9BB00C159E7 /* AddStyleController.m */,
 			);
 			name = Structural;
 			path = src;
@@ -241,9 +245,10 @@
 		536E0B1A0FEAB17700C159E7 /* .h */ = {
 			isa = PBXGroup;
 			children = (
+				536E0BAA0FEAB9BB00C159E7 /* AddStyleController.h */,
 				536E0B0E0FEAB15500C159E7 /* StyleStructureController.h */,
-				536E0B2D0FEAB20A00C159E7 /* StylePreview.h */,
 				536E0B300FEAB23800C159E7 /* StyleStructureDataSource.h */,
+				536E0B2D0FEAB20A00C159E7 /* StylePreview.h */,
 			);
 			name = .h;
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 				536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */,
 				536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */,
 				536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */,
+				536E0BAC0FEAB9BB00C159E7 /* AddStyleController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +371,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -372,6 +379,7 @@
 				GCC_PREFIX_HEADER = TTStyleBuilder_Prefix.pch;
 				INFOPLIST_FILE = "TTStyleBuilder-Info.plist";
 				PRODUCT_NAME = TTStyleBuilder;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Debug;
 		};
@@ -379,11 +387,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TTStyleBuilder_Prefix.pch;
 				INFOPLIST_FILE = "TTStyleBuilder-Info.plist";
 				PRODUCT_NAME = TTStyleBuilder;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Release;
 		};

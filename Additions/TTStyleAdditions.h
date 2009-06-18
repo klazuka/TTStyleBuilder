@@ -14,6 +14,68 @@
 @interface TTStyle (TTStyleBuilderAdditions)
 
 - (NSArray *)pipeline;          // the rendering pipeline from this style onwards, flattened into an array of TTStyles.
-- (NSString *)className;        // this style's class name.
 
 @end
+
+@interface TTSolidFillStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+
+@interface TTMaskStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTSolidBorderStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTTextStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTInsetStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTLinearGradientFillStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTFourBorderStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTBevelBorderStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTShapeStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTContentStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTReflectiveFillStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTPartStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTImageStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTBoxStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+@interface TTShadowStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance;
+@end
+
+

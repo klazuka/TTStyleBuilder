@@ -7,12 +7,18 @@
 //
 
 #import "NSObjectAdditions.h"
+#import "objc/runtime.h"
 
 // I had to copy NSDebug.h from the simulator's Foundation framework to this project
 // in order to use it on both the simulator and the device.
 #import "NSDebug.h"
 
 @implementation NSObject (TTStyleBuilderAdditions)
+
+- (NSString *)className
+{
+    return [NSString stringWithCString:class_getName([self class]) encoding:NSUTF8StringEncoding];
+}
 
 // -------------------------------------------------------------------------------
 #pragma mark In Memory Object URLS

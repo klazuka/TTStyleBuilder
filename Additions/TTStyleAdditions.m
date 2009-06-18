@@ -11,11 +11,6 @@
 
 @implementation TTStyle (TTStyleBuilderAdditions)
 
-- (NSString *)className
-{
-    return [NSString stringWithCString:class_getName([self class]) encoding:NSUTF8StringEncoding];
-}
-
 // a private helper method for accumulating values as we walk the linked list
 - (void)pipelineHelper:(NSMutableArray *)names
 {
@@ -35,3 +30,77 @@
 }
 
 @end
+
+
+@implementation TTSolidFillStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTSolidFillStyle styleWithColor:RGBACOLOR(0, 128, 256, 1.0) next:nil]; }
+@end
+
+@implementation TTMaskStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTMaskStyle styleWithMask:TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png") next:nil]; }
+@end
+
+@implementation TTSolidBorderStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTSolidBorderStyle styleWithColor:[UIColor redColor] width:2.f next:nil]; }
+@end
+
+@implementation TTTextStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTTextStyle styleWithColor:[UIColor orangeColor] next:nil]; }
+@end
+
+@implementation TTInsetStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTInsetStyle styleWithInset:UIEdgeInsetsMake(4.f, 10.f, 4.f, 10.f) next:nil]; }
+@end
+
+@implementation TTLinearGradientFillStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTLinearGradientFillStyle styleWithColor1:[UIColor orangeColor] color2:[UIColor yellowColor] next:nil]; }
+@end
+
+@implementation TTFourBorderStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTFourBorderStyle styleWithTop:[UIColor blackColor] right:[UIColor blackColor] bottom:[UIColor blackColor] left:[UIColor blackColor] width:2.f next:nil]; }
+@end
+
+@implementation TTBevelBorderStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTBevelBorderStyle styleWithColor:[UIColor whiteColor] width:4.f next:nil]; }
+@end
+
+@implementation TTShapeStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTShapeStyle styleWithShape:[TTRoundedRectangleShape shapeWithRadius:TT_ROUNDED] next:nil]; }
+@end
+
+@implementation TTContentStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTContentStyle styleWithNext:nil]; }
+@end
+
+@implementation TTReflectiveFillStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTReflectiveFillStyle styleWithColor:[UIColor redColor] next:nil]; }
+@end
+
+@implementation TTPartStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTPartStyle styleWithName:@"FooPart" style:[TTImageStyle styleWithImage:TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png") next:nil] next:nil]; }
+@end
+
+@implementation TTImageStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTImageStyle styleWithImageURL:@"http://1.bp.blogspot.com/_lULSdWJgqfQ/R84h4N149aI/AAAAAAAAABI/rO81Veof-T8/s400/blah.jpg" next:nil]; }
+@end
+
+@implementation TTBoxStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTBoxStyle styleWithPadding:UIEdgeInsetsMake(12.f, 12.f, 12.f, 12.f) next:nil]; }
+@end
+
+@implementation TTShadowStyle (TTStyleBuilderAdditions)
++ (TTStyle *)prototypicalInstance { return [TTShadowStyle styleWithColor:[UIColor blackColor] blur:2.f offset:CGSizeMake(0.f, 1.f) next:nil]; }
+@end
+
+
+
+
+
+
+
+
+
+
+
+
+
