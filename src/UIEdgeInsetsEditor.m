@@ -38,17 +38,21 @@
 {
     UIEdgeInsets insets = [[self.object valueForKey:self.propertyName] UIEdgeInsetsValue];
     
-    topField = [[TTTextFieldTableField alloc] initWithTitle:@"Top" text:[NSString stringWithFormat:@"%f", insets.top]];
+    topField = [[TTTextFieldTableField alloc] initWithTitle:@"Top" text:[NSString stringWithFormat:@"%.1f", insets.top]];
     topField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    topField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    leftField = [[TTTextFieldTableField alloc] initWithTitle:@"Left" text:[NSString stringWithFormat:@"%f", insets.left]];
+    leftField = [[TTTextFieldTableField alloc] initWithTitle:@"Left" text:[NSString stringWithFormat:@"%.1f", insets.left]];
     leftField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    leftField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    bottomField = [[TTTextFieldTableField alloc] initWithTitle:@"Bottom" text:[NSString stringWithFormat:@"%f", insets.bottom]];
+    bottomField = [[TTTextFieldTableField alloc] initWithTitle:@"Bottom" text:[NSString stringWithFormat:@"%.1f", insets.bottom]];
     bottomField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    bottomField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    rightField = [[TTTextFieldTableField alloc] initWithTitle:@"Right" text:[NSString stringWithFormat:@"%f", insets.right]];
+    rightField = [[TTTextFieldTableField alloc] initWithTitle:@"Right" text:[NSString stringWithFormat:@"%.1f", insets.right]];
     rightField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    rightField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     return [TTListDataSource dataSourceWithObjects:topField, leftField, bottomField, rightField, nil];
 }

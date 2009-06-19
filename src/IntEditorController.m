@@ -33,6 +33,8 @@
 {
     numberField = [[TTTextFieldTableField alloc] initWithTitle:self.propertyName text:[NSString stringWithFormat:@"%d", [[self.object valueForKey:self.propertyName] intValue]]];
     numberField.keyboardType = UIKeyboardTypeNumberPad;
+    numberField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
     return [TTListDataSource dataSourceWithObjects:numberField, nil];
 }
 

@@ -33,11 +33,13 @@
 {
     CGSize size = [[self.object valueForKey:self.propertyName] CGSizeValue];
     
-    widthField = [[TTTextFieldTableField alloc] initWithTitle:@"Width" text:[NSString stringWithFormat:@"%f", size.width]];
+    widthField = [[TTTextFieldTableField alloc] initWithTitle:@"Width" text:[NSString stringWithFormat:@"%.1f", size.width]];
     widthField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    widthField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    heightField = [[TTTextFieldTableField alloc] initWithTitle:@"Height" text:[NSString stringWithFormat:@"%f", size.height]];
+    heightField = [[TTTextFieldTableField alloc] initWithTitle:@"Height" text:[NSString stringWithFormat:@"%.1f", size.height]];
     heightField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    heightField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
     return [TTListDataSource dataSourceWithObjects:widthField, heightField, nil];
 }

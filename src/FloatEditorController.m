@@ -31,8 +31,9 @@
 
 - (id<TTTableViewDataSource>)createDataSource
 {
-    numberField = [[TTTextFieldTableField alloc] initWithTitle:self.propertyName text:[NSString stringWithFormat:@"%f", [[self.object valueForKey:self.propertyName] floatValue]]];
+    numberField = [[TTTextFieldTableField alloc] initWithTitle:self.propertyName text:[NSString stringWithFormat:@"%.1f", [[self.object valueForKey:self.propertyName] floatValue]]];
     numberField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    numberField.clearButtonMode = UITextFieldViewModeWhileEditing;
     return [TTListDataSource dataSourceWithObjects:numberField, nil];
 }
 
