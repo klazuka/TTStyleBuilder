@@ -25,6 +25,8 @@
 		536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B2E0FEAB20A00C159E7 /* StylePreview.m */; };
 		536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */; };
 		536E0BAC0FEAB9BB00C159E7 /* AddStyleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0BAB0FEAB9BB00C159E7 /* AddStyleController.m */; };
+		536E0CC10FEB0ED600C159E7 /* CGSizeEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0CC00FEB0ED600C159E7 /* CGSizeEditor.m */; };
+		536E0CE00FEB111800C159E7 /* UIEdgeInsetsEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0CDF0FEB111800C159E7 /* UIEdgeInsetsEditor.m */; };
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
@@ -84,6 +86,10 @@
 		536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleStructureDataSource.m; sourceTree = "<group>"; };
 		536E0BAA0FEAB9BB00C159E7 /* AddStyleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStyleController.h; sourceTree = "<group>"; };
 		536E0BAB0FEAB9BB00C159E7 /* AddStyleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStyleController.m; sourceTree = "<group>"; };
+		536E0CBF0FEB0ED600C159E7 /* CGSizeEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSizeEditor.h; sourceTree = "<group>"; };
+		536E0CC00FEB0ED600C159E7 /* CGSizeEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGSizeEditor.m; sourceTree = "<group>"; };
+		536E0CDE0FEB111800C159E7 /* UIEdgeInsetsEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEdgeInsetsEditor.h; sourceTree = "<group>"; };
+		536E0CDF0FEB111800C159E7 /* UIEdgeInsetsEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIEdgeInsetsEditor.m; sourceTree = "<group>"; };
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -191,6 +197,8 @@
 				536E028C0FE80F7200C159E7 /* ColorEditorController.m */,
 				536E02DE0FE826F300C159E7 /* IntEditorController.m */,
 				536E030B0FE82D5B00C159E7 /* FloatEditorController.m */,
+				536E0CC00FEB0ED600C159E7 /* CGSizeEditor.m */,
+				536E0CDF0FEB111800C159E7 /* UIEdgeInsetsEditor.m */,
 			);
 			name = Editors;
 			path = src;
@@ -203,6 +211,8 @@
 				536E028B0FE80F7200C159E7 /* ColorEditorController.h */,
 				536E02DD0FE826F300C159E7 /* IntEditorController.h */,
 				536E030C0FE82D5B00C159E7 /* FloatEditorController.h */,
+				536E0CBF0FEB0ED600C159E7 /* CGSizeEditor.h */,
+				536E0CDE0FEB111800C159E7 /* UIEdgeInsetsEditor.h */,
 			);
 			name = .h;
 			sourceTree = "<group>";
@@ -353,6 +363,8 @@
 				536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */,
 				536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */,
 				536E0BAC0FEAB9BB00C159E7 /* AddStyleController.m in Sources */,
+				536E0CC10FEB0ED600C159E7 /* CGSizeEditor.m in Sources */,
+				536E0CE00FEB111800C159E7 /* UIEdgeInsetsEditor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

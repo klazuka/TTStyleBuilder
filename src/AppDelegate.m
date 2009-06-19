@@ -21,7 +21,7 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
     // setup the initial view of the style structure
-    TTStyle *styleToBeEdited = TTSTYLE(tabGrid);
+    TTStyle *styleToBeEdited = TTSTYLE(badge);
     UIViewController *rootController = [[StyleStructureController alloc] initForRootStyle:styleToBeEdited];
     navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];
     

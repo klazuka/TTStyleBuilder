@@ -36,4 +36,11 @@
     return [TTListDataSource dataSourceWithObjects:numberField, nil];
 }
 
+- (void)dealloc
+{
+    [numberField release];
+    [super dealloc];
+}
+
+
 @end
