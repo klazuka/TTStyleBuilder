@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "StyleStructureController.h"
 #import "StyleConfigController.h"
+#import "MainMenuController.h"
 
 @implementation AppDelegate
 
@@ -20,9 +21,8 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    // setup the initial view of the style structure
-    TTStyle *styleToBeEdited = TTSTYLE(badge);
-    UIViewController *rootController = [[StyleStructureController alloc] initForRootStyle:styleToBeEdited];
+    // display the main menu on launch
+    UIViewController *rootController = [[MainMenuController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];
     
     // configure TTNavigationCenter

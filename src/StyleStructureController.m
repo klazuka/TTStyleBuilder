@@ -18,7 +18,7 @@
     if ((self = [super init])) {
         rootStyle = [style retain];
         self.title = @"Style Builder";
-        self.navigationItem.leftBarButtonItem = [self editButtonItem];
+//        self.navigationItem.leftBarButtonItem = [self editButtonItem];
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayAddStylePicker)] autorelease];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redrawStylePreview) name:kRefreshStylePreviewNotification object:nil];
     }
@@ -95,6 +95,18 @@
 {
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
+}
+
+// until I can find a place to put the 'edit' button
+// the only way to toggle the editing state is
+// to double-tap somewhere inside self.view but outside
+// the tableview (in this case, the best place to double-tap
+// is the style preview view).
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    if ([touch tapCount] == 2)
+        [self setEditing:!self.editing animated:YES];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

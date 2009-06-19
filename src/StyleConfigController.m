@@ -89,8 +89,7 @@
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
 {
     if (![PropertyEditorController canEdit:[object propertyType]]) {
-        UIAlertView *prompt = [[[UIAlertView alloc] initWithTitle:@"No Editor Available" message:[object propertyType] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil] autorelease];
-        [prompt show];
+        [self alert:[object propertyType] title:@"No Editor Available" delegate:nil];
         return;
     }
     

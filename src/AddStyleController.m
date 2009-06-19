@@ -9,7 +9,8 @@
 #import "AddStyleController.h"
 #import "objc/runtime.h"
 
-static NSMutableDictionary *StyleMap;
+static SEL PrototypeSelector;
+static NSMutableSet *StylesWithPrototypes;
 
 @implementation AddStyleController
 
@@ -20,11 +21,11 @@ static NSMutableDictionary *StyleMap;
     if ( self != [AddStyleController class] )
         return;
     
-    // Initialize the mapping from displayed style name to style instance
-    StyleMap = [[NSMutableDictionary alloc] init];
+    PrototypeSelector = @selector(prototypicalInstance);
+    StylesWithPrototypes = [[NSMutableSet alloc] init];
     
-    // find all sub-classes of TTStyle and ask it for its prototypical instance.
-    // then register that instance under the class name in the map.
+    // find all sub-classes of TTStyle that implement the prototypicalInstance selector.
+    // then add that class name to the set of all styles who can provide a prototypical instance.
 
     Class * classes = NULL;
     int numClasses = objc_getClassList(NULL, 0);
@@ -39,13 +40,11 @@ static NSMutableDictionary *StyleMap;
             
             if ( class_getSuperclass(klass) == [TTStyle class] ) {
                 NSString *klassName = [NSString stringWithCString:class_getName(klass) encoding:NSUTF8StringEncoding];
-                SEL prototypeSelector = @selector(prototypicalInstance);
-                if ([klass respondsToSelector:prototypeSelector]) {
-                    TTStyle *instance = [klass performSelector:prototypeSelector];
-                    [StyleMap setObject:instance forKey:klassName];
-                    KLog(@"Yay... registered %@ in the StyleMap", klassName);
+                if ([klass respondsToSelector:PrototypeSelector]) {
+                    [StylesWithPrototypes addObject:klassName];
+                    KLog(@"Yay... %@ can provide a prototypical style instance", klassName);
                 } else {
-                    KLog(@"found %@ but it does not implement %@", klassName, NSStringFromSelector(prototypeSelector));
+                    KLog(@"Found %@ but it does not implement %@", klassName, NSStringFromSelector(PrototypeSelector));
                 }
             }
         }
@@ -72,7 +71,7 @@ static NSMutableDictionary *StyleMap;
 {
     NSMutableArray *items = [NSMutableArray array];
     
-    for (NSString *styleClassName in StyleMap) 
+    for (NSString *styleClassName in StylesWithPrototypes) 
         [items addObject:[[[TTTableField alloc] initWithText:styleClassName] autorelease]];
     
     return [TTListDataSource dataSourceWithItems:items];
@@ -81,11 +80,10 @@ static NSMutableDictionary *StyleMap;
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
 {
     NSAssert(self.delegate, @"AddStyleController requires the delegate property to be non-nil in order to pick a new style.");
-    
-    // TODO give the delegate the real TTStyle object
-    KLog(@"Selected style %@", object);
-//    [self.delegate didPickNewStyleForAppend:[TTLinearGradientFillStyle styleWithColor1:RGBACOLOR(0, 0.5, 0.5, 0.75) color2:[UIColor clearColor] next:nil]];
-    [self.delegate didPickNewStyleForAppend:[StyleMap objectForKey:[object text]]];
+
+    NSString *klassName = [object text];
+    Class klass = objc_lookUpClass([klassName cStringUsingEncoding:NSUTF8StringEncoding]);
+    [self.delegate didPickNewStyleForAppend:[klass performSelector:PrototypeSelector]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
