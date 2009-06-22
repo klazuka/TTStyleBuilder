@@ -41,24 +41,9 @@
     
     // create the window and show everything
     window = [[UIWindow alloc] initWithFrame:TTApplicationFrame()];
-	[window addSubview:[navigationController view]];
+    [window addSubview:[navigationController view]];
     [window makeKeyAndVisible];
 }
-
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-}
-
-#pragma mark -
-#pragma mark TTNavigationDelegate
-
-- (BOOL)shouldLoadExternalURL:(NSURL*)url
-{
-    KLog(@"shouldLoadExternalURL:%@", url);
-    return NO;
-}
-
 
 #pragma mark -
 #pragma mark Memory management

@@ -7,6 +7,7 @@
 //
 
 #import "AddStyleController.h"
+#import "RuntimeSupport.h"
 #import "objc/runtime.h"
 
 static SEL PrototypeSelector;
@@ -25,31 +26,15 @@ static NSMutableSet *StylesWithPrototypes;
     StylesWithPrototypes = [[NSMutableSet alloc] init];
     
     // find all sub-classes of TTStyle that implement the prototypicalInstance selector.
-    // then add that class name to the set of all styles who can provide a prototypical instance.
-
-    Class * classes = NULL;
-    int numClasses = objc_getClassList(NULL, 0);
-    
-    if (numClasses > 0 )
-    {
-        classes = malloc(sizeof(Class) * numClasses);
-        numClasses = objc_getClassList(classes, numClasses);
-        
-        for ( int i = 0; i < numClasses; i++ ) {
-            Class klass = classes[i];
-            
-            if ( class_getSuperclass(klass) == [TTStyle class] ) {
-                NSString *klassName = [NSString stringWithCString:class_getName(klass) encoding:NSUTF8StringEncoding];
-                if ([klass respondsToSelector:PrototypeSelector]) {
-                    [StylesWithPrototypes addObject:klassName];
-                    KLog(@"Yay... %@ can provide a prototypical style instance", klassName);
-                } else {
-                    KLog(@"Found %@ but it does not implement %@", klassName, NSStringFromSelector(PrototypeSelector));
-                }
-            }
+    // then add that class name to the set of all styles which can provide a prototypical instance.
+    for (Class klass in SubclassEnumeratorForClass([TTStyle class])) {
+        NSString *klassName = [NSString stringWithCString:class_getName(klass) encoding:NSUTF8StringEncoding];
+        if ([klass respondsToSelector:PrototypeSelector]) {
+            [StylesWithPrototypes addObject:klassName];
+            KLog(@"Yay... %@ can provide a prototypical style instance", klassName);
+        } else {
+            KLog(@"Found %@ but it does not implement %@", klassName, NSStringFromSelector(PrototypeSelector));
         }
-        
-        free(classes);
     }
 }
 

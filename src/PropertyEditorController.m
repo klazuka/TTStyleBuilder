@@ -7,7 +7,7 @@
 //
 
 #import "PropertyEditorController.h"
-#import "objc/runtime.h"
+#import "RuntimeSupport.h"
 
 static NSMutableDictionary *ClassHandlerMap = nil;
 
@@ -33,24 +33,10 @@ static NSMutableDictionary *ClassHandlerMap = nil;
     // find all sub-classes of PropertyEditorController and ask them 
     // for the property type that they know how to handle.
     // Then create the mapping.
-    Class * classes = NULL;
-    int numClasses = objc_getClassList(NULL, 0);
     
-    if (numClasses > 0 )
-    {
-        classes = malloc(sizeof(Class) * numClasses);
-        numClasses = objc_getClassList(classes, numClasses);
-        
-        for ( int i = 0; i < numClasses; i++ ) {
-            Class klass = classes[i];
-            
-            if ( class_getSuperclass(klass) == self ) {
-                NSString *type = [klass typeHandler];
-                [ClassHandlerMap setObject:klass forKey:type];
-            }
-        }
-        
-        free(classes);
+    for (Class klass in SubclassEnumeratorForClass([PropertyEditorController class])) {
+        NSString *type = [klass typeHandler];
+        [ClassHandlerMap setObject:klass forKey:type];
     }
 }
 
