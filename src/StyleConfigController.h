@@ -6,15 +6,10 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "TTStyleBuilderGlobal.h"
+#import "ObjectEditorController.h"
 
-@interface StyleConfigController : TTTableViewController
+@interface StyleConfigController : ObjectEditorController
 {
-    TTStyle *style;
 }
-
-- (id)initForStyle:(TTStyle *)aStyle;   // designated initializer
-
-@property (nonatomic, retain) TTStyle *style;
 
 @end
