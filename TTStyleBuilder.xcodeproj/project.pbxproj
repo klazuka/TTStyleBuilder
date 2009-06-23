@@ -34,6 +34,7 @@
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
 		53A59F9D0FF177ED00C82D9A /* ObjectEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59F9B0FF177ED00C82D9A /* ObjectEditorController.m */; };
+		53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59FB90FF17B0F00C82D9A /* SettingsController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,8 @@
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		53A59F9B0FF177ED00C82D9A /* ObjectEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectEditorController.m; sourceTree = "<group>"; };
 		53A59F9C0FF177ED00C82D9A /* ObjectEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectEditorController.h; sourceTree = "<group>"; };
+		53A59FB80FF17B0F00C82D9A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
+		53A59FB90FF17B0F00C82D9A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TTStyleBuilder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTStyleBuilder-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +134,7 @@
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
 				533A1D780FEB28A000BECCA4 /* MainMenuController.m */,
 				5370049E0FEB2F7B00C1A0D0 /* StyleSheetController.m */,
+				53A59FB90FF17B0F00C82D9A /* SettingsController.m */,
 				53049E870FE67B4E00DD937B /* TTStyleBuilderGlobal.h */,
 			);
 			name = App;
@@ -205,6 +209,7 @@
 		533A1D7A0FEB296D00BECCA4 /* .h */ = {
 			isa = PBXGroup;
 			children = (
+				53A59FB80FF17B0F00C82D9A /* SettingsController.h */,
 				5370049D0FEB2F7B00C1A0D0 /* StyleSheetController.h */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				533A1D770FEB28A000BECCA4 /* MainMenuController.h */,
@@ -404,6 +409,7 @@
 				5370049F0FEB2F7B00C1A0D0 /* StyleSheetController.m in Sources */,
 				5370056F0FEBFE2D00C1A0D0 /* RuntimeSupport.m in Sources */,
 				53A59F9D0FF177ED00C82D9A /* ObjectEditorController.m in Sources */,
+				53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

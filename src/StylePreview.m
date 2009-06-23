@@ -9,6 +9,37 @@
 #import "StylePreview.h"
 
 @implementation StylePreview
+
+@synthesize size;
+@synthesize fillColor;
+@synthesize textForDelegate;
+@synthesize imageForDelegate;
+
+- (id)initWithFrame:(CGRect)frame
+{
+    if ((self = [super initWithFrame:frame])) {
+        size = frame.size;
+        fillColor = self.backgroundColor;
+        textForDelegate = @"42";
+        imageForDelegate = TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png");
+    }
+    return self;
+}
+
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+    [super setValue:value forKey:key];
+    
+    if ([key isEqualToString:@"size"]) {
+        self.width = [value CGSizeValue].width;
+        self.height = [value CGSizeValue].height;
+    } else if ([key isEqualToString:@"fillColor"]) {
+        self.backgroundColor = value;
+    }
+    
+    [self setNeedsDisplay];  // redraw whenever one of our properties are modified
+}
+
 - (void)drawRect:(CGRect)rect
 {
     // for some reason, if you don't explicitly fill the gfx context
@@ -17,17 +48,26 @@
     // image buffer. So if I were Joe, I would do this in -[TTView drawRect:]
     // but since I'm not, I'll just do it here in my subclass.
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[UIColor lightGrayColor] setFill];
+    [self.backgroundColor setFill];
     CGContextFillRect(ctx, rect);
     [super drawRect:rect];
 }
 - (NSString*)textForLayerWithStyle:(TTStyle*)style
 {
-    return @"42";
+    return textForDelegate;
 }
 
 - (UIImage*)imageForLayerWithStyle:(TTStyle*)style
 {
-    return TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png");
+    return imageForDelegate;
 }
+
+- (void)dealloc
+{
+    [fillColor release];
+    [textForDelegate release];
+    [imageForDelegate release];
+    [super dealloc];
+}
+
 @end

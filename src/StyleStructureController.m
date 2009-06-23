@@ -10,6 +10,7 @@
 #import "StylePreview.h"
 #import "StyleStructureDataSource.h"
 #import "AddStyleController.h"
+#import "SettingsController.h"
 
 @implementation StyleStructureController
 
@@ -18,7 +19,6 @@
     if ((self = [super init])) {
         rootStyle = [style retain];
         self.title = @"Style Builder";
-//        self.navigationItem.leftBarButtonItem = [self editButtonItem];
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayAddStylePicker)] autorelease];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redrawStylePreview) name:kRefreshStylePreviewNotification object:nil];
     }
@@ -58,6 +58,14 @@
     [previewView setNeedsDisplay];
 }
 
+- (void)showSettings
+{
+    // display settings for the "live preview" area
+    SettingsController *controller = [[[SettingsController alloc] init] autorelease];
+    [controller showObject:previewView inView:nil withState:nil];
+    [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:controller] autorelease] animated:YES];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark AddStyleDelegate
 
@@ -75,19 +83,28 @@
     
     const CGFloat stylePreviewHeight = 80.f;
     
+    // table view (each row is a style in the rendering pipeline)
     CGRect tableFrame = self.view.bounds;
     tableFrame.size.height -= stylePreviewHeight;
     self.tableView = [[[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain] autorelease];
 	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.tableView];
     
+    // live preview display of the current rendering pipeline
     CGRect previewFrame = self.view.bounds;
     previewFrame.origin.y = self.view.height - stylePreviewHeight;
     previewFrame.size.height = stylePreviewHeight;
     previewFrame = CGRectInset(previewFrame, 4.f, 4.f);
     previewView = [[StylePreview alloc] initWithFrame:previewFrame];
     previewView.style = rootStyle;
+    previewView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:previewView];
+    
+    // info button to open app settings
+    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
+    [infoButton addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+    [infoButton setFrame:UIEdgeInsetsInsetRect(self.view.frame, UIEdgeInsetsMake(self.view.height - 40.f, self.view.width - 40.f, 0.f, 0.f))];
+    [self.view addSubview:infoButton];
 }
 
 // TTTableViewController should do this for you but it doesn't
@@ -105,8 +122,10 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
-    if ([touch tapCount] == 2)
+    if ([touch tapCount] == 2) {
+        // toggle editing mode (allows for deleting and rearranging styles)
         [self setEditing:!self.editing animated:YES];
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
