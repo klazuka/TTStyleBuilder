@@ -19,9 +19,9 @@
 {
     if ((self = [super initWithFrame:frame])) {
         size = frame.size;
-        fillColor = self.backgroundColor;
-        textForDelegate = @"42";
-        imageForDelegate = TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png");
+        fillColor = [self.backgroundColor retain];
+        textForDelegate = [[NSString alloc] initWithUTF8String:"42"];
+        imageForDelegate = [TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png") retain];
     }
     return self;
 }
@@ -33,6 +33,7 @@
     if ([key isEqualToString:@"size"]) {
         self.width = [value CGSizeValue].width;
         self.height = [value CGSizeValue].height;
+        self.centerX = self.superview.centerX;
     } else if ([key isEqualToString:@"fillColor"]) {
         self.backgroundColor = value;
     }
