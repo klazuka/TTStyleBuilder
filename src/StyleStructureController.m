@@ -94,7 +94,7 @@
     CGRect previewFrame = self.view.bounds;
     previewFrame.origin.y = self.view.height - stylePreviewHeight;
     previewFrame.size.height = stylePreviewHeight;
-    previewFrame = CGRectInset(previewFrame, 4.f, 4.f);
+    previewFrame = CGRectInset(previewFrame, 40.f, 10.f);
     previewView = [[StylePreview alloc] initWithFrame:previewFrame];
     previewView.style = rootStyle;
     previewView.backgroundColor = [UIColor whiteColor];
