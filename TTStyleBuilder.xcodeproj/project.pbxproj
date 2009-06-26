@@ -15,10 +15,7 @@
 		53049E850FE6799100DD937B /* TTStyleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 53049E840FE6799100DD937B /* TTStyleAdditions.m */; };
 		5304A1E40FE6C37100DD937B /* NSObjectAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304A1E30FE6C37100DD937B /* NSObjectAdditions.m */; };
 		533A1D790FEB28A000BECCA4 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533A1D780FEB28A000BECCA4 /* MainMenuController.m */; };
-		536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E028C0FE80F7200C159E7 /* ColorEditorController.m */; };
-		536E02DF0FE826F300C159E7 /* IntEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E02DE0FE826F300C159E7 /* IntEditorController.m */; };
-		536E030D0FE82D5B00C159E7 /* FloatEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E030B0FE82D5B00C159E7 /* FloatEditorController.m */; };
-		536E0B090FEAB13500C159E7 /* PropertyEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B080FEAB13500C159E7 /* PropertyEditorController.m */; };
+		536E0B090FEAB13500C159E7 /* PropertyEditorSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */; };
 		536E0B100FEAB15500C159E7 /* StyleStructureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */; };
 		536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B120FEAB16500C159E7 /* PropertyField.m */; };
 		536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */; };
@@ -35,6 +32,9 @@
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
 		53A59F9D0FF177ED00C82D9A /* ObjectEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59F9B0FF177ED00C82D9A /* ObjectEditorController.m */; };
 		53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59FB90FF17B0F00C82D9A /* SettingsController.m */; };
+		53D972590FF5541700E62B9A /* ColorEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972540FF5541700E62B9A /* ColorEditor.m */; };
+		53D9725A0FF5541700E62B9A /* FloatEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972560FF5541700E62B9A /* FloatEditor.m */; };
+		53D9725B0FF5541700E62B9A /* IntEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972580FF5541700E62B9A /* IntEditor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,14 +71,8 @@
 		5304A2150FE6C7D600DD937B /* NSDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDebug.h; sourceTree = "<group>"; };
 		533A1D770FEB28A000BECCA4 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
 		533A1D780FEB28A000BECCA4 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
-		536E028B0FE80F7200C159E7 /* ColorEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditorController.h; sourceTree = "<group>"; };
-		536E028C0FE80F7200C159E7 /* ColorEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorEditorController.m; sourceTree = "<group>"; };
-		536E02DD0FE826F300C159E7 /* IntEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntEditorController.h; sourceTree = "<group>"; };
-		536E02DE0FE826F300C159E7 /* IntEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntEditorController.m; sourceTree = "<group>"; };
-		536E030B0FE82D5B00C159E7 /* FloatEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatEditorController.m; sourceTree = "<group>"; };
-		536E030C0FE82D5B00C159E7 /* FloatEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatEditorController.h; sourceTree = "<group>"; };
-		536E0B070FEAB13500C159E7 /* PropertyEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyEditorController.h; sourceTree = "<group>"; };
-		536E0B080FEAB13500C159E7 /* PropertyEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyEditorController.m; sourceTree = "<group>"; };
+		536E0B070FEAB13500C159E7 /* PropertyEditorSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyEditorSystem.h; sourceTree = "<group>"; };
+		536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyEditorSystem.m; sourceTree = "<group>"; };
 		536E0B0E0FEAB15500C159E7 /* StyleStructureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleStructureController.h; sourceTree = "<group>"; };
 		536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleStructureController.m; sourceTree = "<group>"; };
 		536E0B110FEAB16500C159E7 /* PropertyField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyField.h; sourceTree = "<group>"; };
@@ -108,6 +102,12 @@
 		53A59F9C0FF177ED00C82D9A /* ObjectEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectEditorController.h; sourceTree = "<group>"; };
 		53A59FB80FF17B0F00C82D9A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		53A59FB90FF17B0F00C82D9A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
+		53D972530FF5541700E62B9A /* ColorEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditor.h; sourceTree = "<group>"; };
+		53D972540FF5541700E62B9A /* ColorEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorEditor.m; sourceTree = "<group>"; };
+		53D972550FF5541700E62B9A /* FloatEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatEditor.h; sourceTree = "<group>"; };
+		53D972560FF5541700E62B9A /* FloatEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatEditor.m; sourceTree = "<group>"; };
+		53D972570FF5541700E62B9A /* IntEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntEditor.h; sourceTree = "<group>"; };
+		53D972580FF5541700E62B9A /* IntEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntEditor.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TTStyleBuilder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTStyleBuilder-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,10 +221,10 @@
 			isa = PBXGroup;
 			children = (
 				536E03340FE8307600C159E7 /* .h */,
-				536E0B080FEAB13500C159E7 /* PropertyEditorController.m */,
-				536E028C0FE80F7200C159E7 /* ColorEditorController.m */,
-				536E02DE0FE826F300C159E7 /* IntEditorController.m */,
-				536E030B0FE82D5B00C159E7 /* FloatEditorController.m */,
+				536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */,
+				53D972540FF5541700E62B9A /* ColorEditor.m */,
+				53D972560FF5541700E62B9A /* FloatEditor.m */,
+				53D972580FF5541700E62B9A /* IntEditor.m */,
 				536E0CC00FEB0ED600C159E7 /* CGSizeEditor.m */,
 				536E0CDF0FEB111800C159E7 /* UIEdgeInsetsEditor.m */,
 			);
@@ -234,10 +234,10 @@
 		536E03340FE8307600C159E7 /* .h */ = {
 			isa = PBXGroup;
 			children = (
-				536E0B070FEAB13500C159E7 /* PropertyEditorController.h */,
-				536E028B0FE80F7200C159E7 /* ColorEditorController.h */,
-				536E02DD0FE826F300C159E7 /* IntEditorController.h */,
-				536E030C0FE82D5B00C159E7 /* FloatEditorController.h */,
+				536E0B070FEAB13500C159E7 /* PropertyEditorSystem.h */,
+				53D972530FF5541700E62B9A /* ColorEditor.h */,
+				53D972550FF5541700E62B9A /* FloatEditor.h */,
+				53D972570FF5541700E62B9A /* IntEditor.h */,
 				536E0CBF0FEB0ED600C159E7 /* CGSizeEditor.h */,
 				536E0CDE0FEB111800C159E7 /* UIEdgeInsetsEditor.h */,
 			);
@@ -392,10 +392,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				53049E850FE6799100DD937B /* TTStyleAdditions.m in Sources */,
 				5304A1E40FE6C37100DD937B /* NSObjectAdditions.m in Sources */,
-				536E028D0FE80F7200C159E7 /* ColorEditorController.m in Sources */,
-				536E02DF0FE826F300C159E7 /* IntEditorController.m in Sources */,
-				536E030D0FE82D5B00C159E7 /* FloatEditorController.m in Sources */,
-				536E0B090FEAB13500C159E7 /* PropertyEditorController.m in Sources */,
+				536E0B090FEAB13500C159E7 /* PropertyEditorSystem.m in Sources */,
 				536E0B100FEAB15500C159E7 /* StyleStructureController.m in Sources */,
 				536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */,
 				536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */,
@@ -410,6 +407,9 @@
 				5370056F0FEBFE2D00C1A0D0 /* RuntimeSupport.m in Sources */,
 				53A59F9D0FF177ED00C82D9A /* ObjectEditorController.m in Sources */,
 				53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */,
+				53D972590FF5541700E62B9A /* ColorEditor.m in Sources */,
+				53D9725A0FF5541700E62B9A /* FloatEditor.m in Sources */,
+				53D9725B0FF5541700E62B9A /* IntEditor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

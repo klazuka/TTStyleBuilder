@@ -9,7 +9,7 @@
 #import "ObjectEditorController.h"
 #import "PropertyField.h"
 #import "PropertyFieldCell.h"
-#import "PropertyEditorController.h"
+#import "PropertyEditorSystem.h"
 #import <objc/runtime.h>
 
 @interface ObjectEditorDataSource : TTListDataSource {} @end
@@ -73,12 +73,12 @@
 
 - (void)didSelectObject:(id)propertyField atIndexPath:(NSIndexPath*)indexPath
 {
-    if (![PropertyEditorController canEdit:[propertyField propertyType]]) {
+    if (![PropertyEditorSystem canEdit:[propertyField propertyType]]) {
         [self alert:[propertyField propertyType] title:@"No Editor Available" delegate:nil];
         return;
     }
     
-    PropertyEditorController *editor = [PropertyEditorController editorForPropertyType:[propertyField propertyType]];
+    UIViewController<PropertyEditorImplementation> *editor = [PropertyEditorSystem editorForPropertyType:[propertyField propertyType]];
     editor.object = [propertyField object];
     editor.propertyName = [propertyField propertyName];
     [self.navigationController pushViewController:editor animated:YES];

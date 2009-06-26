@@ -11,6 +11,8 @@
 
 @implementation UIEdgeInsetsEditor
 
+@synthesize object, propertyName;
+
 + (NSString *)typeHandler
 {
     return @"T{UIEdgeInsets=\"top\"f\"left\"f\"bottom\"f\"right\"f}";
@@ -18,6 +20,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIViewController
+
+- (void)loadView
+{
+    [super loadView];
+    self.tableView = [[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped] autorelease];
+	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.tableView];
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -57,8 +67,10 @@
     return [TTListDataSource dataSourceWithObjects:topField, leftField, bottomField, rightField, nil];
 }
 
-- (void) dealloc
+- (void)dealloc
 {
+    [object release];
+    [propertyName release];
     [topField release];
     [leftField release];
     [bottomField release];

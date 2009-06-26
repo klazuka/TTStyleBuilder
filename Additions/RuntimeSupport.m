@@ -8,46 +8,52 @@
 
 #import "RuntimeSupport.h"
 
-/*
- *      SubclassEnumeratorForClass
- *
- *  This creates an enumerator of the *direct* subclasses of the class
- *  that you provide. You can use this with fast enumeration.
- *
- *  Example usage:
- *
- *  for (Class klass in SubclassEnumeratorForClass([UIView class]))
- *      NSLog(@"Found subclass: %s", class_getName(klass));
- */
-NSEnumerator *SubclassEnumeratorForClass(Class baseClass)
+
+NSEnumerator *AllClasses(void)
 {
-    NSMutableArray *subclasses = [NSMutableArray array];
+    // Create a non-retaining/non-releasing array to hold our values
+    // because Class objects have static lifetime.
+    CFMutableArrayRef result = CFArrayCreateMutable(NULL, 0, NULL); 
     
-    // find all sub-classes of baseClass
+    // Iterate over every class in the runtime
     Class * classes = NULL;
     int numClasses = objc_getClassList(NULL, 0);
     
-    if (numClasses > 0 )
-    {
+    if (numClasses > 0 ) {
         classes = malloc(sizeof(Class) * numClasses);
         numClasses = objc_getClassList(classes, numClasses);
         
-        for (int i = 0; i < numClasses; i++) {
-            Class klass = classes[i];
-            
-            if (class_getSuperclass(klass) == baseClass) {
-                // yes, addObject: expects an |id|, but I give it a |Class|
-                // since they are both pointers. Of course, Apple could break
-                // this in the future, but this is not meant to be bullet-proof
-                // software here.
-                [subclasses addObject:klass];
-            }
-        }
+        for (int i = 0; i < numClasses; i++)
+            CFArrayAppendValue(result, classes[i]);
         
         free(classes);
     }
     
-    return [subclasses objectEnumerator];
+    return [(NSArray*)result objectEnumerator];
+}
+
+NSEnumerator *ImplementationsForProtocol(Protocol *protocol)
+{
+    CFMutableArrayRef implementations = CFArrayCreateMutable(NULL, 0, NULL);
+    
+    // Find all classes that conform to |protocol|
+    for (Class cls in AllClasses())
+        if (class_conformsToProtocol(cls, protocol))
+            CFArrayAppendValue(implementations, cls);
+    
+    return [(NSArray*)implementations objectEnumerator];
+}
+
+NSEnumerator *SubclassEnumeratorForClass(Class baseClass)
+{
+    CFMutableArrayRef subclasses = CFArrayCreateMutable(NULL, 0, NULL);
+    
+    // Find all sub-classes of |baseClass|
+    for (Class cls in AllClasses())
+        if (class_getSuperclass(cls) == baseClass)
+            CFArrayAppendValue(subclasses, cls);
+    
+    return [(NSArray*)subclasses objectEnumerator];
 }
 
 

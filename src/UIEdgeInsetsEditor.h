@@ -6,10 +6,15 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "PropertyEditorController.h"
+#import "PropertyEditorSystem.h"
 
-@interface UIEdgeInsetsEditor : PropertyEditorController
+@interface UIEdgeInsetsEditor : TTTableViewController <PropertyEditorImplementation>
 {
+    // PropertyEditorImplementation
+    id object;
+    NSString *propertyName;
+    
+    // UIEdgeInsets editor specific
     TTTextFieldTableField *topField;
     TTTextFieldTableField *leftField;
     TTTextFieldTableField *bottomField;

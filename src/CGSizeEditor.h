@@ -6,11 +6,16 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "PropertyEditorController.h"
+#import "PropertyEditorSystem.h"
 
 
-@interface CGSizeEditor : PropertyEditorController
+@interface CGSizeEditor : TTTableViewController <PropertyEditorImplementation>
 {
+    // PropertyEditorImplementation
+    id object;
+    NSString *propertyName;
+    
+    // CGSize editor specific
     TTTextFieldTableField *widthField;
     TTTextFieldTableField *heightField;
 }

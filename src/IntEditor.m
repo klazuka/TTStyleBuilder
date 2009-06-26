@@ -1,15 +1,17 @@
 //
-//  IntEditorController.m
+//  IntEditor.m
 //  TTStyleBuilder
 //
 //  Created by Keith Lazuka on 6/16/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "IntEditorController.h"
+#import "IntEditor.h"
 
 
-@implementation IntEditorController
+@implementation IntEditor
+
+@synthesize object, propertyName;
 
 + (NSString *)typeHandler
 {
@@ -18,6 +20,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIViewController
+
+- (void)loadView
+{
+    [super loadView];
+    self.tableView = [[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped] autorelease];
+	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.tableView];
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -40,6 +50,8 @@
 
 - (void)dealloc
 {
+    [object release];
+    [propertyName release];
     [numberField release];
     [super dealloc];
 }
