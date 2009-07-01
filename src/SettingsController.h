@@ -6,9 +6,9 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "ObjectEditorController.h"
+#import "ObjectEditor.h"
 
-@interface SettingsController : ObjectEditorController
+@interface SettingsController : ObjectEditor
 {
 }
 

@@ -8,9 +8,9 @@
 
 #import "PropertyEditorSystem.h"
 
-@interface UIEdgeInsetsEditor : TTTableViewController <PropertyEditorImplementation>
+@interface UIEdgeInsetsEditor : TTTableViewController <ValueEditor>
 {
-    // PropertyEditorImplementation
+    // ValueEditor
     id object;
     NSString *propertyName;
     

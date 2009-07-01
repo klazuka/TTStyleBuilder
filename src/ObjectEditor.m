@@ -1,15 +1,14 @@
 //
-//  ObjectEditorController.m
+//  ObjectEditor.m
 //  TTStyleBuilder
 //
 //  Created by Keith Lazuka on 6/15/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "ObjectEditorController.h"
+#import "ObjectEditor.h"
 #import "PropertyField.h"
 #import "PropertyFieldCell.h"
-#import "PropertyEditorSystem.h"
 #import <objc/runtime.h>
 
 @interface ObjectEditorDataSource : TTListDataSource {} @end
@@ -24,9 +23,17 @@
 @end
 
 
-@implementation ObjectEditorController
+@implementation ObjectEditor
 
 @synthesize object;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark ValueEditor protocol
+
++ (NSString *)typeHandler
+{
+    return @"T@";
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIViewController
@@ -73,14 +80,23 @@
 
 - (void)didSelectObject:(id)propertyField atIndexPath:(NSIndexPath*)indexPath
 {
-    if (![PropertyEditorSystem canEdit:[propertyField propertyType]]) {
-        [self alert:[propertyField propertyType] title:@"No Editor Available" delegate:nil];
+    NSString *propertyType = [propertyField propertyType];
+    if (![PropertyEditorSystem canEdit:propertyType]) {
+        [self alert:propertyType title:@"No Editor Available" delegate:nil];
         return;
     }
     
-    UIViewController<PropertyEditorImplementation> *editor = [PropertyEditorSystem editorForPropertyType:[propertyField propertyType]];
-    editor.object = [propertyField object];
-    editor.propertyName = [propertyField propertyName];
+    UIViewController<ValueEditor> *editor = [PropertyEditorSystem editorForPropertyType:propertyType];
+    
+    if ([editor respondsToSelector:@selector(propertyName)]) {
+        // CASE: ValueEditor is a PropertyEditor
+        editor.propertyName = [propertyField propertyName];
+        editor.object = [propertyField object];
+    } else {
+        // CASE: ValueEditor is an ObjectEditor
+        editor.object = [[propertyField object] valueForKey:[propertyField propertyName]];
+    }
+
     [self.navigationController pushViewController:editor animated:YES];
 }
 

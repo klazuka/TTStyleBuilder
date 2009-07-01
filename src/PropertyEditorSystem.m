@@ -9,6 +9,11 @@
 #import "PropertyEditorSystem.h"
 #import "RuntimeSupport.h"
 
+@interface PropertyEditorSystem ()
++ (Class)lookupClassForPropertyType:(NSString *)encodeDirectiveType;
++ (NSString *)fallbackTypeForPropertyType:(NSString *)encodeDirectiveType;
+@end
+
 static NSMutableDictionary *ClassHandlerMap = nil;
 
 @implementation PropertyEditorSystem
@@ -24,30 +29,26 @@ static NSMutableDictionary *ClassHandlerMap = nil;
     // Initialize the mapping from property type to its property editor
     ClassHandlerMap = [[NSMutableDictionary alloc] init];
 
-    // Find all classes that adopt the PropertyEditorImplementation protocol
+    // Find all classes that adopt the ValueEditor protocol
     // and ask them for the property type that they know how to handle.
     // Finally, map the property type to the class.
-    const char *protocolName = "PropertyEditorImplementation";
-    for (Class klass in ImplementationsForProtocol(objc_getProtocol(protocolName))) {
-        NSString *type = [klass typeHandler];
-        [ClassHandlerMap setObject:klass forKey:type];
-        NSLog(@"Registered %s as an editor plugin for type %@", class_getName(klass), type);
+    const char *protocolName = "ValueEditor";
+    for (Class cls in ImplementationsForProtocol(objc_getProtocol(protocolName))) {
+        NSString *type = [cls typeHandler];
+        [ClassHandlerMap setObject:cls forKey:type];
+        NSLog(@"Registered %s as an editor plugin for type %@", class_getName(cls), type);
     }
 }
 
-+ (UIViewController<PropertyEditorImplementation> *)editorForPropertyType:(NSString *)encodeDirectiveType
++ (UIViewController<ValueEditor> *)editorForPropertyType:(NSString *)encodeDirectiveType
 {
-    // dispatch to Class based on input format
-    Class klass = [ClassHandlerMap objectForKey:encodeDirectiveType];
-    if ( !klass ) {
-        KLog(@"Failed to find a property editor class for type %@", encodeDirectiveType);
-        return nil;
-    }
+    // Dispatch to Class based on input format
+    Class cls = [self lookupClassForPropertyType:encodeDirectiveType];
+
+    // Alloc
+    UIViewController<ValueEditor> *instance = class_createInstance(cls, 0);
     
-    // alloc
-    UIViewController<PropertyEditorImplementation> *instance = class_createInstance(klass, 0);
-    
-    // init
+    // Init
     [instance init];
     
     return [instance autorelease];
@@ -55,7 +56,29 @@ static NSMutableDictionary *ClassHandlerMap = nil;
 
 + (BOOL)canEdit:(NSString *)encodeDirectiveType
 {
-    return [ClassHandlerMap objectForKey:encodeDirectiveType] != nil;
+    return [self lookupClassForPropertyType:encodeDirectiveType] != nil;
+}
+
++ (Class)lookupClassForPropertyType:(NSString *)encodeDirectiveType
+{
+    Class cls = [ClassHandlerMap objectForKey:encodeDirectiveType];
+    if (!cls) {
+        NSString *fallback = [self fallbackTypeForPropertyType:encodeDirectiveType];
+        if (fallback) {
+            return [self lookupClassForPropertyType:fallback];
+        } else {
+            KLog(@"Failed to find an editor class for type %@, even after trying to use fallback type %@", encodeDirectiveType, fallback);
+            return nil;
+        }
+    }
+    
+    return cls;
+}
+
++ (NSString *)fallbackTypeForPropertyType:(NSString *)encodeDirectiveType
+{
+     // If the property is an 'id', then fallback to the generic 'id' handler.
+    return [encodeDirectiveType hasPrefix:@"T@"] ? @"T@" : nil;
 }
 
 @end

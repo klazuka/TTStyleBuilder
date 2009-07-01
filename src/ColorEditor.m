@@ -18,13 +18,6 @@
     return @"T@\"UIColor\"";
 }
 
-/*
-- (void)viewWillDisappear:(BOOL)animated
-{
-
-}
- */
-
 - (void)sliderValueChanged:(id)sender
 {
     UIColor *color = [UIColor colorWithHue:[hueSlider value] 

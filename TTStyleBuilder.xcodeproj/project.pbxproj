@@ -19,7 +19,6 @@
 		536E0B100FEAB15500C159E7 /* StyleStructureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B0F0FEAB15500C159E7 /* StyleStructureController.m */; };
 		536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B120FEAB16500C159E7 /* PropertyField.m */; };
 		536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */; };
-		536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B160FEAB16500C159E7 /* StyleConfigController.m */; };
 		536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B2E0FEAB20A00C159E7 /* StylePreview.m */; };
 		536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0B310FEAB23800C159E7 /* StyleStructureDataSource.m */; };
 		536E0BAC0FEAB9BB00C159E7 /* AddStyleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E0BAB0FEAB9BB00C159E7 /* AddStyleController.m */; };
@@ -30,11 +29,12 @@
 		5398F9F50FE5060A0041DFF8 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5398F9F40FE5060A0041DFF8 /* Three20.bundle */; };
 		5398FA090FE506180041DFF8 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398F9F30FE505ED0041DFF8 /* libThree20.a */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
-		53A59F9D0FF177ED00C82D9A /* ObjectEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59F9B0FF177ED00C82D9A /* ObjectEditorController.m */; };
 		53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59FB90FF17B0F00C82D9A /* SettingsController.m */; };
 		53D972590FF5541700E62B9A /* ColorEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972540FF5541700E62B9A /* ColorEditor.m */; };
 		53D9725A0FF5541700E62B9A /* FloatEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972560FF5541700E62B9A /* FloatEditor.m */; };
 		53D9725B0FF5541700E62B9A /* IntEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972580FF5541700E62B9A /* IntEditor.m */; };
+		53D9790E0FFB98B700E62B9A /* ObjectEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9790B0FFB98B700E62B9A /* ObjectEditor.m */; };
+		53D9790F0FFB98B700E62B9A /* StyleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9790D0FFB98B700E62B9A /* StyleEditor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,8 +79,6 @@
 		536E0B120FEAB16500C159E7 /* PropertyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyField.m; sourceTree = "<group>"; };
 		536E0B130FEAB16500C159E7 /* PropertyFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyFieldCell.h; sourceTree = "<group>"; };
 		536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyFieldCell.m; sourceTree = "<group>"; };
-		536E0B150FEAB16500C159E7 /* StyleConfigController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleConfigController.h; sourceTree = "<group>"; };
-		536E0B160FEAB16500C159E7 /* StyleConfigController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleConfigController.m; sourceTree = "<group>"; };
 		536E0B2D0FEAB20A00C159E7 /* StylePreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StylePreview.h; sourceTree = "<group>"; };
 		536E0B2E0FEAB20A00C159E7 /* StylePreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StylePreview.m; sourceTree = "<group>"; };
 		536E0B300FEAB23800C159E7 /* StyleStructureDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleStructureDataSource.h; sourceTree = "<group>"; };
@@ -98,8 +96,6 @@
 		5398F9EB0FE505ED0041DFF8 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		5398F9F40FE5060A0041DFF8 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		53A59F9B0FF177ED00C82D9A /* ObjectEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectEditorController.m; sourceTree = "<group>"; };
-		53A59F9C0FF177ED00C82D9A /* ObjectEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectEditorController.h; sourceTree = "<group>"; };
 		53A59FB80FF17B0F00C82D9A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		53A59FB90FF17B0F00C82D9A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		53D972530FF5541700E62B9A /* ColorEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditor.h; sourceTree = "<group>"; };
@@ -108,6 +104,10 @@
 		53D972560FF5541700E62B9A /* FloatEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatEditor.m; sourceTree = "<group>"; };
 		53D972570FF5541700E62B9A /* IntEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntEditor.h; sourceTree = "<group>"; };
 		53D972580FF5541700E62B9A /* IntEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntEditor.m; sourceTree = "<group>"; };
+		53D9790A0FFB98B700E62B9A /* ObjectEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectEditor.h; sourceTree = "<group>"; };
+		53D9790B0FFB98B700E62B9A /* ObjectEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectEditor.m; sourceTree = "<group>"; };
+		53D9790C0FFB98B700E62B9A /* StyleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleEditor.h; sourceTree = "<group>"; };
+		53D9790D0FFB98B700E62B9A /* StyleEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleEditor.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TTStyleBuilder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTStyleBuilder-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,33 +217,6 @@
 			name = .h;
 			sourceTree = "<group>";
 		};
-		536E028A0FE80F2A00C159E7 /* Editors */ = {
-			isa = PBXGroup;
-			children = (
-				536E03340FE8307600C159E7 /* .h */,
-				536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */,
-				53D972540FF5541700E62B9A /* ColorEditor.m */,
-				53D972560FF5541700E62B9A /* FloatEditor.m */,
-				53D972580FF5541700E62B9A /* IntEditor.m */,
-				536E0CC00FEB0ED600C159E7 /* CGSizeEditor.m */,
-				536E0CDF0FEB111800C159E7 /* UIEdgeInsetsEditor.m */,
-			);
-			name = Editors;
-			sourceTree = "<group>";
-		};
-		536E03340FE8307600C159E7 /* .h */ = {
-			isa = PBXGroup;
-			children = (
-				536E0B070FEAB13500C159E7 /* PropertyEditorSystem.h */,
-				53D972530FF5541700E62B9A /* ColorEditor.h */,
-				53D972550FF5541700E62B9A /* FloatEditor.h */,
-				53D972570FF5541700E62B9A /* IntEditor.h */,
-				536E0CBF0FEB0ED600C159E7 /* CGSizeEditor.h */,
-				536E0CDE0FEB111800C159E7 /* UIEdgeInsetsEditor.h */,
-			);
-			name = .h;
-			sourceTree = "<group>";
-		};
 		536E0AEC0FEAAF8500C159E7 /* Style Structure */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,12 +233,17 @@
 		536E0AED0FEAAF8D00C159E7 /* Object Editor */ = {
 			isa = PBXGroup;
 			children = (
-				536E028A0FE80F2A00C159E7 /* Editors */,
 				536E0AEE0FEAAFB400C159E7 /* .h */,
+				536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */,
+				53D972540FF5541700E62B9A /* ColorEditor.m */,
+				53D972560FF5541700E62B9A /* FloatEditor.m */,
+				53D972580FF5541700E62B9A /* IntEditor.m */,
+				536E0CC00FEB0ED600C159E7 /* CGSizeEditor.m */,
+				536E0CDF0FEB111800C159E7 /* UIEdgeInsetsEditor.m */,
+				53D9790B0FFB98B700E62B9A /* ObjectEditor.m */,
+				53D9790D0FFB98B700E62B9A /* StyleEditor.m */,
 				536E0B120FEAB16500C159E7 /* PropertyField.m */,
 				536E0B140FEAB16500C159E7 /* PropertyFieldCell.m */,
-				53A59F9B0FF177ED00C82D9A /* ObjectEditorController.m */,
-				536E0B160FEAB16500C159E7 /* StyleConfigController.m */,
 			);
 			name = "Object Editor";
 			path = src;
@@ -274,10 +252,16 @@
 		536E0AEE0FEAAFB400C159E7 /* .h */ = {
 			isa = PBXGroup;
 			children = (
+				536E0B070FEAB13500C159E7 /* PropertyEditorSystem.h */,
+				53D972530FF5541700E62B9A /* ColorEditor.h */,
+				53D972550FF5541700E62B9A /* FloatEditor.h */,
+				53D972570FF5541700E62B9A /* IntEditor.h */,
+				536E0CBF0FEB0ED600C159E7 /* CGSizeEditor.h */,
+				536E0CDE0FEB111800C159E7 /* UIEdgeInsetsEditor.h */,
+				53D9790A0FFB98B700E62B9A /* ObjectEditor.h */,
+				53D9790C0FFB98B700E62B9A /* StyleEditor.h */,
 				536E0B110FEAB16500C159E7 /* PropertyField.h */,
 				536E0B130FEAB16500C159E7 /* PropertyFieldCell.h */,
-				53A59F9C0FF177ED00C82D9A /* ObjectEditorController.h */,
-				536E0B150FEAB16500C159E7 /* StyleConfigController.h */,
 			);
 			name = .h;
 			sourceTree = "<group>";
@@ -396,7 +380,6 @@
 				536E0B100FEAB15500C159E7 /* StyleStructureController.m in Sources */,
 				536E0B170FEAB16500C159E7 /* PropertyField.m in Sources */,
 				536E0B180FEAB16500C159E7 /* PropertyFieldCell.m in Sources */,
-				536E0B190FEAB16500C159E7 /* StyleConfigController.m in Sources */,
 				536E0B2F0FEAB20A00C159E7 /* StylePreview.m in Sources */,
 				536E0B320FEAB23800C159E7 /* StyleStructureDataSource.m in Sources */,
 				536E0BAC0FEAB9BB00C159E7 /* AddStyleController.m in Sources */,
@@ -405,11 +388,12 @@
 				533A1D790FEB28A000BECCA4 /* MainMenuController.m in Sources */,
 				5370049F0FEB2F7B00C1A0D0 /* StyleSheetController.m in Sources */,
 				5370056F0FEBFE2D00C1A0D0 /* RuntimeSupport.m in Sources */,
-				53A59F9D0FF177ED00C82D9A /* ObjectEditorController.m in Sources */,
 				53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */,
 				53D972590FF5541700E62B9A /* ColorEditor.m in Sources */,
 				53D9725A0FF5541700E62B9A /* FloatEditor.m in Sources */,
 				53D9725B0FF5541700E62B9A /* IntEditor.m in Sources */,
+				53D9790E0FFB98B700E62B9A /* ObjectEditor.m in Sources */,
+				53D9790F0FFB98B700E62B9A /* StyleEditor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

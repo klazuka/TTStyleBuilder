@@ -8,9 +8,9 @@
 
 #import "PropertyEditorSystem.h"
 
-@interface ColorEditor : UIViewController <PropertyEditorImplementation>
+@interface ColorEditor : UIViewController <ValueEditor>
 {
-    // PropertyEditorImplementation
+    // ValueEditor
     id object;
     NSString *propertyName;
     

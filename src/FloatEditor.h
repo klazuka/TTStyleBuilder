@@ -8,9 +8,9 @@
 
 #import "PropertyEditorSystem.h"
 
-@interface FloatEditor : TTTableViewController <PropertyEditorImplementation>
+@interface FloatEditor : TTTableViewController <ValueEditor>
 {
-    // PropertyEditorImplementation
+    // ValueEditor
     id object;
     NSString *propertyName;
     

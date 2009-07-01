@@ -1,15 +1,15 @@
 //
-//  ObjectEditorController.h
+//  ObjectEditor.h
 //  TTStyleBuilder
 //
 //  Created by Keith Lazuka on 6/15/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "TTStyleBuilderGlobal.h"
+#import "PropertyEditorSystem.h"
 
 /*
- *      ObjectEditorController
+ *      ObjectEditor
  *
  *  Uses a tableview to display each Obj-C 2.0 property
  *  defined on the object that it is told to edit.
@@ -31,16 +31,15 @@
  *
  *  TODO: design a mechanism for automatically wrapping
  *        instances of this class in a UINavigationController
- *        if being used in a model context (e.g. the way
+ *        if being used in a modal context (e.g. the way
  *        that I use SettingsController in this app).
  *
  */
 
-@interface ObjectEditorController : TTTableViewController
+@interface ObjectEditor : TTTableViewController <ValueEditor>
 {
+    // ValueEditor
     id object;
 }
-
-@property (nonatomic, retain) id object;    // the object to be edited
 
 @end

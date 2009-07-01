@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "StyleStructureController.h"
-#import "StyleConfigController.h"
+#import "StyleEditor.h"
 #import "MainMenuController.h"
 
 @implementation AppDelegate
@@ -37,7 +37,7 @@
     
     // define the view controllers for TTStyle objects
     [nav addView:@"style_structure" controller:[StyleStructureController class]];
-    [nav addView:@"style_config" controller:[StyleConfigController class]];
+    [nav addView:@"style_config" controller:[StyleEditor class]];
     
     // create the window and show everything
     window = [[UIWindow alloc] initWithFrame:TTApplicationFrame()];
