@@ -10,6 +10,7 @@
 #import "PropertyField.h"
 #import "PropertyFieldCell.h"
 #import <objc/runtime.h>
+#import "NewObjectPickerController.h"
 
 @interface ObjectEditorDataSource : TTListDataSource {} @end
 @implementation ObjectEditorDataSource
@@ -26,6 +27,29 @@
 @implementation ObjectEditor
 
 @synthesize object;
+
+- (id)init
+{
+    if ((self = [super init])) {
+        // This is an ugly hack, but right now I don't have an easy way for the PropertyFieldCell
+        // to directly talk to the ObjectEditor controller.
+        // The PropertyFieldCell will pass along its reference to the PropertyField object 
+        // via the NSNotification object's payload. This PropertyField object should, in turn,
+        // be used as the delegate to the NewObjectPickerController since it has all of the
+        // data that is needed to replace the old property value when the user finally
+        // picks a new value.
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newValueButtonTapped:) name:kNewObjectValueButtonTappedNotification object:nil];
+    }
+    return self;
+}
+
+- (void)newValueButtonTapped:(NSNotification *)notification
+{
+    PropertyField *propertyField = [notification object];
+    NewObjectPickerController *controller = [[[NewObjectPickerController alloc] initWithBaseClass:[propertyField propertyClass]] autorelease];
+    controller.delegate = propertyField;
+    [self.navigationController pushViewController:controller animated:YES];
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark ValueEditor protocol
@@ -105,6 +129,7 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [object release];
     [super dealloc];
 }

@@ -1,41 +1,45 @@
 //
-//  AddStyleController.m
+//  NewObjectPickerController.m
 //  TTStyleBuilder
 //
 //  Created by Keith Lazuka on 6/18/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "AddStyleController.h"
+#import "NewObjectPickerController.h"
 #import "RuntimeSupport.h"
 #import "objc/runtime.h"
 
 static SEL PrototypeSelector;
-static NSMutableSet *StylesWithPrototypes;
 
-@implementation AddStyleController
+@implementation NewObjectPickerController
 
 @synthesize delegate;
 
 + (void)initialize
 {
-    if ( self != [AddStyleController class] )
-        return;
-    
     PrototypeSelector = @selector(prototypicalInstance);
-    StylesWithPrototypes = [[NSMutableSet alloc] init];
-    
-    // find all sub-classes of TTStyle that implement the prototypicalInstance selector.
-    // then add that class name to the set of all styles which can provide a prototypical instance.
-    for (Class klass in SubclassEnumeratorForClass([TTStyle class])) {
-        NSString *klassName = [NSString stringWithCString:class_getName(klass) encoding:NSUTF8StringEncoding];
-        if ([klass respondsToSelector:PrototypeSelector]) {
-            [StylesWithPrototypes addObject:klassName];
-            KLog(@"Yay... %@ can provide a prototypical style instance", klassName);
-        } else {
-            KLog(@"Found %@ but it does not implement %@", klassName, NSStringFromSelector(PrototypeSelector));
+}
+
+- (id)initWithBaseClass:(Class)baseClass
+{
+    if ((self = [super init])) {
+        subclassNamesWithPrototypes = [[NSMutableSet alloc] init];
+        
+        // Find all sub-classes of |baseClass| that implement the prototypicalInstance selector.
+        // then add that class name to the set of all subclasses which can provide a prototypical instance.
+        for (Class cls in SubclassEnumeratorForClass(baseClass)) {
+            NSString *klassName = [NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
+            if ([cls respondsToSelector:PrototypeSelector]) {
+                [subclassNamesWithPrototypes addObject:klassName];
+                KLog(@"Yay... %@ can provide a prototypical instance", klassName);
+            } else {
+                KLog(@"Found %@ but it does not implement %@", klassName, NSStringFromSelector(PrototypeSelector));
+            }
         }
     }
+    
+    return self;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +60,7 @@ static NSMutableSet *StylesWithPrototypes;
 {
     NSMutableArray *items = [NSMutableArray array];
     
-    for (NSString *styleClassName in StylesWithPrototypes) 
+    for (NSString *styleClassName in subclassNamesWithPrototypes) 
         [items addObject:[[[TTTableField alloc] initWithText:styleClassName] autorelease]];
     
     return [TTListDataSource dataSourceWithItems:items];
@@ -64,12 +68,20 @@ static NSMutableSet *StylesWithPrototypes;
 
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
 {
-    NSAssert(self.delegate, @"AddStyleController requires the delegate property to be non-nil in order to pick a new style.");
+    NSAssert(self.delegate, @"NewObjectPickerController requires the delegate property to be non-nil in order to pick a new object.");
 
     NSString *klassName = [object text];
     Class klass = objc_lookUpClass([klassName cStringUsingEncoding:NSUTF8StringEncoding]);
-    [self.delegate didPickNewStyleForAppend:[klass performSelector:PrototypeSelector]];
+    [self.delegate didPickNewObject:[klass performSelector:PrototypeSelector]];
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark -
+- (void)dealloc
+{
+    [subclassNamesWithPrototypes release];
+    [super dealloc];
+}
+
 
 @end

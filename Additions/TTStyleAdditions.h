@@ -8,19 +8,23 @@
 
 #import "Three20/Three20.h"
 
-//
-//  Convenience methods for working with TTStyle's Objective-C runtime state.
-//
+/*
+ *  Convenience methods for working with TTStyle's Objective-C runtime state.
+ */
 @interface TTStyle (TTStyleBuilderAdditions)
 
 - (NSArray *)pipeline;          // the rendering pipeline from this style onwards, flattened into an array of TTStyles.
 
 @end
 
+/*
+ *  Provide an example object for each TTStyle subclass.
+ *  This makes it easy for the TTStyleBuilder tool to instantiate
+ *  new TTStyle objects at runtime.
+ */
 @interface TTSolidFillStyle (TTStyleBuilderAdditions)
 + (TTStyle *)prototypicalInstance;
 @end
-
 
 @interface TTMaskStyle (TTStyleBuilderAdditions)
 + (TTStyle *)prototypicalInstance;
@@ -77,5 +81,3 @@
 @interface TTShadowStyle (TTStyleBuilderAdditions)
 + (TTStyle *)prototypicalInstance;
 @end
-
-

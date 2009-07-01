@@ -16,11 +16,13 @@
 
 // ---- class extensions ----
 #import "TTStyleAdditions.h"
+#import "TTShapeAdditions.h"
 #import "NSObjectAdditions.h"
 
 
 // ---- notifications ----
 #define kRefreshStylePreviewNotification @"Refresh Style Preview Notification"
+#define kNewObjectValueButtonTappedNotification @"New Object Value Button Notification"
 
 
 // ---- macros -----

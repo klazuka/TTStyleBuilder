@@ -8,8 +8,9 @@
 
 #import "TTStyleBuilderGlobal.h"
 #import <objc/runtime.h>
+#import "NewObjectPickerController.h"
 
-@interface PropertyField : TTTableField
+@interface PropertyField : TTTableField <NewObjectPickerDelegate>
 {
     id object;
     NSString *propertyName;
@@ -23,5 +24,6 @@
 - (id)initWithObject:(id)anObject property:(objc_property_t)aProperty url:(NSString *)url;  // designated initializer
 
 - (NSString *)valueDescription;
+- (Class)propertyClass;
 
 @end

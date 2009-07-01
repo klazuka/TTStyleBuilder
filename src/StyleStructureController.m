@@ -9,7 +9,7 @@
 #import "StyleStructureController.h"
 #import "StylePreview.h"
 #import "StyleStructureDataSource.h"
-#import "AddStyleController.h"
+#import "NewObjectPickerController.h"
 #import "SettingsController.h"
 
 @implementation StyleStructureController
@@ -33,7 +33,7 @@
 
 - (void)displayAddStylePicker
 {
-    AddStyleController *controller = [[[AddStyleController alloc] init] autorelease];
+    NewObjectPickerController *controller = [[[NewObjectPickerController alloc] initWithBaseClass:[TTStyle class]] autorelease];
     controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -67,11 +67,12 @@
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark AddStyleDelegate
+#pragma mark NewObjectPickerDelegate
 
-- (void)didPickNewStyleForAppend:(TTStyle *)style
+- (void)didPickNewObject:(id)newObject
 {
-    [self addStyle:style];
+    NSAssert1([newObject isKindOfClass:[TTStyle class]], @"expected new object to be of kind TTStyle, but its class is actually %@", [newObject className]);
+    [self addStyle:newObject];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

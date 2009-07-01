@@ -25,7 +25,6 @@
                                 brightness:[brightnessSlider value] 
                                      alpha:1.f];
     
-    NSLog(@"sliderValueChanged: new raw Three20 color hue=%.2f sat=%.2f bri=%.2f", [color hue], [color saturation], [color value]);
     [self.object setValue:color forKey:self.propertyName];
     
     [colorSwatchView setBackgroundColor:color];
@@ -106,8 +105,6 @@
 - (void)viewDidLoad
 {
     UIColor *color = [self.object valueForKey:self.propertyName];
-    NSLog(@"viewDidLoad: raw Three20 color hue=%.2f sat=%.2f bri=%.2f", [color hue], [color saturation], [color value]);
-    
     [hueSlider setValue:([color hue] / 360.f)];
     [saturationSlider setValue:[color saturation]];
     [brightnessSlider setValue:[color value]];

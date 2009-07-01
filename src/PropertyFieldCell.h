@@ -10,7 +10,8 @@
 
 @interface PropertyFieldCell : TTTextTableFieldCell
 {
-    UILabel *valueLabel;    // displays the blue value part near right edge of cell
+    UILabel *valueLabel;        // Displays the blue value part near right edge of cell
+    UIButton *newValueButton;   // Tap this button to bring up the picker to replace this property's value with a new value.
 }
 
 @end

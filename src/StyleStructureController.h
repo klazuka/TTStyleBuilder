@@ -7,9 +7,9 @@
 //
 
 #import "TTStyleBuilderGlobal.h"
-#import "AddStyleController.h"  // needed for the AddStyleDelegate protocol
+#import "NewObjectPickerController.h"  // needed for the NewObjectPickerDelegate protocol
 
-@interface StyleStructureController : TTTableViewController <AddStyleDelegate>
+@interface StyleStructureController : TTTableViewController <NewObjectPickerDelegate>
 {
     TTStyle *rootStyle;
     TTView *previewView;

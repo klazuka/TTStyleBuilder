@@ -33,6 +33,33 @@
     return [[object valueForKey:propertyName] description];
 }
 
+- (Class)propertyClass
+{
+    NSAssert([propertyType hasPrefix:@"T@"], @"the propertyClass method requires that the underlying property type is an 'id'");
+    
+    if ([propertyType isEqualToString:@"T@"]) {
+        // What I'm about to do here isn't strictly correct since the dynamic type 'id' 
+        // imposes no restraints on the object's root class, but it will work for our purposes.
+        NSLog(@"WARNING: asked to determine the Class of a property with type 'id'. Returning [NSObject class] as the result, even though it is not strictly correct.");
+        return [NSObject class];
+    }
+    
+    NSString *className = [propertyType substringWithRange:NSMakeRange(3, [propertyType length] - 4)]; // drop the 'T@"' from the beginning and the trailing '"' at the end.
+    return objc_lookUpClass([className cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+
+// ------------------------------------------
+#pragma mark NewObjectPickerDelegate protocol
+
+- (void)didPickNewObject:(id)newObject
+{
+    // Take the |newObject| that the user picked and 
+    // replace the old property value with |newObject|.
+    [object setValue:newObject forKey:propertyName];
+}
+
+#pragma mark - 
+
 - (void)dealloc
 {
     [object release];
