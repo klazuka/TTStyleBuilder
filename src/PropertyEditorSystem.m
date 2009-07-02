@@ -10,7 +10,7 @@
 #import "RuntimeSupport.h"
 
 @interface PropertyEditorSystem ()
-+ (Class)lookupClassForPropertyType:(NSString *)encodeDirectiveType;
++ (Class)lookupEditorClassForPropertyType:(NSString *)encodeDirectiveType;
 + (NSString *)fallbackTypeForPropertyType:(NSString *)encodeDirectiveType;
 @end
 
@@ -43,7 +43,7 @@ static NSMutableDictionary *ClassHandlerMap = nil;
 + (UIViewController<ValueEditor> *)editorForPropertyType:(NSString *)encodeDirectiveType
 {
     // Dispatch to Class based on input format
-    Class cls = [self lookupClassForPropertyType:encodeDirectiveType];
+    Class cls = [self lookupEditorClassForPropertyType:encodeDirectiveType];
 
     // Alloc
     UIViewController<ValueEditor> *instance = class_createInstance(cls, 0);
@@ -56,29 +56,32 @@ static NSMutableDictionary *ClassHandlerMap = nil;
 
 + (BOOL)canEdit:(NSString *)encodeDirectiveType
 {
-    return [self lookupClassForPropertyType:encodeDirectiveType] != nil;
+    return [self lookupEditorClassForPropertyType:encodeDirectiveType] != nil;
 }
 
-+ (Class)lookupClassForPropertyType:(NSString *)encodeDirectiveType
++ (Class)lookupEditorClassForPropertyType:(NSString *)encodeDirectiveType
 {
+    // typical case: lookup and find a plugin that explicitly handles this type.
     Class cls = [ClassHandlerMap objectForKey:encodeDirectiveType];
-    if (!cls) {
-        NSString *fallback = [self fallbackTypeForPropertyType:encodeDirectiveType];
-        if (fallback) {
-            return [self lookupClassForPropertyType:fallback];
-        } else {
-            KLog(@"Failed to find an editor class for type %@, even after trying to use fallback type %@", encodeDirectiveType, fallback);
-            return nil;
-        }
+    if (cls)
+        return cls;
+
+    // a-typical case: attempt to find a fallback plugin
+    NSString *fallback = [self fallbackTypeForPropertyType:encodeDirectiveType];
+    if (fallback) {
+        return [self lookupEditorClassForPropertyType:fallback];
+    } else {
+        KLog(@"Failed to find an editor class for type %@, even after trying to use fallback type %@", encodeDirectiveType, fallback);
+        return nil;
     }
-    
-    return cls;
 }
 
 + (NSString *)fallbackTypeForPropertyType:(NSString *)encodeDirectiveType
 {
      // If the property is an 'id', then fallback to the generic 'id' handler.
-    return [encodeDirectiveType hasPrefix:@"T@"] ? @"T@" : nil;
+    return IsIdType(encodeDirectiveType) 
+            ? @"T@"
+            : nil;
 }
 
 @end

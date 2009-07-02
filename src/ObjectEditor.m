@@ -9,7 +9,7 @@
 #import "ObjectEditor.h"
 #import "PropertyField.h"
 #import "PropertyFieldCell.h"
-#import <objc/runtime.h>
+#import "RuntimeSupport.h"
 #import "NewObjectPickerController.h"
 
 @interface ObjectEditorDataSource : TTListDataSource {} @end
@@ -46,7 +46,9 @@
 - (void)newValueButtonTapped:(NSNotification *)notification
 {
     PropertyField *propertyField = [notification object];
-    NewObjectPickerController *controller = [[[NewObjectPickerController alloc] initWithBaseClass:[propertyField propertyClass]] autorelease];
+    Class baseClass = ClassFromPropertyType([propertyField propertyType]);
+    NSAssert1(baseClass, @"Failed to find a Class for propertyType %@", [propertyField propertyType]);
+    NewObjectPickerController *controller = [[[NewObjectPickerController alloc] initWithBaseClass:baseClass] autorelease];
     controller.delegate = propertyField;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -90,13 +92,34 @@
 {
     NSMutableArray *items = [NSMutableArray array];
     
+    // TODO the property list should also include inherited properties for superclasses.
+    //      For instance, right now if you try to edit a TTInnerShadowStyle, it will say
+    //      that there are no editable properties, but it actually inherits 3 properties
+    //      from TTShadowStyle.
     unsigned int numProperties = -1;
     objc_property_t *properties = class_copyPropertyList([object class], &numProperties);
     
     for (unsigned int i = 0; i < numProperties; i++) {
         objc_property_t prop = properties[i];
+        // --- ugly hack between these lines ---------
+        // There are some types, like CGImageRef, that KVC cannot handle
+        // For the most common non-id types, KVC will wrap the value
+        // in an NSValue object.
+        //
+        // The right way to do this would be to skip every property
+        // whose type is not an 'id' or not on the white-list of
+        // automatically wrapped types (like int, float, CGSize, etc.)
+        //
+        // Until I fix this for real, I'll just manually skip the types
+        // that I encounter problems with.
+        if (strstr(property_getName(prop), "CGImage"))  // breaks ObjectEditor on a UIImage
+            continue;
+        // -------------------------------------------
         [items addObject:[[[PropertyField alloc] initWithObject:object property:prop url:nil] autorelease]];
     }
+    
+    if ([items count] == 0)
+        [self alert:@"Sorry, there are no editable properties on this object"];
     
     free(properties);
     return [ObjectEditorDataSource dataSourceWithItems:items];

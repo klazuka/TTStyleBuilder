@@ -32,7 +32,6 @@ static SEL PrototypeSelector;
             NSString *klassName = [NSString stringWithCString:class_getName(cls) encoding:NSUTF8StringEncoding];
             if ([cls respondsToSelector:PrototypeSelector]) {
                 [subclassNamesWithPrototypes addObject:klassName];
-                KLog(@"Yay... %@ can provide a prototypical instance", klassName);
             } else {
                 KLog(@"Found %@ but it does not implement %@", klassName, NSStringFromSelector(PrototypeSelector));
             }

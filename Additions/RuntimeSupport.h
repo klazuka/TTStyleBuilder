@@ -50,3 +50,30 @@ NSEnumerator *SubclassEnumeratorForClass(Class klass);
  *      NSLog(@"%s conforms to protocol %s", class_getName(cls), protocolName);
  */
 NSEnumerator *ImplementationsForProtocol(Protocol *protocol);
+
+/*
+ *      IsIdType()
+ *
+ *  Returns YES if |encodeDirectiveType| is of the
+ *  general format that describes an object of
+ *  type 'id' (which is to say, struct objc_object*).
+ *
+ */
+BOOL IsIdType(NSString *encodeDirectiveType);
+
+/*
+ *      ClassFromPropertyType()
+ *
+ *  Uses |encodeDirectiveType| to lookup the corresponding 
+ *  Class data structure in the runtime.
+ */
+Class ClassFromPropertyType(NSString *encodeDirectiveType);
+
+
+
+
+
+
+
+
+
