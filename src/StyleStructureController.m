@@ -31,6 +31,19 @@
     return [self initForRootStyle:TTSTYLE(tabBar)];
 }
 
+- (void)redrawStylePreview
+{
+    [previewView setNeedsDisplay];
+}
+
+- (void)displaySettingsScreen
+{
+    // display settings for the "live preview" area
+    SettingsController *controller = [[[SettingsController alloc] init] autorelease];
+    [controller showObject:previewView inView:nil withState:nil];
+    [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:controller] autorelease] animated:YES];
+}
+
 - (void)displayAddStylePicker
 {
     NewObjectPickerController *controller = [[[NewObjectPickerController alloc] initWithBaseClass:[TTStyle class]] autorelease];
@@ -38,7 +51,7 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)addStyle:(TTStyle *)style
+- (void)appendStyleToPipeline:(TTStyle *)style
 {
     NSString *name = [style className];
     NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
@@ -53,26 +66,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
-- (void)redrawStylePreview
-{
-    [previewView setNeedsDisplay];
-}
-
-- (void)showSettings
-{
-    // display settings for the "live preview" area
-    SettingsController *controller = [[[SettingsController alloc] init] autorelease];
-    [controller showObject:previewView inView:nil withState:nil];
-    [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:controller] autorelease] animated:YES];
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NewObjectPickerDelegate
 
 - (void)didPickNewObject:(id)newObject
 {
     NSAssert1([newObject isKindOfClass:[TTStyle class]], @"expected new object to be of kind TTStyle, but its class is actually %@", [newObject className]);
-    [self addStyle:newObject];
+    [self appendStyleToPipeline:newObject];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@
     
     // info button to open app settings
     UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
-    [infoButton addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+    [infoButton addTarget:self action:@selector(displaySettingsScreen) forControlEvents:UIControlEventTouchUpInside];
     [infoButton setFrame:UIEdgeInsetsInsetRect(self.view.frame, UIEdgeInsetsMake(self.view.height - 40.f, self.view.width - 40.f, 0.f, 0.f))];
     [self.view addSubview:infoButton];
 }
