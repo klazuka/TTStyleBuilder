@@ -41,15 +41,15 @@
 @end
 
 @implementation TTSolidBorderStyle (TTStyleBuilderAdditions)
-+ (TTStyle *)prototypicalInstance { return [TTSolidBorderStyle styleWithColor:[UIColor redColor] width:2.f next:nil]; }
++ (TTStyle *)prototypicalInstance { return [TTSolidBorderStyle styleWithColor:[UIColor blackColor] width:6.f next:nil]; }
 @end
 
 @implementation TTTextStyle (TTStyleBuilderAdditions)
-+ (TTStyle *)prototypicalInstance { return [TTTextStyle styleWithColor:[UIColor orangeColor] next:nil]; }
++ (TTStyle *)prototypicalInstance { return [TTTextStyle styleWithColor:[UIColor blackColor] next:nil]; }
 @end
 
 @implementation TTInsetStyle (TTStyleBuilderAdditions)
-+ (TTStyle *)prototypicalInstance { return [TTInsetStyle styleWithInset:UIEdgeInsetsMake(4.f, 10.f, 4.f, 10.f) next:nil]; }
++ (TTStyle *)prototypicalInstance { return [TTInsetStyle styleWithInset:UIEdgeInsetsMake(6.f, 10.f, 6.f, 10.f) next:nil]; }
 @end
 
 @implementation TTLinearGradientFillStyle (TTStyleBuilderAdditions)
@@ -89,7 +89,7 @@
 @end
 
 @implementation TTShadowStyle (TTStyleBuilderAdditions)
-+ (TTStyle *)prototypicalInstance { return [TTShadowStyle styleWithColor:[UIColor blackColor] blur:2.f offset:CGSizeMake(0.f, 1.f) next:nil]; }
++ (TTStyle *)prototypicalInstance { return [TTShadowStyle styleWithColor:[UIColor blackColor] blur:4.f offset:CGSizeMake(2.f, 4.f) next:nil]; }
 @end
 
 
