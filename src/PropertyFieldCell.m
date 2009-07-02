@@ -45,24 +45,26 @@
 {
     if (_field != object) {
         [super setObject:object];
+        
+        if (!object)
+            return;
         [valueLabel setText:[object valueDescription]];
         
         // size the blue "value" label such that it does not occlude the property name
         NSString *propertyName = [object text];
-        CGSize labelSize = [propertyName sizeWithFont:_label.font];
+        CGSize propertyNameSize = [propertyName sizeWithFont:_label.font];
         CGFloat padLeft = 65.f;
         CGFloat padRight = padLeft + 30.f;
         CGFloat cellWidth = 320.f;  // TODO get this from somewhere else
         CGFloat cellHeight = 44.f;  // TODO get this from somewhere else
-
+        
         [valueLabel setFrame:
-            CGRectMake(
-                       _label.left + labelSize.width + padLeft, 
-                       _label.top, 
-                       cellWidth - labelSize.width - padRight, 
-                       cellHeight)];
-        
-        
+         CGRectMake(
+                    propertyNameSize.width + padLeft, 
+                    0.f, 
+                    cellWidth - propertyNameSize.width - padRight, 
+                    cellHeight)];
+
         // Conditionally hide/show the new value button based on the property type.
         // TODO this is an ugly hack. In the initialization of my TTStyle and TTShape categories
         // I should register the base class with some global registry that this class than

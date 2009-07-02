@@ -36,7 +36,6 @@ static NSMutableDictionary *ClassHandlerMap = nil;
     for (Class cls in ImplementationsForProtocol(objc_getProtocol(protocolName))) {
         NSString *type = [cls typeHandler];
         [ClassHandlerMap setObject:cls forKey:type];
-        NSLog(@"Registered %s as an editor plugin for type %@", class_getName(cls), type);
     }
 }
 
