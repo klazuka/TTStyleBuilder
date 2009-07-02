@@ -17,28 +17,37 @@
 - (id)initForRootStyle:(TTStyle *)style
 {
     if ((self = [super init])) {
-        rootStyle = [style retain];
+        headStyle = [style retain];
         self.title = @"Style Builder";
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayAddStylePicker)] autorelease];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(redrawStylePreview) name:kRefreshStylePreviewNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLiveStylePreview) name:kRefreshStylePreviewNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stylePipelineUpdated:) name:kStylePipelineUpdatedNotification object:nil];
     }
     return self;
 }
 
 - (id)init
 {
-    // choose an arbitrary style from the system as an example.
+    // Choose an arbitrary style from the system as an example.
     return [self initForRootStyle:TTSTYLE(tabBar)];
 }
 
-- (void)redrawStylePreview
+- (void)refreshLiveStylePreview
 {
     [previewView setNeedsDisplay];
 }
 
+- (void)stylePipelineUpdated:(NSNotification *)notification
+{
+    [headStyle release];
+    headStyle = [[notification object] retain];
+    previewView.style = headStyle;
+    [self refreshLiveStylePreview];
+}
+
 - (void)displaySettingsScreen
 {
-    // display settings for the "live preview" area
+    // Display settings for the "live preview" area
     SettingsController *controller = [[[SettingsController alloc] init] autorelease];
     [controller showObject:previewView inView:nil withState:nil];
     [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:controller] autorelease] animated:YES];
@@ -53,17 +62,29 @@
 
 - (void)appendStyleToPipeline:(TTStyle *)style
 {
+    NSAssert(headStyle, @"headStyle cannot be nil (at least until I add the capability to start with a blank slate)");
+    NSAssert(style, @"style for appending cannot be nil");
+    
     NSString *name = [style className];
     NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
     
-    // update the table view
+    // Update the table view
     [((TTListDataSource*)self.dataSource).items addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
     [self.tableView reloadData];
     
-    // add the new style to the end of the rendering pipeline
-    NSArray *pipeline = [rootStyle pipeline];
+    // Add the new style to the end of the rendering pipeline
+    NSArray *pipeline = [headStyle pipeline];
     [[pipeline lastObject] setNext:style];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
+    
+    // Debugging support
+    KLog(@" ++++ [Appended %@ to the end of the pipeline]", style);
+    int i = 0;
+    for (TTStyle *style in [headStyle pipeline])
+        KLog(@"%d - %@", i++, [style className]);
+    NSAssert(i > 0, @"Failed to append style. headStyle's pipeline is empty!");
+    
+    // Post the notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,38 +105,39 @@
     
     const CGFloat stylePreviewHeight = 80.f;
     
-    // table view (each row is a style in the rendering pipeline)
+    // Table view (each row is a style in the rendering pipeline)
     CGRect tableFrame = self.view.bounds;
     tableFrame.size.height -= stylePreviewHeight;
     self.tableView = [[[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain] autorelease];
 	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.tableView];
     
-    // live preview display of the current rendering pipeline
+    // Live preview display of the current rendering pipeline
     CGRect previewFrame = self.view.bounds;
     previewFrame.origin.y = self.view.height - stylePreviewHeight;
     previewFrame.size.height = stylePreviewHeight;
     previewFrame = CGRectInset(previewFrame, 40.f, 10.f);
     previewView = [[StylePreview alloc] initWithFrame:previewFrame];
-    previewView.style = rootStyle;
+    previewView.style = headStyle;
     previewView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:previewView];
     
-    // info button to open app settings
+    // Info button to open app settings
     UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
     [infoButton addTarget:self action:@selector(displaySettingsScreen) forControlEvents:UIControlEventTouchUpInside];
     [infoButton setFrame:UIEdgeInsetsInsetRect(self.view.frame, UIEdgeInsetsMake(self.view.height - 40.f, self.view.width - 40.f, 0.f, 0.f))];
     [self.view addSubview:infoButton];
 }
 
-// TTTableViewController should do this for you but it doesn't
+// TODO This is a bug in Three20: 
+//      TTTableViewController should do this.
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
 }
 
-// until I can find a place to put the 'edit' button
+// Until I can find a place to put the 'edit' button
 // the only way to toggle the editing state is
 // to double-tap somewhere inside self.view but outside
 // the tableview (in this case, the best place to double-tap
@@ -124,7 +146,7 @@
 {
     UITouch *touch = [touches anyObject];
     if ([touch tapCount] == 2) {
-        // toggle editing mode (allows for deleting and rearranging styles)
+        // Toggle editing mode (allows for deleting and rearranging styles)
         [self setEditing:!self.editing animated:YES];
     }
 }
@@ -136,13 +158,13 @@
 {
     NSMutableArray *styleNames = [NSMutableArray array];
     
-    for (TTStyle *style in [rootStyle pipeline]) {
+    for (TTStyle *style in [headStyle pipeline]) {
         NSString *name = [style className];
         NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
         [styleNames addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
     }
     
-    return [StyleStructureDataSource dataSourceWithItems:styleNames rootStyle:rootStyle];
+    return [StyleStructureDataSource dataSourceWithItems:styleNames headStyle:headStyle];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +173,7 @@
 - (void)dealloc
 {
     [previewView release];
-    [rootStyle release];
+    [headStyle release];
     [super dealloc];
 }
 

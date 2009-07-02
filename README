@@ -1,19 +1,22 @@
-TTStyleBuilder is an interactive tool for creating and exploring Three20's TTStyle rendering pipelines. The tool can run in either the iPhone simulator or directly on the device.
+TTStyleBuilder is an interactive tool for creating and exploring Three20's TTStyle rendering pipelines. The tool can run in either the iPhone simulator or directly on the device. For more information about TTStyle, please see http://groups.google.com/group/three20/web/understanding-ttstyle.
 
 One of the guiding principles while implementing this tool is that everything should be accomplished solely by extending Three20 without making any modifications to the source code. In order to do this, TTStyleBuilder relies heavily on the Objective-C runtime to dynamically reflect on the system in memory.
 
-Current status is alpha. I have only been working on this since June 16th.
+Current status is alpha.
 
-When browsing the structure of a style, you can enter 'editing' mode by double-tapping the live style preview area at the bottom of the screen. This will allow you to delete styles from the pipeline and to rearrange the styles within the pipeline (please see KNOWN BUGS below). Double-tap the live preview area again to stop the editing mode.
+When browsing the structure of a style, you can enter 'editing' mode by double-tapping the live style preview area at the bottom of the screen. This will allow you to delete styles from the pipeline and to rearrange the styles within the pipeline. Double-tap the live preview area again to stop the editing mode.
+
+Tap the info button in the bottom right corner to change the settings for the "live style preview" view. The "live style preview" also acts as the TTStyleDelegate, so you can the text and image to be used when styles like TTTextStyle query their delegate for a string.
 
 Right now there is no provision for saving your work. Future versions will allow you to construct TTStyleSheet subclasses and archive them to disk in the same manner as Interface Builder archives view hierarchies. Eventually I will add support for reading these TTStyleSheet archives from disk directly into a running Three20 application.
 
-Also, many of the property editor plugins have not been implemented. 
-
-KNOWN BUGS:
-- when rearranging the order of styles, if you drag a style up to the very top and then try to delete it, bad things will happen.
-- you cannot delete the first row (nor rearrange it).
+KNOWN ISSUES:
 - when browsing a style sheet, only selectors that do not take any arguments are shown (so stuff like "blackToolbarButton:" will not be shown because it takes an argument). This might be impossible to fix without making changes to TTStyle.{h,m} which is something that I've been reluctant to do.
+- The "Load From Disk" mode is not yet implemented.
+
+
+TO DO:
+- too long of a list to write here
 
 
 -keith

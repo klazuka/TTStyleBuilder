@@ -11,7 +11,7 @@
 
 @interface StyleStructureController : TTTableViewController <NewObjectPickerDelegate>
 {
-    TTStyle *rootStyle;
+    TTStyle *headStyle;
     TTView *previewView;
 }
 

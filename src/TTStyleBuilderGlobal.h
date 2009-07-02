@@ -21,6 +21,7 @@
 
 
 // ---- notifications ----
+#define kStylePipelineUpdatedNotification @"Style Pipeline Updated Notification"
 #define kRefreshStylePreviewNotification @"Refresh Style Preview Notification"
 #define kNewObjectValueButtonTappedNotification @"New Object Value Button Notification"
 
