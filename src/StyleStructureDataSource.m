@@ -47,8 +47,6 @@
         KLog(@"Un-linked %@", styleToBeDeleted);
     }
     
-    NSAssert(rootStyle != nil && rootStyle != headStyle, @"un-linking: rootStyle and headStyle both point at the same object!");
-
     int i = 0;
     for (TTStyle *style in [headStyle pipeline])
         KLog(@"%d - %@", i++, [style className]);
@@ -78,15 +76,25 @@
         KLog(@"Linked %@ into the pipeline at index: %u, bumping %@", style, index, bumpedStyle);
     }
     
-    NSAssert(rootStyle != nil && rootStyle != headStyle, @"linking: rootStyle and headStyle both point at the same object!");
-    
     int i = 0;
     for (TTStyle *style in [headStyle pipeline])
         KLog(@"%d - %@", i++, [style className]);
 }
 
+- (void)appendStyle:(TTStyle *)style
+{
+    KLog(@" ++++ [Appending %@]", style);
+    [self linkStyle:style
+            atIndex:(headStyle ? [[headStyle pipeline] count] : 0)];
+    
+    // Post the notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
+}
+
 - (void)verifyState
 {
+    (rootStyle != nil && rootStyle != headStyle, @"rootStyle and headStyle cannot both point at the same object!");
+    
     // Verify that the TTStyle linked list matches
     // the table view data source representation.
     int i = 0;

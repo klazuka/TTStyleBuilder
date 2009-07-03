@@ -62,7 +62,6 @@
 
 - (void)appendStyleToPipeline:(TTStyle *)style
 {
-    NSAssert(headStyle, @"headStyle cannot be nil (at least until I add the capability to start with a blank slate)");
     NSAssert(style, @"style for appending cannot be nil");
     
     NSString *name = [style className];
@@ -73,18 +72,7 @@
     [self.tableView reloadData];
     
     // Add the new style to the end of the rendering pipeline
-    NSArray *pipeline = [headStyle pipeline];
-    [[pipeline lastObject] setNext:style];
-    
-    // Debugging support
-    KLog(@" ++++ [Appended %@ to the end of the pipeline]", style);
-    int i = 0;
-    for (TTStyle *style in [headStyle pipeline])
-        KLog(@"%d - %@", i++, [style className]);
-    NSAssert(i > 0, @"Failed to append style. headStyle's pipeline is empty!");
-    
-    // Post the notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
+    [(StyleStructureDataSource*)self.dataSource appendStyle:style];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
