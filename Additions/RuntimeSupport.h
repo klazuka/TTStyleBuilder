@@ -52,22 +52,22 @@ NSEnumerator *SubclassEnumeratorForClass(Class klass);
 NSEnumerator *ImplementationsForProtocol(Protocol *protocol);
 
 /*
- *      IsIdType()
+ *      IsIdAtEncodeType()
  *
- *  Returns YES if |encodeDirectiveType| is of the
+ *  Returns YES if |atEncodeType| is of the
  *  general format that describes an object of
  *  type 'id' (which is to say, struct objc_object*).
  *
  */
-BOOL IsIdType(NSString *encodeDirectiveType);
+BOOL IsIdAtEncodeType(NSString *atEncodeType);
 
 /*
- *      ClassFromPropertyType()
+ *      ClassFromAtEncodeType()
  *
- *  Uses |encodeDirectiveType| to lookup the corresponding 
+ *  Uses |atEncodeType| to lookup the corresponding 
  *  Class data structure in the runtime.
  */
-Class ClassFromPropertyType(NSString *encodeDirectiveType);
+Class ClassFromAtEncodeType(NSString *atEncodeType);
 
 /*
  *      AllPropertiesOfClass()

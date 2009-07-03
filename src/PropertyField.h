@@ -14,18 +14,18 @@
 {
     id object;
     NSString *propertyName;
-    NSString *propertyType;
+    NSString *atEncodeType;
     BOOL readOnly;
 }
 
-@property (nonatomic, retain) id object;                // the object that hosts the property
-@property (nonatomic, retain) NSString *propertyName;
-@property (nonatomic, retain) NSString *propertyType;   // expressed in the same format as the @encode() compiler directive would create. (e.g. an NSString* property would be @"T@\"NSString\"")
-@property (nonatomic, getter=isReadOnly) BOOL readOnly;
+@property (nonatomic, retain) id object;                // The object that hosts the property.
+@property (nonatomic, retain) NSString *propertyName;   // The key that can be used with KVC on |object| to obtain this property's current value.
+@property (nonatomic, retain) NSString *atEncodeType;   // Expressed in the same format as the @encode() compiler directive would create. (e.g. an NSString* property would be @"T@\"NSString\"")
+@property (nonatomic, getter=isReadOnly) BOOL readOnly; // Is the property read-only.
 
-- (id)initWithObject:(id)anObject property:(objc_property_t)aProperty url:(NSString *)url;  // designated initializer
+- (id)initWithObject:(id)anObject property:(objc_property_t)aProperty url:(NSString *)url;  // Designated initializer
 
-- (id)value;                        // the property value
-- (NSString *)valueDescription;     // a textual description of the property value
+- (id)value;                        // Lookup the property's current value.
+- (NSString *)valueDescription;     // A textual description of the property value for display to the user.
 
 @end

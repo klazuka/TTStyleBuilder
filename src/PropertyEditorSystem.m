@@ -10,8 +10,8 @@
 #import "RuntimeSupport.h"
 
 @interface PropertyEditorSystem ()
-+ (Class)lookupEditorClassForPropertyType:(NSString *)encodeDirectiveType;
-+ (NSString *)fallbackTypeForPropertyType:(NSString *)encodeDirectiveType;
++ (Class)lookupEditorClassForAtEncodeType:(NSString *)atEncodeType;
++ (NSString *)fallbackTypeForAtEncodeType:(NSString *)atEncodeType;
 @end
 
 static NSMutableDictionary *ClassHandlerMap = nil;
@@ -26,23 +26,21 @@ static NSMutableDictionary *ClassHandlerMap = nil;
     if ( self != [PropertyEditorSystem class] )
         return;
     
-    // Initialize the mapping from property type to its property editor
+    // Initialize the mapping.
     ClassHandlerMap = [[NSMutableDictionary alloc] init];
 
     // Find all classes that adopt the ValueEditor protocol
-    // and ask them for the property type that they know how to handle.
-    // Finally, map the property type to the class.
+    // and ask them for the atEncodeType that they know how to handle.
+    // Finally, map the type to the editor plugin's class.
     const char *protocolName = "ValueEditor";
-    for (Class cls in ImplementationsForProtocol(objc_getProtocol(protocolName))) {
-        NSString *type = [cls typeHandler];
-        [ClassHandlerMap setObject:cls forKey:type];
-    }
+    for (Class cls in ImplementationsForProtocol(objc_getProtocol(protocolName)))
+        [ClassHandlerMap setObject:cls forKey:[cls atEncodeTypeHandler]];
 }
 
-+ (UIViewController<ValueEditor> *)editorForPropertyType:(NSString *)encodeDirectiveType
++ (UIViewController<ValueEditor> *)editorForAtEncodeType:(NSString *)atEncodeType
 {
-    // Dispatch to Class based on input format
-    Class cls = [self lookupEditorClassForPropertyType:encodeDirectiveType];
+    // Dispatch to an editor Class based on |atEncodeType|.
+    Class cls = [self lookupEditorClassForAtEncodeType:atEncodeType];
 
     // Alloc
     UIViewController<ValueEditor> *instance = class_createInstance(cls, 0);
@@ -53,32 +51,32 @@ static NSMutableDictionary *ClassHandlerMap = nil;
     return [instance autorelease];
 }
 
-+ (BOOL)canEdit:(NSString *)encodeDirectiveType
++ (BOOL)canEdit:(NSString *)atEncodeType
 {
-    return [self lookupEditorClassForPropertyType:encodeDirectiveType] != nil;
+    return [self lookupEditorClassForAtEncodeType:atEncodeType] != nil;
 }
 
-+ (Class)lookupEditorClassForPropertyType:(NSString *)encodeDirectiveType
++ (Class)lookupEditorClassForAtEncodeType:(NSString *)atEncodeType
 {
     // typical case: lookup and find a plugin that explicitly handles this type.
-    Class cls = [ClassHandlerMap objectForKey:encodeDirectiveType];
+    Class cls = [ClassHandlerMap objectForKey:atEncodeType];
     if (cls)
         return cls;
 
     // a-typical case: attempt to find a fallback plugin
-    NSString *fallback = [self fallbackTypeForPropertyType:encodeDirectiveType];
+    NSString *fallback = [self fallbackTypeForAtEncodeType:atEncodeType];
     if (fallback) {
-        return [self lookupEditorClassForPropertyType:fallback];
+        return [self lookupEditorClassForAtEncodeType:fallback];
     } else {
-        KLog(@"Failed to find an editor class for type %@, even after trying to use fallback type %@", encodeDirectiveType, fallback);
+        KLog(@"Failed to find an editor class for type %@, even after trying to use fallback type %@", atEncodeType, fallback);
         return nil;
     }
 }
 
-+ (NSString *)fallbackTypeForPropertyType:(NSString *)encodeDirectiveType
++ (NSString *)fallbackTypeForAtEncodeType:(NSString *)atEncodeType
 {
      // If the property is an 'id', then fallback to the generic 'id' handler.
-    return IsIdType(encodeDirectiveType) 
+    return IsIdAtEncodeType(atEncodeType) 
             ? @"T@"
             : nil;
 }

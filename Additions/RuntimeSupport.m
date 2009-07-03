@@ -56,16 +56,16 @@ NSEnumerator *SubclassEnumeratorForClass(Class baseClass)
     return [(NSArray*)subclasses objectEnumerator];
 }
 
-BOOL IsIdType(NSString *encodeDirectiveType)
+BOOL IsIdAtEncodeType(NSString *atEncodeType)
 {
-    return [encodeDirectiveType hasPrefix:@"T@"];
+    return [atEncodeType hasPrefix:@"T@"];
 }
 
-Class ClassFromPropertyType(NSString *encodeDirectiveType)
+Class ClassFromAtEncodeType(NSString *atEncodeType)
 {
-    NSCAssert(IsIdType(encodeDirectiveType), @"Cannot call ClassFromPropertyType() when the property type is not an 'id' or equivalent.");
+    NSCAssert(IsIdAtEncodeType(atEncodeType), @"Cannot call ClassFromAtEncodeType() when |atEncodeType| is not an 'id' or equivalent.");
     
-    if ([encodeDirectiveType isEqualToString:[NSString stringWithCString:@encode(id)]]) {
+    if ([atEncodeType isEqualToString:[NSString stringWithCString:@encode(id)]]) {
         // What I'm about to do here isn't strictly correct since the dynamic type 'id' 
         // imposes no restraints on the object's root class, but it will work for our purposes.
         NSLog(@"WARNING: asked to determine the Class of a property with type 'id'. Returning [NSObject class] as the result, even though it is not strictly correct.");
@@ -73,7 +73,7 @@ Class ClassFromPropertyType(NSString *encodeDirectiveType)
     }
     
     // Drop the 'T@"' from the beginning and the trailing '"' at the end.
-    NSString *className = [encodeDirectiveType substringWithRange:NSMakeRange(3, [encodeDirectiveType length] - 4)]; 
+    NSString *className = [atEncodeType substringWithRange:NSMakeRange(3, [atEncodeType length] - 4)]; 
     
     // Lookup and return the class
     return objc_lookUpClass([className cStringUsingEncoding:NSUTF8StringEncoding]);

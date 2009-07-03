@@ -50,7 +50,7 @@
             return;
         [valueLabel setText:[object valueDescription]];
         
-        // size the blue "value" label such that it does not occlude the property name
+        // Size the blue "value" label such that it does not occlude the property name.
         NSString *propertyName = [object text];
         CGSize propertyNameSize = [propertyName sizeWithFont:_label.font];
         CGFloat padLeft = 65.f;
@@ -65,12 +65,12 @@
                     cellWidth - propertyNameSize.width - padRight, 
                     cellHeight)];
 
-        // Conditionally hide/show the new value button based on the property type.
+        // Conditionally hide/show the new value button based on the property's atEncodeType.
         // TODO this is an ugly hack. In the initialization of my TTStyle and TTShape categories
         // I should register the base class with some global registry that this class than
         // queries to determine whether to show or hide the button.
-        NSRange r1 = [[object propertyType] rangeOfString:@"Style"];
-        NSRange r2 = [[object propertyType] rangeOfString:@"Shape"];
+        NSRange r1 = [[object atEncodeType] rangeOfString:@"Style"];
+        NSRange r2 = [[object atEncodeType] rangeOfString:@"Shape"];
         BOOL hidden = r1.location == NSNotFound && r2.location == NSNotFound;
         [newValueButton setHidden:hidden];
         

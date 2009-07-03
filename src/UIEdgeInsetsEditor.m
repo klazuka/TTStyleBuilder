@@ -13,7 +13,7 @@
 
 @synthesize object, propertyName;
 
-+ (NSString *)typeHandler
++ (NSString *)atEncodeTypeHandler
 {
     return @"T{UIEdgeInsets=\"top\"f\"left\"f\"bottom\"f\"right\"f}";
 }

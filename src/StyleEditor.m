@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark ValueEditor protocol
 
-+ (NSString *)typeHandler
++ (NSString *)atEncodeTypeHandler
 {
     return @"T@\"TTStyle\"";
 }

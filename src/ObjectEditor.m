@@ -46,8 +46,8 @@
 - (void)newValueButtonTapped:(NSNotification *)notification
 {
     PropertyField *propertyField = [notification object];
-    Class baseClass = ClassFromPropertyType([propertyField propertyType]);
-    NSAssert1(baseClass, @"Failed to find a Class for propertyType %@", [propertyField propertyType]);
+    Class baseClass = ClassFromAtEncodeType([propertyField atEncodeType]);
+    NSAssert1(baseClass, @"Failed to find a Class for %@", [propertyField atEncodeType]);
     NewObjectPickerController *controller = [[[NewObjectPickerController alloc] initWithBaseClass:baseClass] autorelease];
     controller.delegate = propertyField;
     [self.navigationController pushViewController:controller animated:YES];
@@ -56,7 +56,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark ValueEditor protocol
 
-+ (NSString *)typeHandler
++ (NSString *)atEncodeTypeHandler
 {
     return @"T@";
 }
@@ -132,19 +132,19 @@
         return;
     }
     
-    NSString *propertyType = [propertyField propertyType];
+    NSString *atEncodeType = [propertyField atEncodeType];
     
-    if ([propertyField isReadOnly] && !IsIdType(propertyType)) {
+    if ([propertyField isReadOnly] && !IsIdAtEncodeType(atEncodeType)) {
         [self alert:[NSString stringWithFormat:@"%@ is a read-only, scalar property.", [propertyField propertyName]]];
         return;
     }
 
-    if (![PropertyEditorSystem canEdit:propertyType]) {
-        [self alert:propertyType title:@"No Editor Available" delegate:nil];
+    if (![PropertyEditorSystem canEdit:atEncodeType]) {
+        [self alert:atEncodeType title:@"No Editor Available" delegate:nil];
         return;
     }
     
-    UIViewController<ValueEditor> *editor = [PropertyEditorSystem editorForPropertyType:propertyType];
+    UIViewController<ValueEditor> *editor = [PropertyEditorSystem editorForAtEncodeType:atEncodeType];
     
     if ([editor respondsToSelector:@selector(propertyName)]) {
         // CASE: ValueEditor is a PropertyEditor

@@ -13,7 +13,7 @@
 
 @synthesize object, propertyName;
 
-+ (NSString *)typeHandler
++ (NSString *)atEncodeTypeHandler
 {
     return @"T{CGSize=\"width\"f\"height\"f}";
 }

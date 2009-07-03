@@ -12,7 +12,7 @@
 
 @implementation PropertyField
 
-@synthesize object, propertyName, propertyType, readOnly;
+@synthesize object, propertyName, atEncodeType, readOnly;
 
 - (id)initWithObject:(id)anObject property:(objc_property_t)aProperty url:(NSString *)url
 {
@@ -22,7 +22,7 @@
         propertyName = [propName retain];
         NSString *propertyAttributes = [[NSString alloc] initWithCString:property_getAttributes(aProperty) encoding:NSUTF8StringEncoding];
         NSArray *components = [propertyAttributes componentsSeparatedByString:@","];
-        propertyType = [[components objectAtIndex:0] retain];
+        atEncodeType = [[components objectAtIndex:0] retain];
         readOnly = [components containsObject:@"R"];
     }
     return self;
@@ -54,7 +54,7 @@
 {
     [object release];
     [propertyName release];
-    [propertyType release];
+    [atEncodeType release];
     [super dealloc];
 }
 
