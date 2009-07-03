@@ -126,7 +126,19 @@
 
 - (void)didSelectObject:(id)propertyField atIndexPath:(NSIndexPath*)indexPath
 {
+    // ensure that we are dealing with a true PropertyField
+    if (![propertyField isKindOfClass:[PropertyField class]]) {
+        NSLog(@"WARNING: didSelectObject: expected a PropertyField but got %@", propertyField);
+        return;
+    }
+    
     NSString *propertyType = [propertyField propertyType];
+    
+    if ([propertyField isReadOnly] && !IsIdType(propertyType)) {
+        [self alert:[NSString stringWithFormat:@"%@ is a read-only, scalar property.", [propertyField propertyName]]];
+        return;
+    }
+
     if (![PropertyEditorSystem canEdit:propertyType]) {
         [self alert:propertyType title:@"No Editor Available" delegate:nil];
         return;
