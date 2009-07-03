@@ -118,8 +118,11 @@
         [items addObject:[[[PropertyField alloc] initWithObject:object property:prop url:nil] autorelease]];
     }
     
-    if ([items count] == 0)
-        [self alert:@"Sorry, there are no editable properties on this object"];
+    if ([items count] == 0) {
+        [self alert:[NSString stringWithFormat:@"There are no editable properties on this object. You should consider implementing an editor plugin for class %@", [object className]]
+              title:@"Cannot Edit"
+           delegate:nil];
+    }
     
     free(properties);
     return [ObjectEditorDataSource dataSourceWithItems:items];
