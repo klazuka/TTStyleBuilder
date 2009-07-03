@@ -69,11 +69,11 @@ BOOL IsIdType(NSString *encodeDirectiveType);
  */
 Class ClassFromPropertyType(NSString *encodeDirectiveType);
 
-
-
-
-
-
-
-
-
+/*
+ *      AllPropertiesOfClass()
+ *
+ *  Constructs an array of all the properties defined
+ *  directly on |cls| as well as the properties defined
+ *  on cls's superclass chain.
+ */
+NSArray *AllPropertiesOfClass(Class cls);

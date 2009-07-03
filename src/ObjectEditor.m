@@ -92,16 +92,10 @@
 {
     NSMutableArray *items = [NSMutableArray array];
     
-    // TODO the property list should also include inherited properties for superclasses.
-    //      For instance, right now if you try to edit a TTInnerShadowStyle, it will say
-    //      that there are no editable properties, but it actually inherits 3 properties
-    //      from TTShadowStyle.
-    unsigned int numProperties = -1;
-    objc_property_t *properties = class_copyPropertyList([object class], &numProperties);
-    
-    for (unsigned int i = 0; i < numProperties; i++) {
-        objc_property_t prop = properties[i];
-        // --- ugly hack between these lines ---------
+    NSArray *allProperties = AllPropertiesOfClass([object class]);
+    for (NSUInteger i = 0; i < [allProperties count]; i++) {
+        objc_property_t prop = (objc_property_t)[allProperties objectAtIndex:i];    // TODO is this cast safe? CFArray lets you you append void*, but NSArray vends id.
+        // --- FIXME ugly hack between these lines ---------
         // There are some types, like CGImageRef, that KVC cannot handle
         // For the most common non-id types, KVC will wrap the value
         // in an NSValue object.
@@ -112,9 +106,12 @@
         //
         // Until I fix this for real, I'll just manually skip the types
         // that I encounter problems with.
-        if (strstr(property_getName(prop), "CGImage"))  // breaks ObjectEditor on a UIImage
+        if (strstr(property_getName(prop), "CGImage"))  // otherwise it would break ObjectEditor on a UIImage
             continue;
         // -------------------------------------------
+        // Another ugly hack. We should make an explicit black list of properties that we want to ignore.
+        if (strstr(property_getAttributes(prop), "T@\"TTStyle\",&,N,V_next")) // ignored b/c we don't want the user traversing the linked list--we provide our own UI for that (StyleStructureController's tableview).
+            continue;
         [items addObject:[[[PropertyField alloc] initWithObject:object property:prop url:nil] autorelease]];
     }
     
@@ -124,7 +121,6 @@
            delegate:nil];
     }
     
-    free(properties);
     return [ObjectEditorDataSource dataSourceWithItems:items];
 }
 

@@ -78,3 +78,35 @@ Class ClassFromPropertyType(NSString *encodeDirectiveType)
     // Lookup and return the class
     return objc_lookUpClass([className cStringUsingEncoding:NSUTF8StringEncoding]);
 }
+
+NSArray *AllPropertiesOfClass(Class cls)
+{
+    if (cls == Nil) // Recursion base case
+        return nil;
+    
+    // Create a non-retaining/non-releasing array to hold our values
+    // because the values that objc_property_t point to
+    // have static lifetime (or so I hope!)
+    CFMutableArrayRef result = CFArrayCreateMutable(NULL, 0, NULL);
+    
+    unsigned int numProperties = -1;
+    objc_property_t *properties = class_copyPropertyList(cls, &numProperties);
+    
+    for (unsigned int i = 0; i < numProperties; i++) {
+        objc_property_t prop = *(properties+i);
+        CFArrayAppendValue(result, prop);
+        //NSLog(@"%s.%s with type %s", class_getName(cls), property_getName(prop), property_getAttributes(prop));
+    }
+    
+    free(properties);
+    
+    // Get the properties from the superclass chain (if any)
+    CFArrayRef propertiesFromSuperclasses = (CFArrayRef)AllPropertiesOfClass(class_getSuperclass(cls));
+    if (!propertiesFromSuperclasses)
+        return (NSArray*)result;
+    
+    // Join together the properties defined on |cls| and its superclass chain.
+    CFRange entireRange = CFRangeMake(0, CFArrayGetCount(propertiesFromSuperclasses));
+    CFArrayAppendArray(result, propertiesFromSuperclasses, entireRange);
+    return (NSArray*)result;
+}
