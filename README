@@ -1,22 +1,35 @@
 TTStyleBuilder is an interactive tool for creating and exploring Three20's TTStyle rendering pipelines. The tool can run in either the iPhone simulator or directly on the device. For more information about TTStyle, please see http://groups.google.com/group/three20/web/understanding-ttstyle.
 
-One of the guiding principles while implementing this tool is that everything should be accomplished solely by extending Three20 without making any modifications to the source code. In order to do this, TTStyleBuilder relies heavily on the Objective-C runtime to dynamically reflect on the system in memory.
+Video demo/screencast: http://www.vimeo.com/5429347
 
 Current status is alpha.
 
-When browsing the structure of a style, you can enter 'editing' mode by double-tapping the live style preview area at the bottom of the screen. This will allow you to delete styles from the pipeline and to rearrange the styles within the pipeline. Double-tap the live preview area again to stop the editing mode.
+GETTING STARTED
+1. git clone git://github.com/klazuka/TTStyleBuilder.git
+2. cd TTStyleBuilder
+3. git submodule update --init
+4. open TTStyleBuilder.xcodeproj
+5. Build and Go!
 
-Tap the info button in the bottom right corner to change the settings for the "live style preview" view. The "live style preview" also acts as the TTStyleDelegate, so you can the text and image to be used when styles like TTTextStyle query their delegate for a string.
+USAGE INSTRUCTIONS
+When browsing the structure of a style, you can enter "editing" mode by double-tapping the "live style preview" area at the bottom of the screen. This will allow you to delete styles from the pipeline and to rearrange the styles within the pipeline. Double-tap the live preview area again to exit the editing mode.
+
+Tap the "+" button in the upper-right corner to append a style to the end of the pipeline.
+
+Tap the info button in the bottom right corner to change the settings for the live style preview view. The live style preview also acts as the TTStyleDelegate, so you can specify the text and image to be used when styles like TTTextStyle query their delegate for an NSString or UIImage.
 
 Right now there is no provision for saving your work. Future versions will allow you to construct TTStyleSheet subclasses and archive them to disk in the same manner as Interface Builder archives view hierarchies. Eventually I will add support for reading these TTStyleSheet archives from disk directly into a running Three20 application.
 
-KNOWN ISSUES:
+OTHER
+One of the guiding principles while implementing this tool is that everything should be accomplished solely by extending Three20 without making any modifications to the source code. In order to do this, TTStyleBuilder relies heavily on the Objective-C runtime to dynamically reflect on the system in memory. TTStyleBuilder implements a generic object/property editing system that could, theoretically, be used in other iPhone apps that need an easy way to provide a UI for editing objects.
+
+KNOWN ISSUES
 - when browsing a style sheet, only selectors that do not take any arguments are shown (so stuff like "blackToolbarButton:" will not be shown because it takes an argument). This might be impossible to fix without making changes to TTStyle.{h,m} which is something that I've been reluctant to do.
 - The "Load From Disk" mode is not yet implemented.
+- There are still many property types that do not yet have an editor plug-in (for instance, NSString and UIImage).
 
-
-TO DO:
-- too long of a list to write here
+TO DO
+There are so many things remaining that I'm not even going to bother listing it all here. But the big remaining item is serializing/deserializing the TTStyles that you construct in the tool so that they can be loaded directly into a client application.
 
 
 -keith
