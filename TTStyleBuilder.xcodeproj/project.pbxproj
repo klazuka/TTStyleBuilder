@@ -36,6 +36,7 @@
 		53D979C30FFBD7F300E62B9A /* TTShapeAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D979C20FFBD7F300E62B9A /* TTShapeAdditions.m */; };
 		53F147160FFD337D00C959C7 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53F147150FFD337D00C959C7 /* Three20.bundle */; };
 		53F147360FFD33A000C959C7 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F147340FFD338900C959C7 /* libThree20.a */; };
+		53F1487A0FFE3F3700C959C7 /* StringEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F148790FFE3F3700C959C7 /* StringEditor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,8 @@
 		53D979C20FFBD7F300E62B9A /* TTShapeAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTShapeAdditions.m; sourceTree = "<group>"; };
 		53F147150FFD337D00C959C7 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = three20/src/Three20.bundle; sourceTree = SOURCE_ROOT; };
 		53F1472A0FFD338900C959C7 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
+		53F148780FFE3F3700C959C7 /* StringEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringEditor.h; sourceTree = "<group>"; };
+		53F148790FFE3F3700C959C7 /* StringEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringEditor.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TTStyleBuilder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTStyleBuilder-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -239,6 +242,7 @@
 				536E0AEE0FEAAFB400C159E7 /* .h */,
 				536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */,
 				53D972540FF5541700E62B9A /* ColorEditor.m */,
+				53F148790FFE3F3700C959C7 /* StringEditor.m */,
 				53D972560FF5541700E62B9A /* FloatEditor.m */,
 				53D972580FF5541700E62B9A /* IntEditor.m */,
 				536E0CC00FEB0ED600C159E7 /* CGSizeEditor.m */,
@@ -258,6 +262,7 @@
 			children = (
 				536E0B070FEAB13500C159E7 /* PropertyEditorSystem.h */,
 				53D972530FF5541700E62B9A /* ColorEditor.h */,
+				53F148780FFE3F3700C959C7 /* StringEditor.h */,
 				53D972550FF5541700E62B9A /* FloatEditor.h */,
 				53D972570FF5541700E62B9A /* IntEditor.h */,
 				536E0CBF0FEB0ED600C159E7 /* CGSizeEditor.h */,
@@ -400,6 +405,7 @@
 				53D9790F0FFB98B700E62B9A /* StyleEditor.m in Sources */,
 				53D979960FFBD2CE00E62B9A /* NewObjectPickerController.m in Sources */,
 				53D979C30FFBD7F300E62B9A /* TTShapeAdditions.m in Sources */,
+				53F1487A0FFE3F3700C959C7 /* StringEditor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
