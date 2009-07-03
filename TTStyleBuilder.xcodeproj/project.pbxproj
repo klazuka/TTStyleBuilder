@@ -37,6 +37,7 @@
 		53F147160FFD337D00C959C7 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53F147150FFD337D00C959C7 /* Three20.bundle */; };
 		53F147360FFD33A000C959C7 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F147340FFD338900C959C7 /* libThree20.a */; };
 		53F1487A0FFE3F3700C959C7 /* StringEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F148790FFE3F3700C959C7 /* StringEditor.m */; };
+		53F149630FFE5D4900C959C7 /* UIColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F149620FFE5D4900C959C7 /* UIColorAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,8 @@
 		53F1472A0FFD338900C959C7 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = three20/src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		53F148780FFE3F3700C959C7 /* StringEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringEditor.h; sourceTree = "<group>"; };
 		53F148790FFE3F3700C959C7 /* StringEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringEditor.m; sourceTree = "<group>"; };
+		53F149610FFE5D4900C959C7 /* UIColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorAdditions.h; sourceTree = "<group>"; };
+		53F149620FFE5D4900C959C7 /* UIColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorAdditions.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TTStyleBuilder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTStyleBuilder-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,6 +212,8 @@
 				5304A1E30FE6C37100DD937B /* NSObjectAdditions.m */,
 				5370056E0FEBFE2D00C1A0D0 /* RuntimeSupport.m */,
 				5304A2150FE6C7D600DD937B /* NSDebug.h */,
+				53F149610FFE5D4900C959C7 /* UIColorAdditions.h */,
+				53F149620FFE5D4900C959C7 /* UIColorAdditions.m */,
 			);
 			path = Additions;
 			sourceTree = "<group>";
@@ -406,6 +411,7 @@
 				53D979960FFBD2CE00E62B9A /* NewObjectPickerController.m in Sources */,
 				53D979C30FFBD7F300E62B9A /* TTShapeAdditions.m in Sources */,
 				53F1487A0FFE3F3700C959C7 /* StringEditor.m in Sources */,
+				53F149630FFE5D4900C959C7 /* UIColorAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

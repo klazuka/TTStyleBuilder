@@ -23,7 +23,7 @@
     UIColor *color = [UIColor colorWithHue:[hueSlider value] 
                                 saturation:[saturationSlider value] 
                                 brightness:[brightnessSlider value] 
-                                     alpha:1.f];
+                                     alpha:[alphaSlider value]];
     
     [self.object setValue:color forKey:self.propertyName];
     
@@ -87,6 +87,17 @@
     offsetY += kLabelHeight + kVerticalPadding;
     
     
+    // --- Alpha ----
+    UILabel *alphaLabel = [[[UILabel alloc] initWithFrame:CGRectMake(kOffsetX, offsetY, kLabelWidth, kLabelHeight)] autorelease];
+    [alphaLabel setText:@"Alpha"];
+    [self.view addSubview:alphaLabel];
+    
+    alphaSlider = [[UISlider alloc] initWithFrame:CGRectMake(kSliderOffsetX, offsetY, kSliderWidth, kSliderHeight)];
+    [alphaSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:alphaSlider];
+    offsetY += kLabelHeight + kVerticalPadding;
+    
+    
     // --- Color Preview -----
     const CGFloat kSwatchHeight = 100.f;
     colorSwatchView = [[TTView alloc] initWithFrame:CGRectMake(kOffsetX, offsetY, 320.f - (2 * kOffsetX), kSwatchHeight)];
@@ -108,6 +119,7 @@
     [hueSlider setValue:([color hue] / 360.f)];
     [saturationSlider setValue:[color saturation]];
     [brightnessSlider setValue:[color value]];
+    [alphaSlider setValue:[color alpha]];
     [colorSwatchView setBackgroundColor:color];
 }
 
@@ -121,6 +133,7 @@
     [hueSlider release];
     [saturationSlider release];
     [brightnessSlider release];
+    [alphaSlider release];
     [colorSwatchView release];
     [super dealloc];
 }

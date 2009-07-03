@@ -18,6 +18,7 @@
     UISlider *hueSlider;
     UISlider *saturationSlider;
     UISlider *brightnessSlider;
+    UISlider *alphaSlider;
     TTView *colorSwatchView;
 }
 

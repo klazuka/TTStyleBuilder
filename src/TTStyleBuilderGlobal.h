@@ -18,6 +18,7 @@
 #import "TTStyleAdditions.h"
 #import "TTShapeAdditions.h"
 #import "NSObjectAdditions.h"
+#import "UIColorAdditions.h"
 
 
 // ---- notifications ----
