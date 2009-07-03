@@ -20,7 +20,7 @@
     if ((self = [super initWithFrame:frame])) {
         size = frame.size;
         fillColor = [self.backgroundColor retain];
-        textForDelegate = [[NSString alloc] initWithUTF8String:"42"];
+        textForDelegate = [[NSString alloc] initWithUTF8String:"Three20"];
         imageForDelegate = [TTIMAGE(@"bundle://Three20.bundle/images/nextIcon.png") retain];
     }
     return self;

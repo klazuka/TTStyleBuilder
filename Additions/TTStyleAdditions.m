@@ -45,7 +45,7 @@
 @end
 
 @implementation TTTextStyle (TTStyleBuilderAdditions)
-+ (TTStyle *)prototypicalInstance { return [TTTextStyle styleWithColor:[UIColor blackColor] next:nil]; }
++ (TTStyle *)prototypicalInstance { return [TTTextStyle styleWithFont:[UIFont boldSystemFontOfSize:20.f] color:[UIColor blackColor] next:nil]; }
 @end
 
 @implementation TTInsetStyle (TTStyleBuilderAdditions)
