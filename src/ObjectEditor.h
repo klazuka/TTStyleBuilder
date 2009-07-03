@@ -40,6 +40,10 @@
 {
     // ValueEditor
     id object;
+    
+    BOOL showInheritedProperties;
 }
+
+@property (nonatomic, assign) BOOL showInheritedProperties; // Defaults to YES. If YES, the editor will search for all properties defined on the object's superclass, as well as the entire superclass chain.
 
 @end

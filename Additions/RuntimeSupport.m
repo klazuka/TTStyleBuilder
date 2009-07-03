@@ -79,7 +79,7 @@ Class ClassFromAtEncodeType(NSString *atEncodeType)
     return objc_lookUpClass([className cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
-NSArray *AllPropertiesOfClass(Class cls)
+NSArray *PropertiesOfClass(Class cls, BOOL includeInheritedProperties)
 {
     if (cls == Nil) // Recursion base case
         return nil;
@@ -100,13 +100,17 @@ NSArray *AllPropertiesOfClass(Class cls)
     
     free(properties);
     
-    // Get the properties from the superclass chain (if any)
-    CFArrayRef propertiesFromSuperclasses = (CFArrayRef)AllPropertiesOfClass(class_getSuperclass(cls));
-    if (!propertiesFromSuperclasses)
-        return (NSArray*)result;
+    if (includeInheritedProperties) {
+        // Get the properties from the superclass chain (if any)
+        CFArrayRef propertiesFromSuperclasses = (CFArrayRef)PropertiesOfClass(class_getSuperclass(cls), YES);
+        if (!propertiesFromSuperclasses)
+            return (NSArray*)result;
+        
+        // Join together the properties defined on |cls| and its superclass chain.
+        CFRange entireRange = CFRangeMake(0, CFArrayGetCount(propertiesFromSuperclasses));
+        CFArrayAppendArray(result, propertiesFromSuperclasses, entireRange);
+    }
     
-    // Join together the properties defined on |cls| and its superclass chain.
-    CFRange entireRange = CFRangeMake(0, CFArrayGetCount(propertiesFromSuperclasses));
-    CFArrayAppendArray(result, propertiesFromSuperclasses, entireRange);
     return (NSArray*)result;
+
 }

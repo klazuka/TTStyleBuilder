@@ -26,11 +26,14 @@
 
 @implementation ObjectEditor
 
-@synthesize object;
+@synthesize object, showInheritedProperties;
 
 - (id)init
 {
     if ((self = [super init])) {
+        
+        showInheritedProperties = YES;
+        
         // This is an ugly hack, but right now I don't have an easy way for the PropertyFieldCell
         // to directly talk to the ObjectEditor controller.
         // The PropertyFieldCell will pass along its reference to the PropertyField object 
@@ -92,7 +95,7 @@
 {
     NSMutableArray *items = [NSMutableArray array];
     
-    NSArray *allProperties = AllPropertiesOfClass([object class]);
+    NSArray *allProperties = PropertiesOfClass([object class], showInheritedProperties);
     for (NSUInteger i = 0; i < [allProperties count]; i++) {
         objc_property_t prop = (objc_property_t)[allProperties objectAtIndex:i];    // TODO is this cast safe? CFArray lets you you append void*, but NSArray vends id.
         // --- FIXME ugly hack between these lines ---------

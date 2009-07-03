@@ -209,11 +209,10 @@
 				537005700FEBFE3400C1A0D0 /* .h */,
 				53D979C20FFBD7F300E62B9A /* TTShapeAdditions.m */,
 				53049E840FE6799100DD937B /* TTStyleAdditions.m */,
+				53F149620FFE5D4900C959C7 /* UIColorAdditions.m */,
 				5304A1E30FE6C37100DD937B /* NSObjectAdditions.m */,
 				5370056E0FEBFE2D00C1A0D0 /* RuntimeSupport.m */,
 				5304A2150FE6C7D600DD937B /* NSDebug.h */,
-				53F149610FFE5D4900C959C7 /* UIColorAdditions.h */,
-				53F149620FFE5D4900C959C7 /* UIColorAdditions.m */,
 			);
 			path = Additions;
 			sourceTree = "<group>";
@@ -296,6 +295,7 @@
 			children = (
 				53D979C10FFBD7F300E62B9A /* TTShapeAdditions.h */,
 				53049E830FE6799100DD937B /* TTStyleAdditions.h */,
+				53F149610FFE5D4900C959C7 /* UIColorAdditions.h */,
 				5304A1E20FE6C37100DD937B /* NSObjectAdditions.h */,
 				5370056D0FEBFE2D00C1A0D0 /* RuntimeSupport.h */,
 			);

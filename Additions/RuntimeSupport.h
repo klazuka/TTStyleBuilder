@@ -70,10 +70,11 @@ BOOL IsIdAtEncodeType(NSString *atEncodeType);
 Class ClassFromAtEncodeType(NSString *atEncodeType);
 
 /*
- *      AllPropertiesOfClass()
+ *      PropertiesOfClass()
  *
- *  Constructs an array of all the properties defined
- *  directly on |cls| as well as the properties defined
- *  on cls's superclass chain.
+ *  Constructs an array of the properties defined
+ *  for a class. If |includeInheritedProperties| is YES,
+ *  then this function will also return properties
+ *  defined in cls's superclass chain.
  */
-NSArray *AllPropertiesOfClass(Class cls);
+NSArray *PropertiesOfClass(Class cls, BOOL includeInheritedProperties);

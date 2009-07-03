@@ -14,6 +14,7 @@
 {
     if ((self = [super init])) {
         self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)] autorelease];
+        self.showInheritedProperties = NO;  // We don't want to allow the user to see/edit the inherited TTView/UIView superclass properties.
     }
     return self;
 }
