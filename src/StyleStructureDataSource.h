@@ -22,4 +22,6 @@
 
 - (id)initWithItems:(NSMutableArray*)items headStyle:(TTStyle *)style;
 
+- (void)appendStyle:(TTStyle *)style;   // Appends |style| to the end of the rendering pipeline.
+
 @end
