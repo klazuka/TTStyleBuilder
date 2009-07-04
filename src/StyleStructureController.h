@@ -9,12 +9,14 @@
 #import "TTStyleBuilderGlobal.h"
 #import "NewObjectPickerController.h"  // needed for the NewObjectPickerDelegate protocol
 
+@class StyleStructureDataSource;
+
 @interface StyleStructureController : TTTableViewController <NewObjectPickerDelegate>
 {
-    TTStyle *headStyle;
+    StyleStructureDataSource *styleDataSource;  // same as the TTTableViewController dataSource property
     TTView *previewView;
 }
 
-- (id)initForRootStyle:(TTStyle *)style;    // designated initializer
+- (id)initWithHeadStyle:(TTStyle *)style;    // designated initializer
 
 @end

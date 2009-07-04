@@ -60,7 +60,7 @@
 {
 //    TTStyle *styleToBeEdited = TTSTYLE(badge);
     TTStyle *styleToBeEdited = [[[TTStyle alloc] initWithNext:nil] autorelease];
-    UIViewController *controller = [[StyleStructureController alloc] initForRootStyle:styleToBeEdited];
+    UIViewController *controller = [[StyleStructureController alloc] initWithHeadStyle:styleToBeEdited];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

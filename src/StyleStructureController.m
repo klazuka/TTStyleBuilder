@@ -14,12 +14,18 @@
 
 @implementation StyleStructureController
 
-- (id)initForRootStyle:(TTStyle *)style
+- (id)initWithHeadStyle:(TTStyle *)style
 {
     if ((self = [super init])) {
-        headStyle = [style retain];
         self.title = @"Style Builder";
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayAddStylePicker)] autorelease];
+        
+        styleDataSource = [[StyleStructureDataSource alloc] initWithHeadStyle:style];
+        
+        previewView = [[StylePreview alloc] initWithFrame:CGRectZero];
+        previewView.style = style;
+        previewView.backgroundColor = [UIColor whiteColor];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLiveStylePreview) name:kRefreshStylePreviewNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stylePipelineUpdated:) name:kStylePipelineUpdatedNotification object:nil];
     }
@@ -29,7 +35,7 @@
 - (id)init
 {
     // Choose an arbitrary style from the system as an example.
-    return [self initForRootStyle:TTSTYLE(tabBar)];
+    return [self initWithHeadStyle:TTSTYLE(tabBar)];
 }
 
 - (void)refreshLiveStylePreview
@@ -39,9 +45,10 @@
 
 - (void)stylePipelineUpdated:(NSNotification *)notification
 {
-    [headStyle release];
-    headStyle = [[notification object] retain];
-    previewView.style = headStyle;
+    id obj = [notification object];
+    if (obj)
+        NSAssert([obj isKindOfClass:[TTStyle class]], @"Style pipeline update notification payload must be either a TTStyle instance or nil.");
+    previewView.style = obj;
     [self refreshLiveStylePreview];
 }
 
@@ -64,15 +71,10 @@
 {
     NSAssert(style, @"style for appending cannot be nil");
     
-    NSString *name = [style className];
-    NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
-    
-    // Update the table view
-    [((TTListDataSource*)self.dataSource).items addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
-    [self.tableView reloadData];
-    
     // Add the new style to the end of the rendering pipeline
-    [(StyleStructureDataSource*)self.dataSource appendStyle:style];
+    [styleDataSource appendStyle:style];
+    
+    [self.tableView reloadData];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,9 +107,7 @@
     previewFrame.origin.y = self.view.height - stylePreviewHeight;
     previewFrame.size.height = stylePreviewHeight;
     previewFrame = CGRectInset(previewFrame, 40.f, 10.f);
-    previewView = [[StylePreview alloc] initWithFrame:previewFrame];
-    previewView.style = headStyle;
-    previewView.backgroundColor = [UIColor whiteColor];
+    [previewView setFrame:previewFrame];
     [self.view addSubview:previewView];
     
     // Info button to open app settings
@@ -144,15 +144,7 @@
 
 - (id<TTTableViewDataSource>)createDataSource
 {
-    NSMutableArray *styleNames = [NSMutableArray array];
-    
-    for (TTStyle *style in [headStyle pipeline]) {
-        NSString *name = [style className];
-        NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
-        [styleNames addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
-    }
-    
-    return [StyleStructureDataSource dataSourceWithItems:styleNames headStyle:headStyle];
+    return styleDataSource;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,8 +152,8 @@
 
 - (void)dealloc
 {
+    [styleDataSource release];
     [previewView release];
-    [headStyle release];
     [super dealloc];
 }
 

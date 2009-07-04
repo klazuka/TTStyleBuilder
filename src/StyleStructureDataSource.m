@@ -8,21 +8,106 @@
 
 #import "StyleStructureDataSource.h"
 
+#pragma mark Private Methods
+@interface StyleStructureDataSource ()
+- (void)linkStyle:(TTStyle *)style atIndex:(NSUInteger)index;
+- (TTStyle *)unlinkStyleAtIndex:(NSUInteger)index;
+- (void)verifyState;
+@end
 
+#pragma mark -
+#pragma mark Implementation
+#pragma mark -
 @implementation StyleStructureDataSource
 
-+ (StyleStructureDataSource*)dataSourceWithItems:(NSMutableArray*)items headStyle:(TTStyle *)style
+@synthesize headStyle;
+
++ (StyleStructureDataSource*)dataSourceWithHeadStyle:(TTStyle *)style
 {
-    return [[[[self class] alloc] initWithItems:items headStyle:style] autorelease];
+    return [[[[self class] alloc] initWithHeadStyle:style] autorelease];
 }
-- (id)initWithItems:(NSMutableArray*)items headStyle:(TTStyle *)style
+- (id)initWithHeadStyle:(TTStyle *)theHeadStyle
 {
+    NSMutableArray *items = [NSMutableArray array];
+    for (TTStyle *style in [theHeadStyle pipeline]) {
+        NSString *name = [style className];
+        NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
+        [items addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
+    }
+    
     if ((self = [super initWithItems:items])) {
-        headStyle = style;  // Pointer assignment. I am intentionally not retaining it.
-        rootStyle = [[TTStyle alloc] initWithNext:headStyle];
+        self.headStyle = theHeadStyle;
     }
     return self;
 }
+
+#pragma mark High-level data operations
+
+- (void)appendStyle:(TTStyle *)style
+{
+    KLog(@" ++++ [Appending %@]", style);
+
+    // Update the rendering pipeline
+    [self linkStyle:style
+            atIndex:(headStyle ? [[headStyle pipeline] count] : 0)];
+
+    // Update the table view
+    NSString *name = [style className];
+    NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
+    [self.items addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
+    
+    // Verify correctness
+    [self verifyState];
+    
+    // Post the notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
+}
+
+- (BOOL)deleteStyleAtIndex:(NSUInteger)index
+{
+    KLog(@" ---- [Deleting style at index %u]", index);
+    
+    // Unlink the node from the TTStyle pipeline
+    [self unlinkStyleAtIndex:index];
+    
+    // Remove the item from the table view
+    [self.items removeObjectAtIndex:index];
+    
+    // Verify correctness
+    [self verifyState];
+    
+    // Update the live style preview
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
+    
+    // Signal to the caller that the desired data was deleted
+    return YES;
+}
+
+- (void)moveStyleFromIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
+{
+    KLog(@" >>>> [Moving row at %u to %u]", fromIndex, toIndex);
+    
+    // Update the rendering pipeline (delete followed by an insert)
+    TTStyle *movingStyle = [self unlinkStyleAtIndex:fromIndex];
+    [self linkStyle:movingStyle atIndex:toIndex];
+    
+    // Update the tableview data source
+    id toBeMoved = [self.items objectAtIndex:fromIndex];
+    [[toBeMoved retain] autorelease];  // make sure it is alive during the shuffle
+    [self.items removeObject:toBeMoved];
+    if (toIndex > [self.items count])
+        [self.items addObject:toBeMoved];
+    else
+        [self.items insertObject:toBeMoved atIndex:toIndex];
+    
+    // Verify correctness
+    [self verifyState];
+    
+    // Update the live style preview
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
+}
+
+#pragma mark Low-level linked list operations
 
 - (TTStyle *)unlinkStyleAtIndex:(NSUInteger)index
 {
@@ -32,10 +117,10 @@
     if (index == 0) {
         // We are deleting the node that headStyle points at, 
         // so in order to patch the linked list, we need to 
-        // update rootStyle's next pointer and update the headStyle pointer.
+        // replace the headStyle pointer.
         styleToBeDeleted = headStyle;
         [styleToBeDeleted retain];
-        headStyle = rootStyle.next = styleToBeDeleted.next;
+        self.headStyle = styleToBeDeleted.next;
         KLog(@"SPECIAL CASE: Un-linked %@ from the head of the pipeline. New head is %@", styleToBeDeleted, headStyle);
     } else {
         // Normal case: patch the linked list around the deleted node.
@@ -61,11 +146,9 @@
     
     if (index == 0) {
         // We are inserting a node at the front of the list,
-        // so we need to make headStyle point at this node
-        // as well as update rootStyle's next pointer.
+        // so we need to make headStyle point at this node.
         style.next = headStyle;
-        headStyle = style;
-        rootStyle.next = headStyle;
+        self.headStyle = style;
         KLog(@"SPECIAL CASE: Linked %@ into the head of the pipeline", style);
     } else {
         // Normal case: insert and patch up the linked list.
@@ -81,80 +164,41 @@
         KLog(@"%d - %@", i++, [style className]);
 }
 
-- (void)appendStyle:(TTStyle *)style
-{
-    KLog(@" ++++ [Appending %@]", style);
-    [self linkStyle:style
-            atIndex:(headStyle ? [[headStyle pipeline] count] : 0)];
-    
-    // Post the notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
-}
-
-- (void)verifyState
-{
-    (rootStyle != nil && rootStyle != headStyle, @"rootStyle and headStyle cannot both point at the same object!");
-    
-    // Verify that the TTStyle linked list matches
-    // the table view data source representation.
-    int i = 0;
-     for (TTStyle *style in [headStyle pipeline]) {
-         NSString *a = [style className];
-         NSString *b = [[self.items objectAtIndex:i] text];
-         NSAssert2([a isEqualToString:b], @"pipeline/datasource mismatch! %@ != %@", a, b);
-         i++;
-    }
-}
+#pragma mark UITableViewDataSource hooks
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    KLog(@" >>>> [Moving row at %u to %u]", fromIndexPath.row, toIndexPath.row);
-    
-    // Update the rendering pipeline.
-    // Move is like a delete followed by an insert
-    TTStyle *movingStyle = [self unlinkStyleAtIndex:fromIndexPath.row];
-    [self linkStyle:movingStyle atIndex:toIndexPath.row];
-    
-    // Update the tableview data source
-    id toBeMoved = [self.items objectAtIndex:fromIndexPath.row];
-    [[toBeMoved retain] autorelease];  // make sure it is alive during the shuffle
-    [self.items removeObject:toBeMoved];
-    if (toIndexPath.row > [self.items count])
-        [self.items addObject:toBeMoved];
-    else
-        [self.items insertObject:toBeMoved atIndex:toIndexPath.row];
-    
-    // Verify correctness
-    [self verifyState];
-    
-    // Update the live style preview
-    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
+    [self moveStyleFromIndex:fromIndexPath.row toIndex:toIndexPath.row];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        KLog(@" ---- [Deleting row %u]", indexPath.row);
-        // Unlink the node from the TTStyle pipeline
-        [self unlinkStyleAtIndex:indexPath.row];
-        
-        // Remove the item from the table view
-        [self.items removeObjectAtIndex:indexPath.row];
-        
-        // Verify correctness
-        [self verifyState];
-        
-        // Update the live style preview
-        [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
-        
-        // Tell the tableview that a row has been removed from the datasource.
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-	}
+        BOOL deleted = [self deleteStyleAtIndex:indexPath.row];
+        if (deleted)
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+
 }
+
+#pragma mark -
+
+- (void)verifyState
+{
+    // Verify that the TTStyle linked list matches
+    // the table view data source representation.
+    int i = 0;
+    for (TTStyle *style in [headStyle pipeline]) {
+        NSString *a = [style className];
+        NSString *b = [[self.items objectAtIndex:i] text];
+        NSAssert2([a isEqualToString:b], @"pipeline/datasource mismatch! %@ != %@", a, b);
+        i++;
+    }
+}
+
 - (void)dealloc
 {
-    [rootStyle release];
+    [headStyle release];
     [super dealloc];
 }
 
