@@ -61,6 +61,11 @@
     
     // Post the notification
     [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
+    
+    // Notify the TTTableViewController that the data source has new data.
+    // This is especially important if the prior state was an empty data source
+    // (e.g. displaying the big "NoData" screen).
+    [self dataSourceDidFinishLoad];
 }
 
 - (BOOL)deleteStyleAtIndex:(NSUInteger)index

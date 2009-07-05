@@ -17,7 +17,7 @@
 
 + (StyleStructureDataSource*)dataSourceWithHeadStyle:(TTStyle *)style;
 
-- (id)initWithHeadStyle:(TTStyle *)style;
+- (id)initWithHeadStyle:(TTStyle *)style;    // Designated initializer. |style| may be nil.
 
 - (void)appendStyle:(TTStyle *)style;   // Appends |style| to the end of the rendering pipeline.
 

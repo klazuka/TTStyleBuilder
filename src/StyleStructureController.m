@@ -34,8 +34,7 @@
 
 - (id)init
 {
-    // Choose an arbitrary style from the system as an example.
-    return [self initWithHeadStyle:TTSTYLE(tabBar)];
+    return [self initWithHeadStyle:nil];
 }
 
 - (void)refreshLiveStylePreview
@@ -73,8 +72,6 @@
     
     // Add the new style to the end of the rendering pipeline
     [styleDataSource appendStyle:style];
-    
-    [self.tableView reloadData];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,6 +143,30 @@
 {
     return styleDataSource;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark TTViewController
+
+- (UIImage*)imageForNoData {
+    return TTIMAGE(@"bundle://Three20.bundle/images/empty.png");
+}
+
+- (NSString*)titleForNoData {
+    return NSLocalizedString(@"The style pipeline is empty", @"");
+}
+
+- (NSString*)subtitleForNoData {
+    return NSLocalizedString(@"Tap the '+' button to add your first style node.", @"");
+}
+
+- (UIImage*)imageForError:(NSError*)error {
+    return TTIMAGE(@"bundle://Three20.bundle/images/error.png");
+}
+
+- (NSString*)subtitleForError:(NSError*)error {
+    return NSLocalizedString(@"There was an error displaying the style pipeline.", @"");
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
