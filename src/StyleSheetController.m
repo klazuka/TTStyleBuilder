@@ -85,7 +85,7 @@
 
 - (void)showStyle:(TTStyle *)style
 {
-    UIViewController *controller = [[StyleStructureController alloc] initForRootStyle:style];
+    UIViewController *controller = [[StyleStructureController alloc] initWithHeadStyle:style];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

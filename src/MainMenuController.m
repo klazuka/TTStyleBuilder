@@ -44,7 +44,7 @@
 
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
 {
-    // examine the selected cell text and dispatch to the appropriate method
+    // Examine the selected cell text and dispatch to the appropriate method
     // to display the desired screen.
     NSDictionary *dispatchTable = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [NSValue valueWithPointer:@selector(showCreateNewStyle)], @"Create New Style",
@@ -58,9 +58,7 @@
 
 - (void)showCreateNewStyle
 {
-//    TTStyle *styleToBeEdited = TTSTYLE(badge);
-    TTStyle *styleToBeEdited = [[[TTStyle alloc] initWithNext:nil] autorelease];
-    UIViewController *controller = [[StyleStructureController alloc] initForRootStyle:styleToBeEdited];
+    UIViewController *controller = [[StyleStructureController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

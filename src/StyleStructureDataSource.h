@@ -10,17 +10,14 @@
 
 @interface StyleStructureDataSource : TTListDataSource 
 {
-    TTStyle *rootStyle;     // retained
-    TTStyle *headStyle;     // assigned
+    TTStyle *headStyle;
 }
 
-// |headStyle| will not be retained since it is assumed that while we are editing
-// a TTStyle rendering pipeline, that structure will not be freed during editing.
-// (by not retaining |headStyle|, it makes it easier for me to do the pointer manipulation
-//  when patching up the linked list during delete/rearrange operations).
-+ (StyleStructureDataSource*)dataSourceWithItems:(NSMutableArray*)items headStyle:(TTStyle *)style;
+@property (nonatomic, retain) TTStyle *headStyle; // The head of the style rendering pipeline
 
-- (id)initWithItems:(NSMutableArray*)items headStyle:(TTStyle *)style;
++ (StyleStructureDataSource*)dataSourceWithHeadStyle:(TTStyle *)style;
+
+- (id)initWithHeadStyle:(TTStyle *)style;    // Designated initializer. |style| may be nil.
 
 - (void)appendStyle:(TTStyle *)style;   // Appends |style| to the end of the rendering pipeline.
 
