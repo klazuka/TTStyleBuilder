@@ -26,6 +26,7 @@
 		5370049F0FEB2F7B00C1A0D0 /* StyleSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5370049E0FEB2F7B00C1A0D0 /* StyleSheetController.m */; };
 		5370056F0FEBFE2D00C1A0D0 /* RuntimeSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5370056E0FEBFE2D00C1A0D0 /* RuntimeSupport.m */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
+		539FD81C1002065C00C022A3 /* StyleBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539FD81B1002065C00C022A3 /* StyleBrowserController.m */; };
 		53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59FB90FF17B0F00C82D9A /* SettingsController.m */; };
 		53D972590FF5541700E62B9A /* ColorEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972540FF5541700E62B9A /* ColorEditor.m */; };
 		53D9725A0FF5541700E62B9A /* FloatEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972560FF5541700E62B9A /* FloatEditor.m */; };
@@ -95,6 +96,8 @@
 		5370056D0FEBFE2D00C1A0D0 /* RuntimeSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeSupport.h; sourceTree = "<group>"; };
 		5370056E0FEBFE2D00C1A0D0 /* RuntimeSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuntimeSupport.m; sourceTree = "<group>"; };
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		539FD81A1002065C00C022A3 /* StyleBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleBrowserController.h; sourceTree = "<group>"; };
+		539FD81B1002065C00C022A3 /* StyleBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleBrowserController.m; sourceTree = "<group>"; };
 		53A59FB80FF17B0F00C82D9A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		53A59FB90FF17B0F00C82D9A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		53D972530FF5541700E62B9A /* ColorEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditor.h; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
 				533A1D780FEB28A000BECCA4 /* MainMenuController.m */,
 				5370049E0FEB2F7B00C1A0D0 /* StyleSheetController.m */,
+				539FD81B1002065C00C022A3 /* StyleBrowserController.m */,
 				53A59FB90FF17B0F00C82D9A /* SettingsController.m */,
 				53049E870FE67B4E00DD937B /* TTStyleBuilderGlobal.h */,
 			);
@@ -222,6 +226,7 @@
 			children = (
 				53A59FB80FF17B0F00C82D9A /* SettingsController.h */,
 				5370049D0FEB2F7B00C1A0D0 /* StyleSheetController.h */,
+				539FD81A1002065C00C022A3 /* StyleBrowserController.h */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				533A1D770FEB28A000BECCA4 /* MainMenuController.h */,
 			);
@@ -412,6 +417,7 @@
 				53D979C30FFBD7F300E62B9A /* TTShapeAdditions.m in Sources */,
 				53F1487A0FFE3F3700C959C7 /* StringEditor.m in Sources */,
 				53F149630FFE5D4900C959C7 /* UIColorAdditions.m in Sources */,
+				539FD81C1002065C00C022A3 /* StyleBrowserController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,9 +468,11 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = three20/src/;
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -480,9 +488,11 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = three20/src/;
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",

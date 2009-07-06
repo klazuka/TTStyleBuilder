@@ -9,6 +9,7 @@
 #import "MainMenuController.h"
 #import "StyleStructureController.h"
 #import "StyleSheetController.h"
+#import "StyleBrowserController.h"
 
 @interface MainMenuController ()
 - (void)showCreateNewStyle;
@@ -72,7 +73,9 @@
 
 - (void)showLoadFromDisk
 {
-    [self alert:@"Not yet implemented"];
+    UIViewController *controller = [[StyleBrowserController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 

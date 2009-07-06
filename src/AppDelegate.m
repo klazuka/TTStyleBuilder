@@ -46,7 +46,21 @@
 }
 
 #pragma mark -
-#pragma mark Memory management
+
+NSString *StyleArchivesDir(void)
+{
+#if TARGET_IPHONE_SIMULATOR
+    // I would use NSHomeDirectory() here but when you build for iPhone simulator, 
+    // NSHomeDirectory() instead gives the app's directory in 
+    // ~/Library/Application Support/iPhone Simulator/User/Applications/
+    // which is not what we want.
+    return [[NSString stringWithFormat:@"/Users/%@/Desktop", NSUserName()] stringByExpandingTildeInPath];
+#else
+    return TTPathForDocumentsResource(@".");
+#endif
+}
+
+#pragma mark -
 
 - (void)dealloc
 {

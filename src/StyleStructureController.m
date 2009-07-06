@@ -133,7 +133,31 @@
     if ([touch tapCount] == 2) {
         // Toggle editing mode (allows for deleting and rearranging styles)
         [self setEditing:!self.editing animated:YES];
+    } else if ([touch tapCount] == 3) {
+        // Save the TTStyle pipeline to disk
+        NSString *fullPath = [StyleArchivesDir() stringByAppendingPathComponent:@"FooBar.ttstyle"];
+        NSLog(@"Saving %@ to disk (%@)", [styleDataSource headStyle], fullPath);
+        [[NSKeyedArchiver archivedDataWithRootObject:[styleDataSource headStyle]] writeToFile:fullPath atomically:YES];
+        UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Archived" message:@"Would you like to inspect the saved archive?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Inspect", nil] autorelease];
+        [alertView show];
     }
+}
+
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [alertView cancelButtonIndex])
+        return;
+    
+    // ugly hack while testing
+    // TODO delete this method after finished testing
+    TTStyle *style = [NSKeyedUnarchiver unarchiveObjectWithFile:[StyleArchivesDir() stringByAppendingPathComponent:@"FooBar.ttstyle"]];
+    [styleDataSource release];
+    styleDataSource = [[StyleStructureDataSource alloc] initWithHeadStyle:style];
+    [self setEditing:NO animated:NO];
+    [self invalidateView];
+    previewView.style = style;
+    [self refreshLiveStylePreview];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

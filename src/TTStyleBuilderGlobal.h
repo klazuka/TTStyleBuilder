@@ -37,3 +37,5 @@
 #endif
 
 #endif // KLog
+
+NSString *StyleArchivesDir(void);
