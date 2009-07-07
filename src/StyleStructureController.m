@@ -11,10 +11,11 @@
 #import "StyleStructureDataSource.h"
 #import "NewObjectPickerController.h"
 #import "SettingsController.h"
+#import "AlertPromptView.h"
 
 @implementation StyleStructureController
 
-- (id)initWithHeadStyle:(TTStyle *)style
+- (id)initWithHeadStyle:(TTStyle *)style filePath:(NSString *)theFilePath
 {
     if ((self = [super init])) {
         self.title = @"Style Builder";
@@ -26,15 +27,22 @@
         previewView.style = style;
         previewView.backgroundColor = [UIColor whiteColor];
         
+        filePath = [theFilePath retain];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLiveStylePreview) name:kRefreshStylePreviewNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stylePipelineUpdated:) name:kStylePipelineUpdatedNotification object:nil];
     }
     return self;
 }
 
+- (id)initWithHeadStyle:(TTStyle *)style
+{
+    return [self initWithHeadStyle:style filePath:nil];
+}
+
 - (id)init
 {
-    return [self initWithHeadStyle:nil];
+    return [self initWithHeadStyle:nil filePath:nil];
 }
 
 - (void)refreshLiveStylePreview
@@ -74,12 +82,52 @@
     [styleDataSource appendStyle:style];
 }
 
-- (void)saveStyleToDisk
+- (void)saveStyleToFullPath:(NSString *)fullPath
 {
-    // Save the TTStyle pipeline to disk
-    NSString *fullPath = [StyleArchivesDir() stringByAppendingPathComponent:@"FooBar.ttstyle"];
     NSLog(@"Saving %@ to disk (%@)", [styleDataSource headStyle], fullPath);
-    [[NSKeyedArchiver archivedDataWithRootObject:[styleDataSource headStyle]] writeToFile:fullPath atomically:YES];
+    
+    BOOL ok = [[NSKeyedArchiver archivedDataWithRootObject:[styleDataSource headStyle]] writeToFile:fullPath atomically:YES];
+    if (!ok) {
+        NSString *msg = [NSString stringWithFormat:@"Failed to save style to %@", fullPath];
+        NSLog(msg);
+        [self alert:msg];
+    }
+    
+    // Keep track of the full path to the saved file.
+    [filePath release];
+    filePath = [fullPath retain];
+}
+
+- (void)saveButtonTapped
+{
+    // Before saving the style to disk, we need to prompt the user for a filename.
+    
+    // If this TTStyle was deserialized (e.g. filePath is non-nil)
+    // then pre-populate the filename text field with the original filename.
+    NSString *enteredText = filePath
+                                ? [[filePath lastPathComponent] stringByDeletingPathExtension]
+                                : nil;
+    
+    // Now prompt the user for a filename
+    AlertPromptView *prompt = [[[AlertPromptView alloc] initWithTitle:@"Save As" message:@"not visible" placeholder:@"filename" text:enteredText delegate:self cancelButtonTitle:@"Cancel" okButtonTitle:@"Save"] autorelease];
+    [prompt show];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [alertView cancelButtonIndex])
+        return;
+    
+    if ([alertView isKindOfClass:[AlertPromptView class]]) {
+        // The user provided a filename, so now let's actually save the style.
+        NSString *baseName = [(AlertPromptView *)alertView enteredText];
+        if ([baseName length] == 0) {
+            [self alert:@"the filename for 'save as' cannot be empty!"];
+            return;
+        }
+        NSString *filename = [NSString stringWithFormat:@"%@.ttstyle", baseName];
+        [self saveStyleToFullPath:[StyleArchivesDir() stringByAppendingPathComponent:filename]];
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +169,7 @@
     [items addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
     [items addObject:[[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(displaySettingsScreen)] autorelease]];
     [items addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
-    [items addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveStyleToDisk)] autorelease]];
+    [items addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonTapped)] autorelease]];
     [toolbar setItems:items];
     [self.view addSubview:toolbar];
 }
@@ -173,6 +221,7 @@
 {
     [styleDataSource release];
     [previewView release];
+    [filePath release];
     [super dealloc];
 }
 

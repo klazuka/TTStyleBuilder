@@ -15,8 +15,10 @@
 {
     StyleStructureDataSource *styleDataSource;  // Same as the TTTableViewController dataSource property
     TTView *previewView;
+    NSString *filePath;                         // the path to the archived TTStyle or nil if it was not deserialized.
 }
 
-- (id)initWithHeadStyle:(TTStyle *)style;    // Designated initializer. |style| may be nil.
+- (id)initWithHeadStyle:(TTStyle *)style filePath:(NSString *)filePath;    // Designated initializer. |style| may be nil. |filePath| may be nil.
+- (id)initWithHeadStyle:(TTStyle *)style;
 
 @end

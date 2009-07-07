@@ -11,7 +11,7 @@
 #import "objc/runtime.h"
 
 @interface StyleBrowserController ()
-- (void)showStyle:(TTStyle *)style;
+- (void)showStyle:(TTStyle *)style filePath:(NSString *)filePath;
 @end
 
 @implementation StyleBrowserController
@@ -52,21 +52,21 @@
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
 {
     NSString *filename = [object text];
-    NSString *fullPath = [StyleArchivesDir() stringByAppendingPathComponent:filename];
-    TTStyle *style = [NSKeyedUnarchiver unarchiveObjectWithFile:fullPath];
+    NSString *filePath = [StyleArchivesDir() stringByAppendingPathComponent:filename];
+    TTStyle *style = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
     
     if ( ![style isKindOfClass:[TTStyle class]] ){
-        NSLog(@"Failed to load a TTStyle from %@", fullPath);
+        NSLog(@"Failed to load a TTStyle from %@", filePath);
         [self alert:[NSString stringWithFormat:@"Failed to load %@. Perhaps it is not a valid archive?", filename]];
         return;
     }
 
-    [self showStyle:style];
+    [self showStyle:style filePath:filePath];
 }
 
-- (void)showStyle:(TTStyle *)style
+- (void)showStyle:(TTStyle *)style filePath:(NSString *)filePath
 {
-    UIViewController *controller = [[StyleStructureController alloc] initWithHeadStyle:style];
+    UIViewController *controller = [[StyleStructureController alloc] initWithHeadStyle:style filePath:filePath];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

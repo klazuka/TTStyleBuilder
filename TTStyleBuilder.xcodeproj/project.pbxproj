@@ -27,6 +27,7 @@
 		5370056F0FEBFE2D00C1A0D0 /* RuntimeSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5370056E0FEBFE2D00C1A0D0 /* RuntimeSupport.m */; };
 		5398FA230FE506500041DFF8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5398FA220FE506500041DFF8 /* QuartzCore.framework */; };
 		539FD81C1002065C00C022A3 /* StyleBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539FD81B1002065C00C022A3 /* StyleBrowserController.m */; };
+		539FDA5E100355AA00C022A3 /* AlertPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 539FDA5D100355AA00C022A3 /* AlertPromptView.m */; };
 		53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59FB90FF17B0F00C82D9A /* SettingsController.m */; };
 		53D972590FF5541700E62B9A /* ColorEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972540FF5541700E62B9A /* ColorEditor.m */; };
 		53D9725A0FF5541700E62B9A /* FloatEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972560FF5541700E62B9A /* FloatEditor.m */; };
@@ -98,6 +99,8 @@
 		5398FA220FE506500041DFF8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		539FD81A1002065C00C022A3 /* StyleBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleBrowserController.h; sourceTree = "<group>"; };
 		539FD81B1002065C00C022A3 /* StyleBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleBrowserController.m; sourceTree = "<group>"; };
+		539FDA5C100355AA00C022A3 /* AlertPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertPromptView.h; sourceTree = "<group>"; };
+		539FDA5D100355AA00C022A3 /* AlertPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertPromptView.m; sourceTree = "<group>"; };
 		53A59FB80FF17B0F00C82D9A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		53A59FB90FF17B0F00C82D9A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		53D972530FF5541700E62B9A /* ColorEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditor.h; sourceTree = "<group>"; };
@@ -184,6 +187,8 @@
 				53F147150FFD337D00C959C7 /* Three20.bundle */,
 				28A0AAE50D9B0CCF005BE974 /* TTStyleBuilder_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
+				539FDA5C100355AA00C022A3 /* AlertPromptView.h */,
+				539FDA5D100355AA00C022A3 /* AlertPromptView.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -418,6 +423,7 @@
 				53F1487A0FFE3F3700C959C7 /* StringEditor.m in Sources */,
 				53F149630FFE5D4900C959C7 /* UIColorAdditions.m in Sources */,
 				539FD81C1002065C00C022A3 /* StyleBrowserController.m in Sources */,
+				539FDA5E100355AA00C022A3 /* AlertPromptView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
