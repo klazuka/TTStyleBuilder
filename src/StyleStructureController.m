@@ -74,6 +74,14 @@
     [styleDataSource appendStyle:style];
 }
 
+- (void)saveStyleToDisk
+{
+    // Save the TTStyle pipeline to disk
+    NSString *fullPath = [StyleArchivesDir() stringByAppendingPathComponent:@"FooBar.ttstyle"];
+    NSLog(@"Saving %@ to disk (%@)", [styleDataSource headStyle], fullPath);
+    [[NSKeyedArchiver archivedDataWithRootObject:[styleDataSource headStyle]] writeToFile:fullPath atomically:YES];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NewObjectPickerDelegate
 
@@ -94,24 +102,28 @@
     
     // Table view (each row is a style in the rendering pipeline)
     CGRect tableFrame = self.view.bounds;
-    tableFrame.size.height -= stylePreviewHeight;
+    tableFrame.size.height -= stylePreviewHeight + TOOLBAR_HEIGHT;
     self.tableView = [[[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain] autorelease];
 	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.tableView];
     
     // Live preview display of the current rendering pipeline
     CGRect previewFrame = self.view.bounds;
-    previewFrame.origin.y = self.view.height - stylePreviewHeight;
+    previewFrame.origin.y = self.view.height - stylePreviewHeight - TOOLBAR_HEIGHT;
     previewFrame.size.height = stylePreviewHeight;
     previewFrame = CGRectInset(previewFrame, 40.f, 10.f);
     [previewView setFrame:previewFrame];
     [self.view addSubview:previewView];
     
-    // Info button to open app settings
-    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoDark];
-    [infoButton addTarget:self action:@selector(displaySettingsScreen) forControlEvents:UIControlEventTouchUpInside];
-    [infoButton setFrame:UIEdgeInsetsInsetRect(self.view.frame, UIEdgeInsetsMake(self.view.height - 40.f, self.view.width - 40.f, 0.f, 0.f))];
-    [self.view addSubview:infoButton];
+    UIToolbar *toolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.f, self.view.height - TOOLBAR_HEIGHT, self.view.width, TOOLBAR_HEIGHT)] autorelease];
+    NSMutableArray *items = [NSMutableArray array];
+    [items addObject:[self editButtonItem]];
+    [items addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
+    [items addObject:[[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(displaySettingsScreen)] autorelease]];
+    [items addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
+    [items addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveStyleToDisk)] autorelease]];
+    [toolbar setItems:items];
+    [self.view addSubview:toolbar];
 }
 
 // TODO This is a bug in Three20: 
@@ -120,44 +132,6 @@
 {
     [super setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
-}
-
-// Until I can find a place to put the 'edit' button
-// the only way to toggle the editing state is
-// to double-tap somewhere inside self.view but outside
-// the tableview (in this case, the best place to double-tap
-// is the style preview view).
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    if ([touch tapCount] == 2) {
-        // Toggle editing mode (allows for deleting and rearranging styles)
-        [self setEditing:!self.editing animated:YES];
-    } else if ([touch tapCount] == 3) {
-        // Save the TTStyle pipeline to disk
-        NSString *fullPath = [StyleArchivesDir() stringByAppendingPathComponent:@"FooBar.ttstyle"];
-        NSLog(@"Saving %@ to disk (%@)", [styleDataSource headStyle], fullPath);
-        [[NSKeyedArchiver archivedDataWithRootObject:[styleDataSource headStyle]] writeToFile:fullPath atomically:YES];
-        UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Archived" message:@"Would you like to inspect the saved archive?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Inspect", nil] autorelease];
-        [alertView show];
-    }
-}
-
-#pragma mark UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == [alertView cancelButtonIndex])
-        return;
-    
-    // ugly hack while testing
-    // TODO delete this method after finished testing
-    TTStyle *style = [NSKeyedUnarchiver unarchiveObjectWithFile:[StyleArchivesDir() stringByAppendingPathComponent:@"FooBar.ttstyle"]];
-    [styleDataSource release];
-    styleDataSource = [[StyleStructureDataSource alloc] initWithHeadStyle:style];
-    [self setEditing:NO animated:NO];
-    [self invalidateView];
-    previewView.style = style;
-    [self refreshLiveStylePreview];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
