@@ -8,7 +8,7 @@
 
 #import "PropertyEditorSystem.h"
 
-@interface UIEdgeInsetsEditor : TTTableViewController <ValueEditor>
+@interface UIEdgeInsetsEditor : TTTableViewController <ValueEditor, UITextFieldDelegate>
 {
     // ValueEditor
     id object;

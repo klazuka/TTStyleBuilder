@@ -44,13 +44,14 @@ Writing Editor Plugins
 ----------------------
 1. Inherit from UIViewController (or a subclass of UIViewController)
 2. Implement the ValueEditor protocol.
+3. Post a kRefreshStylePreviewNotification whenever you change the property value that your plugin is the editor for. This will trigger the style preview refresh.
 
 Adding New TTStyles and TTShapes
 --------------------------------
 1. Create your subclass.
 2. Expose your instance variables through Objective-C 2.0 properties.
 3. Implement the class factory method -(TTStyle*)prototypicalInstance.
-4. Don't forget to implement initWithCoder: and encodeWithCoder:
+4. Implement initWithCoder: and encodeWithCoder:
 
 Known Issues
 ============

@@ -18,6 +18,14 @@
     return @"T{CGSize=\"width\"f\"height\"f}";
 }
 
+- (void)updatePropertyValue
+{
+    NSValue *newValue = [NSValue valueWithCGSize:CGSizeMake([[widthField text] floatValue], [[heightField text] floatValue])];
+    [self.object setValue:newValue forKey:self.propertyName];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIViewController
 
@@ -31,10 +39,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSValue *newValue = [NSValue valueWithCGSize:CGSizeMake([[widthField text] floatValue], [[heightField text] floatValue])];
-    [self.object setValue:newValue forKey:self.propertyName];
+    [self updatePropertyValue];
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewController
@@ -44,15 +50,28 @@
     CGSize size = [[self.object valueForKey:self.propertyName] CGSizeValue];
     
     widthField = [[TTTextFieldTableField alloc] initWithTitle:@"Width" text:[NSString stringWithFormat:@"%.1f", size.width]];
+    widthField.delegate = self;
     widthField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     widthField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     heightField = [[TTTextFieldTableField alloc] initWithTitle:@"Height" text:[NSString stringWithFormat:@"%.1f", size.height]];
+    heightField.delegate = self;
     heightField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     heightField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
     return [TTListDataSource dataSourceWithObjects:widthField, heightField, nil];
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    [self performSelector:@selector(updatePropertyValue) withObject:nil afterDelay:0.f]; // Wait until the next iteration of the runloop so that when we read the [textField text] property, we read the new value (which isn't yet visible at this time).
+    return YES;
+}
+
+#pragma mark -
 
 - (void)dealloc
 {

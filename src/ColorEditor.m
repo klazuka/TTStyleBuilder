@@ -28,6 +28,8 @@
     [self.object setValue:color forKey:self.propertyName];
     
     [colorSwatchView setBackgroundColor:color];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

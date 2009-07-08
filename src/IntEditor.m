@@ -18,6 +18,14 @@
     return @"Ti";
 }
 
+- (void)updatePropertyValue
+{
+    NSNumber *newValue = [NSNumber numberWithInt:[[numberField text] intValue]];
+    [self.object setValue:newValue forKey:self.propertyName];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIViewController
 
@@ -31,8 +39,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    NSNumber *newValue = [NSNumber numberWithInt:[[numberField text] intValue]];
-    [self.object setValue:newValue forKey:self.propertyName];
+    [self updatePropertyValue];
 }
 
 
@@ -42,11 +49,23 @@
 - (id<TTTableViewDataSource>)createDataSource
 {
     numberField = [[TTTextFieldTableField alloc] initWithTitle:self.propertyName text:[NSString stringWithFormat:@"%d", [[self.object valueForKey:self.propertyName] intValue]]];
+    numberField.delegate = self;
     numberField.keyboardType = UIKeyboardTypeNumberPad;
     numberField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     return [TTListDataSource dataSourceWithObjects:numberField, nil];
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    [self performSelector:@selector(updatePropertyValue) withObject:nil afterDelay:0.f]; // Wait until the next iteration of the runloop so that when we read the [textField text] property, we read the new value (which isn't yet visible at this time).
+    return YES;
+}
+
+#pragma mark -
 
 - (void)dealloc
 {

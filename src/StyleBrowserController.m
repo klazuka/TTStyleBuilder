@@ -28,6 +28,12 @@
     [self.view addSubview:self.tableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEraseStylePreviewNotification object:nil];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewController
 
@@ -69,6 +75,8 @@
     UIViewController *controller = [[StyleStructureController alloc] initWithHeadStyle:style filePath:filePath];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
 

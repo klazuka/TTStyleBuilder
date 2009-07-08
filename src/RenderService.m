@@ -31,6 +31,7 @@
         offscreenView.backgroundColor = [UIColor colorWithWhite:0.953f alpha:1.f];  // Matches the bg color of the NSImageView in the MacRenderClient.
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(render:) name:kStylePipelineUpdatedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(renderBlankStyle:) name:kEraseStylePreviewNotification object:nil];
     }
     return self;
 }
@@ -49,7 +50,7 @@
 
 - (void)renderStyle:(TTStyle *)style forClient:(NSDictionary *)client
 {
-    TTLOG(@"Rasterizing style (%@) on behalf of RenderClient (%@).", style, client);
+    TTLOG(@"Rasterizing style (%@) for %@", style, [client valueForKeyPath:@"connection.address"]);
     
     // Rasterization
     CGSize clientSize = CGSizeMake([[client objectForKey:@"width"] floatValue], [[client objectForKey:@"height"] floatValue]);
@@ -74,14 +75,25 @@
     cachedStyle = [style retain];
 }
 
+- (void)renderStyleForAllClients:(TTStyle *)style
+{
+    for (NSDictionary *clientKey in clients)
+        [self renderStyle:style forClient:[clients objectForKey:clientKey]];    
+}
+
 - (void)render:(NSNotification *)notification
 {
     id obj = [notification object];
     if (obj)
         NSAssert([obj isKindOfClass:[TTStyle class]], @"Style pipeline update notification payload must be either a TTStyle instance or nil.");
     
-    for (NSDictionary *clientKey in clients)
-        [self renderStyle:obj forClient:[clients objectForKey:clientKey]];
+    [self renderStyleForAllClients:obj];
+}
+
+- (void)renderBlankStyle:(NSNotification *)notification
+{
+    TTLOG(@"Rendering BLANK style.");
+    [self renderStyleForAllClients:[[[TTStyle alloc] initWithNext:nil] autorelease]];
 }
 
 // --------------------------------------------------------------------------------
@@ -136,6 +148,7 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [cachedStyle release];
     [clients release];
     [offscreenView release];

@@ -18,6 +18,13 @@
     return @"T@\"NSString\"";
 }
 
+- (void)updatePropertyValue
+{
+    [self.object setValue:[stringField text] forKey:self.propertyName];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIViewController
 
@@ -31,9 +38,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.object setValue:[stringField text] forKey:self.propertyName];
+    [self updatePropertyValue];
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewController
@@ -41,11 +47,24 @@
 - (id<TTTableViewDataSource>)createDataSource
 {
     stringField = [[TTTextFieldTableField alloc] initWithTitle:self.propertyName text:[self.object valueForKey:self.propertyName]];
+    stringField.delegate = self;
     stringField.keyboardType = UIKeyboardTypeAlphabet;
     stringField.clearButtonMode = UITextFieldViewModeUnlessEditing;
     
     return [TTListDataSource dataSourceWithObjects:stringField, nil];
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    [self performSelector:@selector(updatePropertyValue) withObject:nil afterDelay:0.f]; // Wait until the next iteration of the runloop so that when we read the [textField text] property, we read the new value (which isn't yet visible at this time).
+    return YES;
+}
+
+
+#pragma mark -
 
 - (void)dealloc
 {

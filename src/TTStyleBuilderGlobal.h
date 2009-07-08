@@ -22,9 +22,10 @@
 
 
 // ---- notifications ----
-#define kStylePipelineUpdatedNotification @"Style Pipeline Updated Notification"
-#define kRefreshStylePreviewNotification @"Refresh Style Preview Notification"
-#define kNewObjectValueButtonTappedNotification @"New Object Value Button Notification"
+#define kStylePipelineUpdatedNotification @"Style Pipeline Updated Notification"            // structural change
+#define kRefreshStylePreviewNotification @"Refresh Style Preview Notification"              // property change
+#define kEraseStylePreviewNotification @"Erase Style Preview Notification"                  // nil-out the style preview
+#define kNewObjectValueButtonTappedNotification @"New Object Value Button Notification"     // user tapped the "New" button on an object property to invoke a picker to select a replacement object for the row's property value.
 
 
 // ---- macros -----

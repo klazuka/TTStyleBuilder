@@ -9,7 +9,7 @@
 #import "PropertyEditorSystem.h"
 
 
-@interface CGSizeEditor : TTTableViewController <ValueEditor>
+@interface CGSizeEditor : TTTableViewController <ValueEditor, UITextFieldDelegate>
 {
     // ValueEditor
     id object;
