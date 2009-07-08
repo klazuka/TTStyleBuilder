@@ -1,11 +1,9 @@
 //
-//  BLIPEchoClient.h
+//  MacRenderClient.h
 //  MYNetwork
 //
-//  Created by Jens Alfke on 5/24/08.
-//  Copyright 2008 Jens Alfke. All rights reserved.
-//  Adapted from Apple sample code "CocoaEcho":
-//  http://developer.apple.com/samplecode/CocoaEcho/index.html
+//  Adapted from Jen Aflke's MYNetwork echo client example code:
+//  http://bitbucket.org/snej/mynetwork/wiki/Home
 //
 
 #import <Cocoa/Cocoa.h>
@@ -13,7 +11,7 @@
 @class MYBonjourBrowser;
 
 
-@interface BLIPEchoClient : NSObject <BLIPConnectionDelegate>
+@interface MacRenderClient : NSObject <BLIPConnectionDelegate>
 {
     IBOutlet NSTextField *widthField;
     IBOutlet NSTextField *heightField;

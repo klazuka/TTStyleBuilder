@@ -10,7 +10,6 @@
 		27375DFC0FC9FB5C0033F8F5 /* TCPEndpoint+Certs.m in Sources */ = {isa = PBXBuildFile; fileRef = 27375DFA0FC9FB5C0033F8F5 /* TCPEndpoint+Certs.m */; };
 		273B457B0FA681EE00276298 /* MYBonjourRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B45790FA681EE00276298 /* MYBonjourRegistration.h */; };
 		273B457C0FA681EE00276298 /* MYBonjourRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B457A0FA681EE00276298 /* MYBonjourRegistration.m */; };
-		2779048B0DE9204300C6D295 /* BLIPEchoClient.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2779048A0DE9204300C6D295 /* BLIPEchoClient.xib */; };
 		2780F20C0FA194BD00C0FB83 /* MYDNSService.h in Headers */ = {isa = PBXBuildFile; fileRef = 2780F20A0FA194BD00C0FB83 /* MYDNSService.h */; };
 		2780F20D0FA194BD00C0FB83 /* MYDNSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2780F20B0FA194BD00C0FB83 /* MYDNSService.m */; };
 		2780F4380FA28F4400C0FB83 /* MYBonjourQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 2780F4360FA28F4400C0FB83 /* MYBonjourQuery.h */; };
@@ -19,7 +18,6 @@
 		2780F4A20FA2C59000C0FB83 /* MYAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2780F4A00FA2C59000C0FB83 /* MYAddressLookup.m */; };
 		279DDC970F9E2EF400D75D91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279DD99E0F9E290500D75D91 /* Foundation.framework */; };
 		279DDC9B0F9E2F2A00D75D91 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279DDC9A0F9E2F2A00D75D91 /* AppKit.framework */; };
-		279DDCD10F9E38DD00D75D91 /* BLIPEchoClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 277903E90DE8F08100C6D295 /* BLIPEchoClient.m */; };
 		279E8FA10F9FDD2600608D8D /* BLIPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 270460F40DE49030003D9D3F /* BLIPConnection.m */; };
 		279E8FA20F9FDD2600608D8D /* BLIPDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 270460F60DE49030003D9D3F /* BLIPDispatcher.m */; };
 		279E8FA30F9FDD2600608D8D /* BLIPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270460F90DE49030003D9D3F /* BLIPMessage.m */; };
@@ -46,6 +44,8 @@
 		279E8FB80F9FDD2600608D8D /* ConcurrentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 278C1BB60F9F975700954AE1 /* ConcurrentOperation.m */; };
 		279E8FD70F9FDDE900608D8D /* libMYNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 279E8F9E0F9FDD0800608D8D /* libMYNetwork.a */; };
 		279E8FEF0F9FDE5A00608D8D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2777C9100F7602A7007F8D30 /* Security.framework */; };
+		539FE1321004EBB700C022A3 /* MacRenderClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 539FE12F1004EBB700C022A3 /* MacRenderClient.m */; };
+		539FE1331004EBB700C022A3 /* MacRenderClient.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539FE1301004EBB700C022A3 /* MacRenderClient.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,11 +107,7 @@
 		2777C9100F7602A7007F8D30 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		277903830DE8C2DD00C6D295 /* maindocs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maindocs.h; sourceTree = "<group>"; wrapsLines = 1; };
 		277903D80DE8EFC900C6D295 /* BLIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLIP.h; sourceTree = "<group>"; };
-		277903E80DE8F08100C6D295 /* BLIPEchoClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLIPEchoClient.h; sourceTree = "<group>"; };
-		277903E90DE8F08100C6D295 /* BLIPEchoClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLIPEchoClient.m; sourceTree = "<group>"; };
-		277904260DE91C7900C6D295 /* BLIP Echo Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BLIP Echo Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		277904280DE91C7900C6D295 /* BLIP Echo Client-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BLIP Echo Client-Info.plist"; sourceTree = "<group>"; };
-		2779048A0DE9204300C6D295 /* BLIPEchoClient.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BLIPEchoClient.xib; sourceTree = "<group>"; };
+		277904260DE91C7900C6D295 /* StyleRenderClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StyleRenderClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2780F20A0FA194BD00C0FB83 /* MYDNSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MYDNSService.h; path = PortMapper/MYDNSService.h; sourceTree = "<group>"; };
 		2780F20B0FA194BD00C0FB83 /* MYDNSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYDNSService.m; path = PortMapper/MYDNSService.m; sourceTree = "<group>"; };
 		2780F4360FA28F4400C0FB83 /* MYBonjourQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYBonjourQuery.h; sourceTree = "<group>"; };
@@ -138,6 +134,10 @@
 		27E0DBED0DF3450F00E7F648 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		27E0DBEE0DF3450F00E7F648 /* GTMNSData+zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSData+zlib.h"; sourceTree = "<group>"; };
 		27E0DBEF0DF3450F00E7F648 /* GTMNSData+zlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSData+zlib.m"; sourceTree = "<group>"; };
+		539FE12D1004EBB700C022A3 /* MacRenderClient-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MacRenderClient-Info.plist"; sourceTree = "<group>"; };
+		539FE12E1004EBB700C022A3 /* MacRenderClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacRenderClient.h; sourceTree = "<group>"; };
+		539FE12F1004EBB700C022A3 /* MacRenderClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacRenderClient.m; sourceTree = "<group>"; };
+		539FE1301004EBB700C022A3 /* MacRenderClient.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MacRenderClient.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,11 +165,14 @@
 		08FB7794FE84155DC02AAC07 /* MYNetwork */ = {
 			isa = PBXGroup;
 			children = (
+				539FE12D1004EBB700C022A3 /* MacRenderClient-Info.plist */,
+				539FE12E1004EBB700C022A3 /* MacRenderClient.h */,
+				539FE12F1004EBB700C022A3 /* MacRenderClient.m */,
+				539FE1301004EBB700C022A3 /* MacRenderClient.xib */,
 				270462C30DE4A65B003D9D3F /* BLIP Overview.txt */,
 				277903830DE8C2DD00C6D295 /* maindocs.h */,
 				270460F00DE49030003D9D3F /* MYNetwork */,
 				270461220DE49055003D9D3F /* MYUtilities */,
-				277903E70DE8F05F00C6D295 /* Demo */,
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
@@ -192,7 +195,7 @@
 		1AB674ADFE9D54B511CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				277904260DE91C7900C6D295 /* BLIP Echo Client.app */,
+				277904260DE91C7900C6D295 /* StyleRenderClient.app */,
 				279E8F9E0F9FDD0800608D8D /* libMYNetwork.a */,
 			);
 			name = Products;
@@ -277,18 +280,6 @@
 			name = MYUtilities;
 			sourceTree = MYUtilities;
 		};
-		277903E70DE8F05F00C6D295 /* Demo */ = {
-			isa = PBXGroup;
-			children = (
-				277903E80DE8F08100C6D295 /* BLIPEchoClient.h */,
-				277903E90DE8F08100C6D295 /* BLIPEchoClient.m */,
-				2779048A0DE9204300C6D295 /* BLIPEchoClient.xib */,
-				277904280DE91C7900C6D295 /* BLIP Echo Client-Info.plist */,
-			);
-			name = Demo;
-			path = BLIP/Demo;
-			sourceTree = "<group>";
-		};
 		2780F5710FA2E38100C0FB83 /* Addressing */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,9 +345,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		277904250DE91C7900C6D295 /* BLIP Echo Client */ = {
+		277904250DE91C7900C6D295 /* StyleRenderClient */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2779042B0DE91C7A00C6D295 /* Build configuration list for PBXNativeTarget "BLIP Echo Client" */;
+			buildConfigurationList = 2779042B0DE91C7A00C6D295 /* Build configuration list for PBXNativeTarget "StyleRenderClient" */;
 			buildPhases = (
 				277904220DE91C7900C6D295 /* Resources */,
 				277904230DE91C7900C6D295 /* Sources */,
@@ -367,9 +358,9 @@
 			dependencies = (
 				279E8FD60F9FDDD900608D8D /* PBXTargetDependency */,
 			);
-			name = "BLIP Echo Client";
+			name = StyleRenderClient;
 			productName = "BLIP Echo Client";
-			productReference = 277904260DE91C7900C6D295 /* BLIP Echo Client.app */;
+			productReference = 277904260DE91C7900C6D295 /* StyleRenderClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 		279E8F9D0F9FDD0800608D8D /* Library */ = {
@@ -394,7 +385,7 @@
 /* Begin PBXProject section */
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "MYNetwork" */;
+			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "MacRenderClient" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 08FB7794FE84155DC02AAC07 /* MYNetwork */;
@@ -402,7 +393,7 @@
 			projectRoot = "";
 			targets = (
 				279E8F9D0F9FDD0800608D8D /* Library */,
-				277904250DE91C7900C6D295 /* BLIP Echo Client */,
+				277904250DE91C7900C6D295 /* StyleRenderClient */,
 			);
 		};
 /* End PBXProject section */
@@ -412,7 +403,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2779048B0DE9204300C6D295 /* BLIPEchoClient.xib in Resources */,
+				539FE1331004EBB700C022A3 /* MacRenderClient.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,8 +414,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				279DDCD10F9E38DD00D75D91 /* BLIPEchoClient.m in Sources */,
 				27375DFC0FC9FB5C0033F8F5 /* TCPEndpoint+Certs.m in Sources */,
+				539FE1321004EBB700C022A3 /* MacRenderClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,18 +484,18 @@
 		277904290DE91C7A00C6D295 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "BLIP/Demo/BLIP Echo Client-Info.plist";
+				INFOPLIST_FILE = "MacRenderClient-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "BLIP Echo Client";
+				PRODUCT_NAME = StyleRenderClient;
 			};
 			name = Debug;
 		};
 		2779042A0DE91C7A00C6D295 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = "BLIP/Demo/BLIP Echo Client-Info.plist";
+				INFOPLIST_FILE = "MacRenderClient-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "BLIP Echo Client";
+				PRODUCT_NAME = StyleRenderClient;
 			};
 			name = Release;
 		};
@@ -529,7 +520,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "MYNetwork" */ = {
+		1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "MacRenderClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB927908733DD40010E9CD /* Debug */,
@@ -538,7 +529,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2779042B0DE91C7A00C6D295 /* Build configuration list for PBXNativeTarget "BLIP Echo Client" */ = {
+		2779042B0DE91C7A00C6D295 /* Build configuration list for PBXNativeTarget "StyleRenderClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				277904290DE91C7A00C6D295 /* Debug */,

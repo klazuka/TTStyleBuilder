@@ -1,14 +1,12 @@
 //
-//  BLIPEchoClient.m
+//  MacRenderClient.m
 //  MYNetwork
 //
-//  Created by Jens Alfke on 5/24/08.
-//  Copyright 2008 Jens Alfke. All rights reserved.
-//  Adapted from Apple sample code "CocoaEcho":
-//  http://developer.apple.com/samplecode/CocoaEcho/index.html
+//  Adapted from Jen Aflke's MYNetwork echo client example code:
+//  http://bitbucket.org/snej/mynetwork/wiki/Home
 //
 
-#import "BLIPEchoClient.h"
+#import "MacRenderClient.h"
 #import "MYBonjourBrowser.h"
 #import "MYBonjourService.h"
 #import "CollectionUtils.h"
@@ -16,7 +14,7 @@
 #import "Target.h"
 
 
-@implementation BLIPEchoClient
+@implementation MacRenderClient
 
 
 - (void)awakeFromNib 
