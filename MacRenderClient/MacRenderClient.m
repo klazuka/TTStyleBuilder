@@ -13,15 +13,41 @@
 #import "MYNetwork.h"
 #import "Target.h"
 
+@interface MacRenderClient ()
+- (void)openConnection:(MYBonjourService*)service;
+@end
+
 
 @implementation MacRenderClient
-
 
 - (void)awakeFromNib 
 {
     [self.serviceBrowser start];
+    
+    [self addObserver:self forKeyPath:@"serviceList" options:NSKeyValueObservingOptionNew context:NULL];
+    
     [widthField setStringValue:[NSString stringWithFormat:@"%.0f", imageView.frame.size.width]];
     [heightField setStringValue:[NSString stringWithFormat:@"%.0f", imageView.frame.size.height]];
+}
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"serviceList"]) {
+        // Automatically connect to an arbitrary service from the list if we are not already connected.
+        // YES, we should give the user a choice, but in practice, there will only be one
+        // TTStyleBuilder RenderService available.
+        if (!_connection) {
+            NSArray *services = [change objectForKey:NSKeyValueChangeNewKey];
+            if ([services count] > 0)  {
+                [self openConnection:[services objectAtIndex:0]];                
+            }
+        }
+
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (MYBonjourBrowser*) serviceBrowser {
@@ -38,7 +64,7 @@
     return $array(@"serviceBrowser.services");
 }
 
-
+// ----------------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark BLIPConnection support
 
@@ -59,17 +85,23 @@
     [_connection close];
 }
 
+// ----------------------------------------------------------------------------------------
+#pragma mark TCPConnection delegate
+
 /** Called after the connection successfully opens. */
 - (void)connectionDidOpen:(TCPConnection*)connection {
     if (connection==_connection) {
         [submitButton setEnabled:YES];
+        [widthField setEnabled:YES];
+        [heightField setEnabled:YES];
+        [statusField setStringValue:@"Status: Connected"];
         [self sendConfiguration:nil];
     }
 }
 
 /** Called after the connection fails to open due to an error. */
 - (void)connection: (TCPConnection*)connection failedToOpen:(NSError*)error {
-    [serverTableView.window presentError:error];
+    NSLog(@"connection:failedToOpen: %@", error);
 }
 
 - (void)connection:(BLIPConnection*)connection receivedRequest:(BLIPRequest*)request
@@ -82,25 +114,20 @@
 - (void)connectionDidClose:(TCPConnection*)connection {
     if (connection == _connection) {
         if (connection.error)
-            [serverTableView.window presentError:connection.error];
+            NSLog(@"connectionDidClose: %@", connection.error);
         [_connection release];
         _connection = nil;
         [submitButton setEnabled:NO];
+        [widthField setEnabled:NO];
+        [heightField setEnabled:NO];
+        [imageView setImage:nil];
+        [statusField setStringValue:@"Status: Disconnected"];
     }
 }
 
-
+// ----------------------------------------------------------------------------------------
 #pragma mark -
 #pragma mark GUI action methods
-
-- (IBAction)serverClicked:(id)sender {
-    NSTableView * table = (NSTableView *)sender;
-    int selectedRow = [table selectedRow];
-    
-    [self closeConnection];
-    if (-1 != selectedRow)
-        [self openConnection: [self.serviceList objectAtIndex:selectedRow]];
-}
 
 /* Send a BLIP request containing the client configuration */
 - (IBAction)sendConfiguration:(id)sender 
@@ -124,8 +151,9 @@
     NSLog(@"Got configuration response %@", response);
 }    
 
-
 @end
+
+#pragma mark -
 
 int main(int argc, char *argv[])
 {

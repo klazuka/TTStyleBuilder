@@ -15,8 +15,8 @@
 {
     IBOutlet NSTextField *widthField;
     IBOutlet NSTextField *heightField;
+    IBOutlet NSTextField *statusField;
     IBOutlet NSButton *submitButton;
-    IBOutlet NSTableView *serverTableView;
     IBOutlet NSImageView *imageView;
     
     MYBonjourBrowser *_serviceBrowser;
@@ -26,7 +26,6 @@
 @property (readonly) MYBonjourBrowser *serviceBrowser;
 @property (readonly) NSArray *serviceList;
 
-- (IBAction)serverClicked:(id)sender;
 - (IBAction)sendConfiguration:(id)sender;
 
 @end
