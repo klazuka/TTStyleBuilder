@@ -25,7 +25,7 @@
         listener.bonjourServiceType = @"_ttstylebuilder._tcp";
         [listener open];
         
-        clients = [[NSMutableArray alloc] init];
+        clients = [[NSMutableDictionary alloc] init];
         
         offscreenView = [[StylePreview alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 60.f)]; // TODO size should come from RenderClient
         offscreenView.backgroundColor = [UIColor colorWithWhite:0.953f alpha:1.f];  // Matches the bg color of the NSImageView in the MacRenderClient.
@@ -35,31 +35,53 @@
     return self;
 }
 
+- (void)registerOrUpdateClient:(NSMutableDictionary *)client
+{
+    BLIPConnection *connection = [client objectForKey:@"connection"];
+    NSMutableDictionary *found = [clients objectForKey:[connection address]];
+    if (!found)
+        [clients setObject:client forKey:[connection address]];
+    else
+        [found addEntriesFromDictionary:client];    // merge in the updated values
+    
+    NSLog(@"clients after registerOrUpdate:\n%@", clients);
+}
+
+- (void)renderStyle:(TTStyle *)style forClient:(NSDictionary *)client
+{
+    TTLOG(@"Rasterizing style (%@) on behalf of RenderClient (%@).", style, client);
+    
+    // Rasterization
+    CGSize clientSize = CGSizeMake([[client objectForKey:@"width"] floatValue], [[client objectForKey:@"height"] floatValue]);
+    [offscreenView setFrame:CGRectMake(offscreenView.left, offscreenView.top, clientSize.width, clientSize.height)];
+    offscreenView.style = style;
+    [offscreenView setNeedsDisplay];
+    UIGraphicsBeginImageContext(clientSize);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [[offscreenView layer] renderInContext:ctx];
+    UIImage *raster = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Send the raster to the client
+    BLIPRequest *r = [(BLIPConnection*)[client objectForKey:@"connection"] request];
+    r.body = UIImagePNGRepresentation(raster);
+    r.contentType = @"image/png";
+    r.noReply = YES;
+    [r send];
+    
+    // Hold on to a reference to the style
+    [cachedStyle release];
+    cachedStyle = [style retain];
+}
+
 - (void)render:(NSNotification *)notification
 {
     id obj = [notification object];
     if (obj)
         NSAssert([obj isKindOfClass:[TTStyle class]], @"Style pipeline update notification payload must be either a TTStyle instance or nil.");
     
-    // Render the style for each client.
-    for (NSDictionary *client in clients) {
-        TTLOG(@"Rasterizing style (%@) on behalf of RenderClient (%@).", obj, client);
-        CGSize clientSize = CGSizeMake([[client objectForKey:@"width"] floatValue], [[client objectForKey:@"height"] floatValue]);
-        [offscreenView setFrame:CGRectMake(offscreenView.left, offscreenView.top, clientSize.width, clientSize.height)];
-        offscreenView.style = obj;
-        [offscreenView setNeedsDisplay];
-        UIGraphicsBeginImageContext(clientSize);
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        [[offscreenView layer] renderInContext:ctx];
-        UIImage *raster = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        BLIPRequest *r = [(BLIPConnection*)[client objectForKey:@"connection"] request];
-        r.body = UIImagePNGRepresentation(raster);
-        r.contentType = @"image/png";
-        r.noReply = YES;
-        [r send];
-    }
+    for (NSDictionary *clientKey in clients)
+        [self renderStyle:obj forClient:[clients objectForKey:clientKey]];
 }
 
 // --------------------------------------------------------------------------------
@@ -95,10 +117,13 @@
     
     // Process the client configuration
     NSDictionary *props = [NSKeyedUnarchiver unarchiveObjectWithData:request.body];
-    NSMutableDictionary *config = [props mutableCopy];
-    [config setObject:connection forKey:@"connection"];
-    [clients addObject:[config autorelease]];
+    NSMutableDictionary *client = [[props mutableCopy] autorelease];
+    [client setObject:connection forKey:@"connection"];
+    [self registerOrUpdateClient:client];
     [request respondWithString:@"OK"];
+    
+    // Use the new client configuration to re-rasterize and send back the result.
+    [self renderStyle:cachedStyle forClient:client];
 }
 
 - (void)connectionDidClose:(TCPConnection*)connection;
@@ -111,6 +136,7 @@
 
 - (void)dealloc
 {
+    [cachedStyle release];
     [clients release];
     [offscreenView release];
     [listener release];
