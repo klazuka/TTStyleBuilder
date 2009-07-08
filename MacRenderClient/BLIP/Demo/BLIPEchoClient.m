@@ -22,16 +22,18 @@
 - (void)awakeFromNib 
 {
     [self.serviceBrowser start];
+    [widthField setStringValue:[NSString stringWithFormat:@"%.0f", imageView.frame.size.width]];
+    [heightField setStringValue:[NSString stringWithFormat:@"%.0f", imageView.frame.size.height]];
 }
 
 - (MYBonjourBrowser*) serviceBrowser {
     if (!_serviceBrowser)
-        _serviceBrowser = [[MYBonjourBrowser alloc] initWithServiceType: @"_blipecho._tcp."];
+        _serviceBrowser = [[MYBonjourBrowser alloc] initWithServiceType:@"_ttstylebuilder._tcp."];
     return _serviceBrowser;
 }
 
 - (NSArray*) serviceList {
-    return [_serviceBrowser.services.allObjects sortedArrayUsingSelector: @selector(compare:)];
+    return [_serviceBrowser.services.allObjects sortedArrayUsingSelector:@selector(compare:)];
 }
 
 + (NSArray*) keyPathsForValuesAffectingServiceList {
@@ -43,9 +45,9 @@
 #pragma mark BLIPConnection support
 
 /* Opens a BLIP connection to the given address. */
-- (void)openConnection: (MYBonjourService*)service 
+- (void)openConnection:(MYBonjourService*)service 
 {
-    _connection = [[BLIPConnection alloc] initToBonjourService: service];
+    _connection = [[BLIPConnection alloc] initToBonjourService:service];
     if( _connection ) {
         _connection.delegate = self;
         [_connection open];
@@ -60,28 +62,32 @@
 }
 
 /** Called after the connection successfully opens. */
-- (void) connectionDidOpen: (TCPConnection*)connection {
+- (void)connectionDidOpen:(TCPConnection*)connection {
     if (connection==_connection) {
-        [inputField setEnabled: YES];
-        [responseField setEnabled: YES];
-        [inputField.window makeFirstResponder: inputField];
+        [submitButton setEnabled:YES];
+        [self sendConfiguration:nil];
     }
 }
 
 /** Called after the connection fails to open due to an error. */
-- (void) connection: (TCPConnection*)connection failedToOpen: (NSError*)error {
-    [serverTableView.window presentError: error];
+- (void)connection: (TCPConnection*)connection failedToOpen:(NSError*)error {
+    [serverTableView.window presentError:error];
+}
+
+- (void)connection:(BLIPConnection*)connection receivedRequest:(BLIPRequest*)request
+{
+    NSLog(@"Incoming Request:\n%@", request);
+    [imageView setImage:[[[NSImage alloc] initWithData:request.body] autorelease]];
 }
 
 /** Called after the connection closes. */
-- (void) connectionDidClose: (TCPConnection*)connection {
-    if (connection==_connection) {
+- (void)connectionDidClose:(TCPConnection*)connection {
+    if (connection == _connection) {
         if (connection.error)
-            [serverTableView.window presentError: connection.error];
+            [serverTableView.window presentError:connection.error];
         [_connection release];
         _connection = nil;
-        [inputField setEnabled: NO];
-        [responseField setEnabled: NO];
+        [submitButton setEnabled:NO];
     }
 }
 
@@ -98,25 +104,26 @@
         [self openConnection: [self.serviceList objectAtIndex:selectedRow]];
 }
 
-/* Send a BLIP request containing the string in the textfield */
-- (IBAction)sendText:(id)sender 
+/* Send a BLIP request containing the client configuration */
+- (IBAction)sendConfiguration:(id)sender 
 {
+    NSDictionary *props = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [widthField stringValue], @"width",
+                            [heightField stringValue], @"height",
+                            nil];
+    
     BLIPRequest *r = [_connection request];
-    r.bodyString = [sender stringValue];
+    r.body = [NSKeyedArchiver archivedDataWithRootObject:props];
     BLIPResponse *response = [r send];
-    if (response) {
-        response.onComplete = $target(self,gotResponse:);
-        [inputField setStringValue: @""];
-    } else
+    if (response)
+        response.onComplete = $target(self, gotConfigurationResponse:);
+    else
         NSBeep();
 }
 
-/* Receive the response to the BLIP request, and put its contents into the response field */
-- (void) gotResponse: (BLIPResponse*)response
+- (void)gotConfigurationResponse:(BLIPResponse*)response
 {
-//    **KEITH**
-//    [responseField setObjectValue: response.bodyString];
-    [imageView setImage:[[[NSImage alloc] initWithData:response.body] autorelease]];
+    NSLog(@"Got configuration response %@", response);
 }    
 
 
@@ -124,6 +131,5 @@
 
 int main(int argc, char *argv[])
 {
-    //RunTestCases(argc,(const char**)argv);
     return NSApplicationMain(argc,  (const char **) argv);
 }

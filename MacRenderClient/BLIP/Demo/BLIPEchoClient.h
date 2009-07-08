@@ -15,12 +15,13 @@
 
 @interface BLIPEchoClient : NSObject <BLIPConnectionDelegate>
 {
-    IBOutlet NSTextField * inputField;
-    IBOutlet NSTextField * responseField;
-    IBOutlet NSTableView * serverTableView;
-    IBOutlet NSImageView * imageView;
+    IBOutlet NSTextField *widthField;
+    IBOutlet NSTextField *heightField;
+    IBOutlet NSButton *submitButton;
+    IBOutlet NSTableView *serverTableView;
+    IBOutlet NSImageView *imageView;
     
-    MYBonjourBrowser * _serviceBrowser;
+    MYBonjourBrowser *_serviceBrowser;
     BLIPConnection *_connection;
 }
 
@@ -28,6 +29,6 @@
 @property (readonly) NSArray *serviceList;
 
 - (IBAction)serverClicked:(id)sender;
-- (IBAction)sendText:(id)sender;
+- (IBAction)sendConfiguration:(id)sender;
 
 @end

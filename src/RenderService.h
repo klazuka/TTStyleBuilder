@@ -12,8 +12,8 @@
 @interface RenderService : NSObject <TCPListenerDelegate, BLIPConnectionDelegate>
 {
     BLIPListener *listener;
+    NSMutableArray *clients;    // array of NSDictionary (keys are: width, height, connection)
     TTView *offscreenView;
-    UIImage *cachedRaster;
 }
 
 @end
