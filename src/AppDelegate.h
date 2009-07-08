@@ -8,10 +8,13 @@
 
 #import "TTStyleBuilderGlobal.h"
 
+@class RenderService;
+
 @interface AppDelegate : NSObject <UIApplicationDelegate, TTNavigationDelegate>
 {    
     UIWindow *window;
     UINavigationController *navigationController;
+    RenderService *renderService;
 }
 
 @property (nonatomic, retain) UIWindow *window;

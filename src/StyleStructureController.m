@@ -47,6 +47,10 @@
 
 - (void)refreshLiveStylePreview
 {
+    // Post a notification so that the RenderService can rasterize the new style.
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:[styleDataSource headStyle]];
+    
+    // Update the in-app style preview.
     [previewView setNeedsDisplay];
 }
 
@@ -56,7 +60,7 @@
     if (obj)
         NSAssert([obj isKindOfClass:[TTStyle class]], @"Style pipeline update notification payload must be either a TTStyle instance or nil.");
     previewView.style = obj;
-    [self refreshLiveStylePreview];
+    [previewView setNeedsDisplay];
 }
 
 - (void)displaySettingsScreen

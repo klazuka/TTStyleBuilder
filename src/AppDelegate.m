@@ -10,6 +10,7 @@
 #import "StyleStructureController.h"
 #import "StyleEditor.h"
 #import "MainMenuController.h"
+#import "RenderService.h"
 
 @implementation AppDelegate
 
@@ -21,6 +22,9 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
+    // start-up the Render Service (available via Bonjour)
+    renderService = [[RenderService alloc] init];
+    
     // display the main menu on launch
     UIViewController *rootController = [[MainMenuController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];
@@ -66,6 +70,7 @@ NSString *StyleArchivesDir(void)
 {
 	[navigationController release];
 	[window release];
+    [renderService release];
 	[super dealloc];
 }
 
