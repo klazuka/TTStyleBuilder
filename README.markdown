@@ -36,6 +36,29 @@ You can delete and re-arrange styles within the pipeline by tapping the "Edit" b
 
 Tap the "Settings" button to change the settings for the live style preview view. The live style preview also acts as the TTStyleDelegate, so you can specify the text and image to be used when styles like TTTextStyle query their delegate for an NSString or UIImage.
 
+The Rendering Client
+====================
+Because of the limitations of the iPhone's display size, I have implemented a simple Bonjour client that runs on Mac OS X and displays the current style that the user is editing. The rendering client ("StyleRenderClient.app"), along with its source code, is included with the TTStyleBuilder distribution.
+
+How to use StyleRenderClient.app
+--------------------------------
+1. Launch StyleRenderClient.app on your Mac
+2. Launch TTStyleBuilder either in the iPhone Simulator or on the iPhone device (if you use the device, make sure both the server and the client are connected to the same network).
+3. Use TTStyleBuilder to create or edit an existing style. The changes that you make will be reflected immediately in StyleRenderClient's window.
+4. You can change the size of the style displayed in the client. Type in the desired dimensions in the "Width" and "Height" text fields and then click the "Submit Configuration" button.
+
+In the future, StyleRenderClient will also be able to specify the text and image for the TTStyleDelegate protocol.
+
+Known Issues with the Client
+----------------------------
+When the server (TTStyleBuilder) goes down and comes back up, the client is *usually* able to reconnect. But sometimes it doesn't. Until I fix this, you will just have to relaunch the client.
+
+How StyleRenderClient works
+---------------------------
+TTStyleBuilder runs a TCP listener (called RenderService) that is exposed on the local network via Bonjour. The StyleRenderClient browses for the server via Bonjour and automatically connects as soon as the server is found. When TTStyleBuilder generates a notification that the current style needs to be refreshed, the RenderService (running on the iPhone) iterates over every connected client and renders the style once for each client. A separate render for each client is required because each client is able to specify the raster dimensions that it wants. 
+
+To render the style for a single client, RenderService has a reference to a TTView that is never displayed onscreen. When it needs to render the style to a bitmap, it first sets the TTView's style property to the style being rendered. Then it uses the client configuration (style width and height) to setup a bitmap context and configure the dimensions of the TTView to match the client's preference. Then it asks the TTView's layer (a CALayer) to render into the bitmap context. Finally, it converts the bytes in the bitmap context into a PNG and ships it over the wire via the BLIP protocol directly to the client.
+
 The Object Editor System
 ========================
 One of the guiding principles while implementing this tool is that it should put very little burden on subclassers of TTStyle, and it should avoid patching Three20 as much as possible. In order to do this, TTStyleBuilder relies heavily on the Objective-C runtime to dynamically reflect on the system in memory. TTStyleBuilder implements a generic object/property editing system that could, theoretically, be used in other iPhone apps that need an easy way to provide a UI for editing objects. Rather than defining an editor plugin for each TTStyle subclass (which would increase the burden on subclassers), I instead chose to write the plugins for each basic type (int, float, CGSize, UIColor, etc.).
@@ -67,7 +90,7 @@ Actually, there is not enough runtime information to determine which methods ret
 The style archives directory is different depending on whether you are running TTStyleBuilder on the simulator versus on the device.
  
 * Simulator: ~/Desktop/
-* Device: /iPhoneAppRoot/Documents/
+* Device: YouriPhoneAppRoot/Documents/
 
 -keith
 (klazuka)
