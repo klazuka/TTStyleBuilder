@@ -9,11 +9,13 @@
 #import "TTStyleBuilderGlobal.h"
 #import "BLIPConnection.h"
 
+@class StylePreview;
+
 @interface RenderService : NSObject <TCPListenerDelegate, BLIPConnectionDelegate>
 {
     BLIPListener *listener;
     NSMutableDictionary *clients;   // The keys are IP address:port strings. The values are NSDictionary (keys: width, height, connection)
-    TTView *offscreenView;
+    StylePreview *offscreenView;
     TTStyle *cachedStyle;           // Every time a style is rasterized, it is cached here so that if a client configuration request comes in, we can use the cached style to re-rasterize according to the new configuration and send it back to the client immediately.
 }
 

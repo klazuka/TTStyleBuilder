@@ -56,6 +56,7 @@
     CGSize clientSize = CGSizeMake([[client objectForKey:@"width"] floatValue], [[client objectForKey:@"height"] floatValue]);
     [offscreenView setFrame:CGRectMake(offscreenView.left, offscreenView.top, clientSize.width, clientSize.height)];
     offscreenView.style = style;
+    offscreenView.textForDelegate = [client objectForKey:@"exampleString"];
     [offscreenView setNeedsDisplay];
     UIGraphicsBeginImageContext(clientSize);
     CGContextRef ctx = UIGraphicsGetCurrentContext();

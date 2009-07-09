@@ -94,6 +94,7 @@
         [submitButton setEnabled:YES];
         [widthField setEnabled:YES];
         [heightField setEnabled:YES];
+        [exampleStringField setEnabled:YES];
         [statusField setStringValue:@"Status: Connected"];
         [self sendConfiguration:nil];
     }
@@ -120,6 +121,7 @@
         [submitButton setEnabled:NO];
         [widthField setEnabled:NO];
         [heightField setEnabled:NO];
+        [exampleStringField setEnabled:NO];
         [imageView setImage:nil];
         [statusField setStringValue:@"Status: Disconnected"];
     }
@@ -135,6 +137,7 @@
     NSDictionary *props = [NSDictionary dictionaryWithObjectsAndKeys:
                             [widthField stringValue], @"width",
                             [heightField stringValue], @"height",
+                            [exampleStringField stringValue], @"exampleString",
                             nil];
     
     BLIPRequest *r = [_connection request];

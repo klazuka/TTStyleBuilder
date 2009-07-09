@@ -15,6 +15,7 @@
 {
     IBOutlet NSTextField *widthField;
     IBOutlet NSTextField *heightField;
+    IBOutlet NSTextField *exampleStringField;
     IBOutlet NSTextField *statusField;
     IBOutlet NSButton *submitButton;
     IBOutlet NSImageView *imageView;
