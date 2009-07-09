@@ -26,8 +26,8 @@
     
     [self addObserver:self forKeyPath:@"serviceList" options:NSKeyValueObservingOptionNew context:NULL];
     
-    [widthField setStringValue:[NSString stringWithFormat:@"%.0f", imageView.frame.size.width]];
-    [heightField setStringValue:[NSString stringWithFormat:@"%.0f", imageView.frame.size.height]];
+    [widthField setStringValue:[NSString stringWithFormat:@"%.0f", styleView.frame.size.width]];
+    [heightField setStringValue:[NSString stringWithFormat:@"%.0f", styleView.frame.size.height]];
 }
 
 #pragma mark KVO
@@ -95,6 +95,7 @@
         [widthField setEnabled:YES];
         [heightField setEnabled:YES];
         [exampleStringField setEnabled:YES];
+        [exampleImageView setEnabled:YES];
         [statusField setStringValue:@"Status: Connected"];
         [self sendConfiguration:nil];
     }
@@ -108,7 +109,7 @@
 - (void)connection:(BLIPConnection*)connection receivedRequest:(BLIPRequest*)request
 {
     NSLog(@"Incoming Request:\n%@", request);
-    [imageView setImage:[[[NSImage alloc] initWithData:request.body] autorelease]];
+    [styleView setImage:[[[NSImage alloc] initWithData:request.body] autorelease]];
 }
 
 /** Called after the connection closes. */
@@ -122,7 +123,8 @@
         [widthField setEnabled:NO];
         [heightField setEnabled:NO];
         [exampleStringField setEnabled:NO];
-        [imageView setImage:nil];
+        [exampleImageView setEnabled:NO];
+        [styleView setImage:nil];
         [statusField setStringValue:@"Status: Disconnected"];
     }
 }
@@ -138,6 +140,7 @@
                             [widthField stringValue], @"width",
                             [heightField stringValue], @"height",
                             [exampleStringField stringValue], @"exampleString",
+                            [[exampleImageView image] TIFFRepresentation], @"exampleImage",
                             nil];
     
     BLIPRequest *r = [_connection request];

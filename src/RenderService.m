@@ -45,7 +45,9 @@
     else
         [found addEntriesFromDictionary:client];    // merge in the updated values
     
-    NSLog(@"clients after registerOrUpdate:\n%@", clients);
+    NSLog(@"connected clients after registerOrUpdate:");
+    for (NSString *clientKey in clients)
+        NSLog(@"- client %@", clientKey);
 }
 
 - (void)renderStyle:(TTStyle *)style forClient:(NSDictionary *)client
@@ -57,6 +59,7 @@
     [offscreenView setFrame:CGRectMake(offscreenView.left, offscreenView.top, clientSize.width, clientSize.height)];
     offscreenView.style = style;
     offscreenView.textForDelegate = [client objectForKey:@"exampleString"];
+    offscreenView.imageForDelegate = [UIImage imageWithData:[client objectForKey:@"exampleImage"]];
     [offscreenView setNeedsDisplay];
     UIGraphicsBeginImageContext(clientSize);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -78,8 +81,8 @@
 
 - (void)renderStyleForAllClients:(TTStyle *)style
 {
-    for (NSDictionary *clientKey in clients)
-        [self renderStyle:style forClient:[clients objectForKey:clientKey]];    
+    for (NSString *clientKey in clients)
+        [self renderStyle:style forClient:[clients objectForKey:clientKey]];
 }
 
 - (void)render:(NSNotification *)notification

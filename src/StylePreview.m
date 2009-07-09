@@ -43,7 +43,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    // for some reason, if you don't explicitly fill the gfx context
+    // For some reason, if you don't explicitly fill the gfx context
     // before you render the style, when you do something like
     // setNeedsDisplay, the style will be rendered *over* the old
     // image buffer. So if I were Joe, I would do this in -[TTView drawRect:]

@@ -47,11 +47,15 @@ How to use StyleRenderClient.app
 3. Use TTStyleBuilder to create or edit an existing style. The changes that you make will be reflected immediately in StyleRenderClient's window.
 4. You can change the size of the style displayed in the client. Type in the desired dimensions in the "Width" and "Height" text fields and then click the "Submit Configuration" button.
 
-In the future, StyleRenderClient will also be able to specify the text and image for the TTStyleDelegate protocol.
+The StyleRenderClient can also provide the data for the TTStyleDelegate protocol. This protocol provides the means for a style pipeline to pull in external data from its runtime environment. Any text that you type in the "Text" field will be used any time the style pipeline asks its delegate for textForLayerWithStyle: (if you want to try it out, add a TTTextStyle to your pipeline). Likewise, any image that you drag and drop into the "Image" well will be used any time the style pipeline asks its delegate for imageForLayerWithStyle: (to try it out, add a TTImageStyle to your pipeline, but see known issues below).
+
+If you change the "Text" or "Image" values, you need to click the "Submit Configuration" button to upload your data to TTStyleBuilder (the server).
 
 Known Issues with the Client
 ----------------------------
 When the server (TTStyleBuilder) goes down and comes back up, the client is *usually* able to reconnect. But sometimes it doesn't. Until I fix this, you will just have to relaunch the client.
+
+If you provide an image without an alpha channel to be used by the TTStyleDelegate, oftentimes it will not render correctly. This isn't actually a bug in the client, it's a result of the underlying TTStyle/TTImageStyle implementation. Perhaps Joe designed it this way, or maybe it is something that we need to work on.
 
 How StyleRenderClient works
 ---------------------------

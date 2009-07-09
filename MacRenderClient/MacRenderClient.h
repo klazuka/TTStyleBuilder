@@ -16,9 +16,10 @@
     IBOutlet NSTextField *widthField;
     IBOutlet NSTextField *heightField;
     IBOutlet NSTextField *exampleStringField;
+    IBOutlet NSImageView *exampleImageView;
     IBOutlet NSTextField *statusField;
     IBOutlet NSButton *submitButton;
-    IBOutlet NSImageView *imageView;
+    IBOutlet NSImageView *styleView;
     
     MYBonjourBrowser *_serviceBrowser;
     BLIPConnection *_connection;
