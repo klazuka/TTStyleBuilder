@@ -28,7 +28,7 @@
         clients = [[NSMutableDictionary alloc] init];
         
         offscreenView = [[StylePreview alloc] initWithFrame:CGRectMake(0.f, 0.f, 120.f, 60.f)]; // TODO size should come from RenderClient
-        offscreenView.backgroundColor = [UIColor colorWithWhite:0.953f alpha:1.f];  // Matches the bg color of the NSImageView in the MacRenderClient.
+        offscreenView.backgroundColor = [UIColor colorWithWhite:0.91f alpha:1.f];  // Matches the bg color of the NSImageView in the MacRenderClient.
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(render:) name:kStylePipelineUpdatedNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(renderBlankStyle:) name:kEraseStylePreviewNotification object:nil];
