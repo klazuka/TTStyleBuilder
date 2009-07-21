@@ -63,6 +63,7 @@
 		539FDF511004A53E00C022A3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539FDF501004A53E00C022A3 /* Security.framework */; };
 		539FDF531004A54500C022A3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 539FDF521004A54500C022A3 /* libz.dylib */; };
 		539FDF831004A60B00C022A3 /* RenderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 539FDF821004A60B00C022A3 /* RenderService.m */; };
+		53A4B19C101614750061BECC /* FontEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A4B19B101614750061BECC /* FontEditor.m */; };
 		53A59FBA0FF17B0F00C82D9A /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A59FB90FF17B0F00C82D9A /* SettingsController.m */; };
 		53D972590FF5541700E62B9A /* ColorEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972540FF5541700E62B9A /* ColorEditor.m */; };
 		53D9725A0FF5541700E62B9A /* FloatEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D972560FF5541700E62B9A /* FloatEditor.m */; };
@@ -204,6 +205,8 @@
 		539FDF521004A54500C022A3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		539FDF811004A60B00C022A3 /* RenderService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderService.h; path = src/RenderService.h; sourceTree = "<group>"; };
 		539FDF821004A60B00C022A3 /* RenderService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenderService.m; path = src/RenderService.m; sourceTree = "<group>"; };
+		53A4B19A101614750061BECC /* FontEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontEditor.h; sourceTree = "<group>"; };
+		53A4B19B101614750061BECC /* FontEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontEditor.m; sourceTree = "<group>"; };
 		53A59FB80FF17B0F00C82D9A /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsController.h; sourceTree = "<group>"; };
 		53A59FB90FF17B0F00C82D9A /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsController.m; sourceTree = "<group>"; };
 		53D972530FF5541700E62B9A /* ColorEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorEditor.h; sourceTree = "<group>"; };
@@ -365,6 +368,8 @@
 		536E0AED0FEAAF8D00C159E7 /* Object Editor */ = {
 			isa = PBXGroup;
 			children = (
+				53A4B19A101614750061BECC /* FontEditor.h */,
+				53A4B19B101614750061BECC /* FontEditor.m */,
 				536E0AEE0FEAAFB400C159E7 /* .h */,
 				536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */,
 				53D972540FF5541700E62B9A /* ColorEditor.m */,
@@ -702,6 +707,7 @@
 				539FDF3A1004A3F900C022A3 /* Test.m in Sources */,
 				539FDF3D1004A3F900C022A3 /* GTMNSData+zlib.m in Sources */,
 				539FDF831004A60B00C022A3 /* RenderService.m in Sources */,
+				53A4B19C101614750061BECC /* FontEditor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
