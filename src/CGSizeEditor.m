@@ -26,7 +26,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------
 #pragma mark UIViewController
 
 - (void)loadView
@@ -42,27 +42,32 @@
     [self updatePropertyValue];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
     CGSize size = [[self.object valueForKey:self.propertyName] CGSizeValue];
     
-    widthField = [[TTTextFieldTableField alloc] initWithTitle:@"Width" text:[NSString stringWithFormat:@"%.1f", size.width]];
+    widthField = [[UITextField alloc] init];
+    widthField.text = [NSString stringWithFormat:@"%.1f", size.width];
     widthField.delegate = self;
     widthField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     widthField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    heightField = [[TTTextFieldTableField alloc] initWithTitle:@"Height" text:[NSString stringWithFormat:@"%.1f", size.height]];
+    heightField = [[UITextField alloc] init];
+    heightField.text = [NSString stringWithFormat:@"%.1f", size.height];
     heightField.delegate = self;
     heightField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     heightField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    return [TTListDataSource dataSourceWithObjects:widthField, heightField, nil];
+    self.dataSource = [TTListDataSource dataSourceWithObjects:
+                       [TTTableControlItem itemWithCaption:@"Width" control:widthField],
+                       [TTTableControlItem itemWithCaption:@"Height" control:heightField],
+                       nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

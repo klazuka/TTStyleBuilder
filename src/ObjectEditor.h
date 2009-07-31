@@ -29,11 +29,6 @@
  *  the subset of properties in your custom subclass
  *  that *are* supported.
  *
- *  TODO: design a mechanism for automatically wrapping
- *        instances of this class in a UINavigationController
- *        if being used in a modal context (e.g. the way
- *        that I use SettingsController in this app).
- *
  */
 
 @interface ObjectEditor : TTTableViewController <ValueEditor>

@@ -7,12 +7,7 @@
 //
 
 #import "StyleSheetController.h"
-#import "StyleStructureController.h"
 #import "objc/runtime.h"
-
-@interface StyleSheetController ()
-- (void)showStyle:(TTStyle *)style;
-@end
 
 @implementation StyleSheetController
 
@@ -47,34 +42,27 @@
     return names;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
-
-- (void)loadView
-{
-    [super loadView];
-    self.title = @"StyleSheet";
-    self.tableView = [[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain] autorelease];
-	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.tableView];
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.title = @"StyleSheet";
     [[NSNotificationCenter defaultCenter] postNotificationName:kEraseStylePreviewNotification object:nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
     NSMutableArray *items = [NSMutableArray array];
     for (NSString *selectorName in [[self class] styleSelectorNames])
-        [items addObject:[[[TTTableField alloc] initWithText:selectorName] autorelease]];
+        [items addObject:[TTTableTextItem itemWithText:selectorName]];
     
-    return [TTListDataSource dataSourceWithItems:items];
+    self.dataSource = [TTListDataSource dataSourceWithItems:items];
 }
 
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
@@ -82,21 +70,13 @@
     id style = [[TTStyleSheet globalStyleSheet] performSelector:NSSelectorFromString([object text])];
     if ( ![style isKindOfClass:[TTStyle class]] ){
         NSLog(@"WARNING: table view had putative style method '%@'. It returned a %@ but I expected a TTStyle object.", [object text], style);
-        [self alert:@"This stylesheet method name does not actually return a TTStyle. Sorry."];
+        TTAlert(@"This stylesheet method name does not actually return a TTStyle. Sorry.");
         return;
     }
 
-    [self showStyle:style];
-}
-
-- (void)showStyle:(TTStyle *)style
-{
-    UIViewController *controller = [[StyleStructureController alloc] initWithHeadStyle:style];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
-    
+    NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:style, @"style", nil];
+    [[TTNavigator navigator] openURL:@"tt://style/pipeline/edit?" query:query animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
-
 
 @end

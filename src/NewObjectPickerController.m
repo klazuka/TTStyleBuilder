@@ -8,7 +8,6 @@
 
 #import "NewObjectPickerController.h"
 #import "RuntimeSupport.h"
-#import "objc/runtime.h"
 
 static SEL PrototypeSelector;
 
@@ -41,7 +40,16 @@ static SEL PrototypeSelector;
     return self;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+- (id)initWithNavigatorURL:(NSURL*)URL query:(NSDictionary*)query
+{
+    Class baseClass = [query objectForKey:@"baseClass"];
+    NewObjectPickerController *controller = [self initWithBaseClass:baseClass];
+    controller.delegate = [query objectForKey:@"delegate"];
+    return controller;
+}
+
+
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
 
 - (void)loadView
@@ -52,17 +60,17 @@ static SEL PrototypeSelector;
     [self.view addSubview:self.tableView];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
     NSMutableArray *items = [NSMutableArray array];
     
-    for (NSString *styleClassName in subclassNamesWithPrototypes) 
-        [items addObject:[[[TTTableField alloc] initWithText:styleClassName] autorelease]];
+    for (NSString *styleClassName in subclassNamesWithPrototypes)
+        [items addObject:[TTTableTextItem itemWithText:styleClassName]];
     
-    return [TTListDataSource dataSourceWithItems:items];
+    self.dataSource = [TTListDataSource dataSourceWithItems:items];
 }
 
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath

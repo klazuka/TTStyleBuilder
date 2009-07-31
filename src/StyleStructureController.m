@@ -45,6 +45,11 @@
     return [self initWithHeadStyle:nil filePath:nil];
 }
 
+- (id)initWithNavigatorURL:(NSURL*)URL query:(NSDictionary*)query
+{
+    return [self initWithHeadStyle:[query objectForKey:@"style"] filePath:[query objectForKey:@"styleFilePath"]];
+}
+
 - (void)refreshLiveStylePreview
 {
     // Post a notification so that the RenderService can rasterize the new style.
@@ -61,14 +66,19 @@
         NSAssert([obj isKindOfClass:[TTStyle class]], @"Style pipeline update notification payload must be either a TTStyle instance or nil.");
     previewView.style = obj;
     [previewView setNeedsDisplay];
+    
+    // Display the updated dataSource. I defer reloading the tableView's data until
+    // a subsequent iteration of the runloop so as to avoid an exception in the
+    // tableView's delete method.
+    [self invalidateView];
+    [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.001f];
 }
 
 - (void)displaySettingsScreen
 {
     // Display settings for the "live preview" area
-    SettingsController *controller = [[[SettingsController alloc] init] autorelease];
-    [controller showObject:previewView inView:nil withState:nil];
-    [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:controller] autorelease] animated:YES];
+    NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:previewView, @"object", nil];
+    [[TTNavigator navigator] openURL:@"tt://style/preview/settings?" query:query animated:YES];
 }
 
 - (void)displayAddStylePicker
@@ -94,7 +104,7 @@
     if (!ok) {
         NSString *msg = [NSString stringWithFormat:@"Failed to save style to %@", fullPath];
         NSLog(msg);
-        [self alert:msg];
+        TTAlert(msg);
     }
     
     // Keep track of the full path to the saved file.
@@ -126,7 +136,7 @@
         // The user provided a filename, so now let's actually save the style.
         NSString *baseName = [(AlertPromptView *)alertView enteredText];
         if ([baseName length] == 0) {
-            [self alert:@"the filename for 'save as' cannot be empty!"];
+            TTAlert(@"the filename for 'save as' cannot be empty!");
             return;
         }
         NSString *filename = [NSString stringWithFormat:@"%@.ttstyle", baseName];
@@ -134,7 +144,7 @@
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark NewObjectPickerDelegate
 
 - (void)didPickNewObject:(id)newObject
@@ -143,7 +153,7 @@
     [self appendStyleToPipeline:newObject];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
 
 - (void)loadView
@@ -186,39 +196,15 @@
     [self.tableView setEditing:editing animated:animated];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
-    return styleDataSource;
+    self.dataSource = styleDataSource;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark TTViewController
-
-- (UIImage*)imageForNoData {
-    return TTIMAGE(@"bundle://Three20.bundle/images/empty.png");
-}
-
-- (NSString*)titleForNoData {
-    return NSLocalizedString(@"The style pipeline is empty", @"");
-}
-
-- (NSString*)subtitleForNoData {
-    return NSLocalizedString(@"Tap the '+' button to add your first style node.", @"");
-}
-
-- (UIImage*)imageForError:(NSError*)error {
-    return TTIMAGE(@"bundle://Three20.bundle/images/error.png");
-}
-
-- (NSString*)subtitleForError:(NSError*)error {
-    return NSLocalizedString(@"There was an error displaying the style pipeline.", @"");
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark -
 
 - (void)dealloc

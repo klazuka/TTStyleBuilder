@@ -15,7 +15,7 @@
     NSString *propertyName;
     
     // int editor specific
-    TTTextFieldTableField *numberField;
+    UITextField *numberField;
 }
 
 @end

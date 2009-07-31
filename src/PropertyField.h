@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 #import "NewObjectPickerController.h"
 
-@interface PropertyField : TTTableField <NewObjectPickerDelegate>
+@interface PropertyField : TTTableTextItem <NewObjectPickerDelegate>
 {
     id object;
     NSString *propertyName;

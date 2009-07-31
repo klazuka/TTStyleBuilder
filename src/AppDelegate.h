@@ -10,15 +10,10 @@
 
 @class RenderService;
 
-@interface AppDelegate : NSObject <UIApplicationDelegate, TTNavigationDelegate>
+@interface AppDelegate : NSObject <UIApplicationDelegate>
 {    
-    UIWindow *window;
-    UINavigationController *navigationController;
     RenderService *renderService;
 }
-
-@property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain) UINavigationController *navigationController;
 
 @end
 

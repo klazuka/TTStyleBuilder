@@ -8,7 +8,7 @@
 
 #import "TTStyleBuilderGlobal.h"
 
-@interface PropertyFieldCell : TTTextTableFieldCell
+@interface PropertyFieldCell : TTTableTextItemCell
 {
     UILabel *valueLabel;        // Displays the blue value part near right edge of cell
     UIButton *newValueButton;   // Tap this button to bring up the picker to replace this property's value with a new value.

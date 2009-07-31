@@ -16,8 +16,9 @@
 
 - (id)initWithObject:(id)anObject property:(objc_property_t)aProperty url:(NSString *)url
 {
-    NSString *propName = [NSString stringWithCString:property_getName(aProperty) encoding:NSUTF8StringEncoding];
-    if (self = [self initWithText:propName url:url]) {
+    if (self = [self init]) {
+        NSString *propName = [NSString stringWithCString:property_getName(aProperty) encoding:NSUTF8StringEncoding];
+        self.text = propName;
         object = [anObject retain];
         propertyName = [propName retain];
         NSString *propertyAttributes = [[NSString alloc] initWithCString:property_getAttributes(aProperty) encoding:NSUTF8StringEncoding];

@@ -13,6 +13,7 @@
 - (void)linkStyle:(TTStyle *)style atIndex:(NSUInteger)index;
 - (TTStyle *)unlinkStyleAtIndex:(NSUInteger)index;
 - (void)verifyState;
+- (TTTableTextItem *)tableTextItemForStyle:(TTStyle *)style;
 @end
 
 #pragma mark -
@@ -29,15 +30,12 @@
 - (id)initWithHeadStyle:(TTStyle *)theHeadStyle
 {
     NSMutableArray *items = [NSMutableArray array];
-    for (TTStyle *style in [theHeadStyle pipeline]) {
-        NSString *name = [style className];
-        NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
-        [items addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
-    }
+    for (TTStyle *style in [theHeadStyle pipeline])
+        [items addObject:[self tableTextItemForStyle:style]];
     
-    if ((self = [super initWithItems:items])) {
+    if ((self = [super initWithItems:items]))
         self.headStyle = theHeadStyle;
-    }
+    
     return self;
 }
 
@@ -52,20 +50,12 @@
             atIndex:(headStyle ? [[headStyle pipeline] count] : 0)];
 
     // Update the table view
-    NSString *name = [style className];
-    NSString *url = [NSString stringWithFormat:@"%@?style_config", [style viewURL]];
-    [self.items addObject:[[[TTTableField alloc] initWithText:name url:url] autorelease]];
+    [self.items addObject:[self tableTextItemForStyle:style]];
     
     // Verify correctness
     [self verifyState];
     
-    // Post the notification
     [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
-    
-    // Notify the TTTableViewController that the data source has new data.
-    // This is especially important if the prior state was an empty data source
-    // (e.g. displaying the big "NoData" screen).
-    [self dataSourceDidFinishLoad];
 }
 
 - (BOOL)deleteStyleAtIndex:(NSUInteger)index
@@ -81,7 +71,6 @@
     // Verify correctness
     [self verifyState];
     
-    // Update the live style preview
     [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
     
     // Signal to the caller that the desired data was deleted
@@ -108,7 +97,6 @@
     // Verify correctness
     [self verifyState];
     
-    // Update the live style preview
     [[NSNotificationCenter defaultCenter] postNotificationName:kStylePipelineUpdatedNotification object:headStyle];
 }
 
@@ -186,6 +174,20 @@
 
 }
 
+#pragma mark TTTableViewDataSource protocol
+
+- (UIImage*)imageForEmpty {
+    return TTIMAGE(@"bundle://Three20.bundle/images/empty.png");
+}
+
+- (NSString*)titleForEmpty {
+    return NSLocalizedString(@"The style pipeline is empty", @"");
+}
+
+- (NSString*)subtitleForEmpty {
+    return NSLocalizedString(@"Tap the '+' button to add your first style node.", @"");
+}
+
 #pragma mark -
 
 - (void)verifyState
@@ -199,6 +201,13 @@
         NSAssert2([a isEqualToString:b], @"pipeline/datasource mismatch! %@ != %@", a, b);
         i++;
     }
+}
+
+- (TTTableTextItem *)tableTextItemForStyle:(TTStyle *)style
+{
+    TTTableTextItem *item = [TTTableTextItem itemWithText:[style className] URL:@"tt://style/edit?"];
+    item.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:style, @"object", nil];
+    return item;
 }
 
 - (void)dealloc

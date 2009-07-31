@@ -25,7 +25,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
 
 - (void)loadView
@@ -41,20 +41,25 @@
     [self updatePropertyValue];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
-    stringField = [[TTTextFieldTableField alloc] initWithTitle:self.propertyName text:[self.object valueForKey:self.propertyName]];
+    stringField = [[UITextField alloc] init];
+    stringField.placeholder = self.propertyName;
+    stringField.text = [self.object valueForKey:self.propertyName];
+    stringField.font = TTSTYLEVAR(font);
     stringField.delegate = self;
     stringField.keyboardType = UIKeyboardTypeAlphabet;
     stringField.clearButtonMode = UITextFieldViewModeUnlessEditing;
     
-    return [TTListDataSource dataSourceWithObjects:stringField, nil];
+    self.dataSource = [TTListDataSource dataSourceWithObjects:
+                       [TTTableControlItem itemWithCaption:@"String" control:stringField],
+                       nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

@@ -26,7 +26,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
 
 - (void)loadView
@@ -43,20 +43,23 @@
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
-    numberField = [[TTTextFieldTableField alloc] initWithTitle:self.propertyName text:[NSString stringWithFormat:@"%d", [[self.object valueForKey:self.propertyName] intValue]]];
+    numberField = [[UITextField alloc] init];
+    numberField.text = [NSString stringWithFormat:@"%d", [[self.object valueForKey:self.propertyName] intValue]];
     numberField.delegate = self;
     numberField.keyboardType = UIKeyboardTypeNumberPad;
     numberField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    return [TTListDataSource dataSourceWithObjects:numberField, nil];
+    self.dataSource = [TTListDataSource dataSourceWithObjects:
+                       [TTTableControlItem itemWithCaption:self.propertyName control:numberField], 
+                       nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

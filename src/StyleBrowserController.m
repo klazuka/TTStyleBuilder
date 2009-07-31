@@ -7,37 +7,25 @@
 //
 
 #import "StyleBrowserController.h"
-#import "StyleStructureController.h"
-#import "objc/runtime.h"
-
-@interface StyleBrowserController ()
-- (void)showStyle:(TTStyle *)style filePath:(NSString *)filePath;
-@end
 
 @implementation StyleBrowserController
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
-
-- (void)loadView
-{
-    [super loadView];
-    self.title = @"Archived Styles";
-    self.tableView = [[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain] autorelease];
-	self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.tableView];
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.title = @"Archived Styles";
     [[NSNotificationCenter defaultCenter] postNotificationName:kEraseStylePreviewNotification object:nil];
+    [self invalidateModel];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
     NSMutableArray *items = [NSMutableArray array];
     
@@ -45,39 +33,25 @@
     NSString *dir = StyleArchivesDir();
     NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:dir];
     
-    for (NSString *file in dirEnum) {
-        if ([[file pathExtension] isEqualToString: @"ttstyle"]) {
-
-            [items addObject:[[[TTTableField alloc] initWithText:file] autorelease]];            
+    for (NSString *filename in dirEnum) {
+        if ([[filename pathExtension] isEqualToString: @"ttstyle"]) {
+            NSString *filePath = [StyleArchivesDir() stringByAppendingPathComponent:filename];
+            TTStyle *style = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+            TTTableTextItem *item = [TTTableTextItem itemWithText:filename URL:@"tt://style/pipeline/edit?"];
+            item.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                             style, @"style",
+                             filePath, @"styleFilePath", 
+                             nil];
+            [items addObject:item];
         }        
     }
     
-    return [TTListDataSource dataSourceWithItems:items];
+    self.dataSource = [TTListDataSource dataSourceWithItems:items];
 }
 
 - (void)didSelectObject:(id)object atIndexPath:(NSIndexPath*)indexPath
 {
-    NSString *filename = [object text];
-    NSString *filePath = [StyleArchivesDir() stringByAppendingPathComponent:filename];
-    TTStyle *style = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-    
-    if ( ![style isKindOfClass:[TTStyle class]] ){
-        NSLog(@"Failed to load a TTStyle from %@", filePath);
-        [self alert:[NSString stringWithFormat:@"Failed to load %@. Perhaps it is not a valid archive?", filename]];
-        return;
-    }
-
-    [self showStyle:style filePath:filePath];
-}
-
-- (void)showStyle:(TTStyle *)style filePath:(NSString *)filePath
-{
-    UIViewController *controller = [[StyleStructureController alloc] initWithHeadStyle:style filePath:filePath];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
-
 
 @end

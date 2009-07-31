@@ -15,10 +15,10 @@
     NSString *propertyName;
     
     // UIEdgeInsets editor specific
-    TTTextFieldTableField *topField;
-    TTTextFieldTableField *leftField;
-    TTTextFieldTableField *bottomField;
-    TTTextFieldTableField *rightField;
+    UITextField *topField;
+    UITextField *leftField;
+    UITextField *bottomField;
+    UITextField *rightField;
 }
 
 @end

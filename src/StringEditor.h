@@ -15,7 +15,7 @@
     NSString *propertyName;
     
     // NSString editor specific
-    TTTextFieldTableField *stringField;
+    UITextField *stringField;
 }
 
 @end

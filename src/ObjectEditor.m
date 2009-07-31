@@ -10,7 +10,6 @@
 #import "PropertyField.h"
 #import "PropertyFieldCell.h"
 #import "RuntimeSupport.h"
-#import "NewObjectPickerController.h"
 
 @interface ObjectEditorDataSource : TTListDataSource {} @end
 @implementation ObjectEditorDataSource
@@ -31,32 +30,22 @@
 - (id)init
 {
     if ((self = [super init])) {
-        
         showInheritedProperties = YES;
-        
-        // This is an ugly hack, but right now I don't have an easy way for the PropertyFieldCell
-        // to directly talk to the ObjectEditor controller.
-        // The PropertyFieldCell will pass along its reference to the PropertyField object 
-        // via the NSNotification object's payload. This PropertyField object should, in turn,
-        // be used as the delegate to the NewObjectPickerController since it has all of the
-        // data that is needed to replace the old property value when the user finally
-        // picks a new value.
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newValueButtonTapped:) name:kNewObjectValueButtonTappedNotification object:nil];
     }
     return self;
 }
 
-- (void)newValueButtonTapped:(NSNotification *)notification
+// -------------------------------------------------------------------------------------
+#pragma mark UIViewController/TTNavigator
+
+- (id)initWithNavigatorURL:(NSURL*)URL query:(NSDictionary*)query
 {
-    PropertyField *propertyField = [notification object];
-    Class baseClass = ClassFromAtEncodeType([propertyField atEncodeType]);
-    NSAssert1(baseClass, @"Failed to find a Class for %@", [propertyField atEncodeType]);
-    NewObjectPickerController *controller = [[[NewObjectPickerController alloc] initWithBaseClass:baseClass] autorelease];
-    controller.delegate = propertyField;
-    [self.navigationController pushViewController:controller animated:YES];
+    id<ValueEditor> editor = [super initWithNavigatorURL:URL query:query];
+    editor.object = [query objectForKey:@"object"];
+    return editor;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark ValueEditor protocol
 
 + (NSString *)atEncodeTypeHandler
@@ -64,7 +53,7 @@
     return @"T@";
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
 
 - (void)loadView
@@ -81,17 +70,10 @@
     [self.tableView reloadData];    // ensure that the displayed values are up-to-date.
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (void)showObject:(id)anObject inView:(NSString*)viewType withState:(NSDictionary*)state
-{
-    [super showObject:anObject inView:viewType withState:state];
-    self.object = anObject;
-    self.title = [anObject className];
-}
-
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
     NSMutableArray *items = [NSMutableArray array];
     
@@ -118,13 +100,10 @@
         [items addObject:[[[PropertyField alloc] initWithObject:object property:prop url:nil] autorelease]];
     }
     
-    if ([items count] == 0) {
-        [self alert:[NSString stringWithFormat:@"There are no editable properties on this object. You should consider implementing an editor plugin for class %@", [object className]]
-              title:@"Cannot Edit"
-           delegate:nil];
-    }
+    if ([items count] == 0)
+        TTAlert([NSString stringWithFormat:@"There are no editable properties on this object. You should consider implementing an editor plugin for class %@", [object className]]);
     
-    return [ObjectEditorDataSource dataSourceWithItems:items];
+    self.dataSource = [ObjectEditorDataSource dataSourceWithItems:items];
 }
 
 - (void)didSelectObject:(id)propertyField atIndexPath:(NSIndexPath*)indexPath
@@ -138,30 +117,24 @@
     NSString *atEncodeType = [propertyField atEncodeType];
     
     if ([propertyField isReadOnly] && !IsIdAtEncodeType(atEncodeType)) {
-        [self alert:[NSString stringWithFormat:@"%@ is a read-only, scalar property.", [propertyField propertyName]]];
+        TTAlert([NSString stringWithFormat:@"%@ is a read-only, scalar property.", [propertyField propertyName]]);
         return;
     }
 
     if (![PropertyEditorSystem canEdit:atEncodeType]) {
-        [self alert:atEncodeType title:@"No Editor Available" delegate:nil];
+        TTAlert([NSString stringWithFormat:@"No editor plugin available for type %@", atEncodeType]);
         return;
     }
     
-    UIViewController<ValueEditor> *editor = [PropertyEditorSystem editorForAtEncodeType:atEncodeType];
-    
-    if ([editor respondsToSelector:@selector(propertyName)]) {
-        // CASE: ValueEditor is a PropertyEditor
-        editor.propertyName = [propertyField propertyName];
-        editor.object = [propertyField object];
-    } else {
-        // CASE: ValueEditor is an ObjectEditor
-        editor.object = [[propertyField object] valueForKey:[propertyField propertyName]];
-    }
-
-    [self.navigationController pushViewController:editor animated:YES];
+    NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [propertyField propertyName], @"propertyName",
+                           [propertyField object], @"object",
+                           [propertyField atEncodeType], @"atEncodeType",
+                           nil];
+    [[TTNavigator navigator] openURL:@"tt://value/edit?" query:query animated:YES];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark -
 
 - (void)dealloc

@@ -368,11 +368,10 @@
 		536E0AED0FEAAF8D00C159E7 /* Object Editor */ = {
 			isa = PBXGroup;
 			children = (
-				53A4B19A101614750061BECC /* FontEditor.h */,
-				53A4B19B101614750061BECC /* FontEditor.m */,
 				536E0AEE0FEAAFB400C159E7 /* .h */,
 				536E0B080FEAB13500C159E7 /* PropertyEditorSystem.m */,
 				53D972540FF5541700E62B9A /* ColorEditor.m */,
+				53A4B19B101614750061BECC /* FontEditor.m */,
 				53F148790FFE3F3700C959C7 /* StringEditor.m */,
 				53D972560FF5541700E62B9A /* FloatEditor.m */,
 				53D972580FF5541700E62B9A /* IntEditor.m */,
@@ -393,6 +392,7 @@
 			children = (
 				536E0B070FEAB13500C159E7 /* PropertyEditorSystem.h */,
 				53D972530FF5541700E62B9A /* ColorEditor.h */,
+				53A4B19A101614750061BECC /* FontEditor.h */,
 				53F148780FFE3F3700C959C7 /* StringEditor.h */,
 				53D972550FF5541700E62B9A /* FloatEditor.h */,
 				53D972570FF5541700E62B9A /* IntEditor.h */,

@@ -30,4 +30,10 @@
 
 @end
 
+#pragma mark -
+
+@interface ValueEditorDispatch : UIViewController
+{
+}
+@end
 

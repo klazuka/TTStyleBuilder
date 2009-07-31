@@ -31,7 +31,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshStylePreviewNotification object:nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UIViewController
 
 - (void)loadView
@@ -48,37 +48,46 @@
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark TTTableViewController
 
-- (id<TTTableViewDataSource>)createDataSource
+- (void)createModel
 {
     UIEdgeInsets insets = [[self.object valueForKey:self.propertyName] UIEdgeInsetsValue];
     
-    topField = [[TTTextFieldTableField alloc] initWithTitle:@"Top" text:[NSString stringWithFormat:@"%.1f", insets.top]];
+    topField = [[UITextField alloc] init];
+    topField.text = [NSString stringWithFormat:@"%.1f", insets.top];
     topField.delegate = self;
     topField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     topField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    leftField = [[TTTextFieldTableField alloc] initWithTitle:@"Left" text:[NSString stringWithFormat:@"%.1f", insets.left]];
+    leftField = [[UITextField alloc] init];
+    leftField.text = [NSString stringWithFormat:@"%.1f", insets.left];
     leftField.delegate = self;
     leftField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     leftField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    bottomField = [[TTTextFieldTableField alloc] initWithTitle:@"Bottom" text:[NSString stringWithFormat:@"%.1f", insets.bottom]];
+    bottomField = [[UITextField alloc] init];
+    bottomField.text = [NSString stringWithFormat:@"%.1f", insets.bottom];
     bottomField.delegate = self;
     bottomField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     bottomField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    rightField = [[TTTextFieldTableField alloc] initWithTitle:@"Right" text:[NSString stringWithFormat:@"%.1f", insets.right]];
+    rightField = [[UITextField alloc] init];
+    rightField.text = [NSString stringWithFormat:@"%.1f", insets.right];
     rightField.delegate = self;
     rightField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     rightField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    return [TTListDataSource dataSourceWithObjects:topField, leftField, bottomField, rightField, nil];
+    self.dataSource = [TTListDataSource dataSourceWithObjects:
+                       [TTTableControlItem itemWithCaption:@"Top" control:topField],
+                       [TTTableControlItem itemWithCaption:@"Left" control:leftField],
+                       [TTTableControlItem itemWithCaption:@"Bottom" control:bottomField],
+                       [TTTableControlItem itemWithCaption:@"Right" control:rightField],
+                       nil];
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

@@ -10,12 +10,13 @@
 #import "StyleStructureController.h"
 #import "StyleEditor.h"
 #import "MainMenuController.h"
+#import "StyleSheetController.h"
+#import "StyleBrowserController.h"
+#import "PropertyEditorSystem.h"
+#import "SettingsController.h"
 #import "RenderService.h"
 
 @implementation AppDelegate
-
-@synthesize window;
-@synthesize navigationController;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -25,28 +26,38 @@
     // start-up the Render Service (available via Bonjour)
     renderService = [[RenderService alloc] init];
     
-    // display the main menu on launch
-    UIViewController *rootController = [[MainMenuController alloc] init];
-    navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];
+    TTNavigator* navigator = [TTNavigator navigator];
+    navigator.persistenceMode = TTNavigatorPersistenceModeNone;
+    TTURLMap* map = navigator.URLMap;
+    [map from:@"*" toViewController:[TTWebController class]];
+    [map from:@"tt://mainMenu" toSharedViewController:[MainMenuController class]];
     
-    // configure TTNavigationCenter
-    TTNavigationCenter *nav = [TTNavigationCenter defaultCenter];
-    nav.mainViewController = navigationController;
-    nav.delegate = self;
+    // Entry-point into the generic object and C data type editing system.
+    // TTNavigator query keys: atEncodeType, object and propertyName
+    [map from:@"tt://value/edit?" toViewController:[ValueEditorDispatch class]];
     
-    // hookup the in-memory object URL loading system
-    // (This should belong in TTNavigationCenter initialization)
-    nav.urlSchemes = [NSArray arrayWithObject:[NSObject inMemoryUrlScheme]];
-    [nav addObjectLoader:[NSObject class] name:[NSObject inMemoryUrlHost]];
+    // Allow the user to replace a property value by picking a new value.
+    // This part of the generic object editing system.
+    // TTNavigator query keys: baseClass, delegate
+    [map from:@"tt://value/new?" toViewController:[NewObjectPickerController class]];
     
-    // define the view controllers for TTStyle objects
-    [nav addView:@"style_structure" controller:[StyleStructureController class]];
-    [nav addView:@"style_config" controller:[StyleEditor class]];
+    // Edit an individual style's properties.
+    // TTNavigator query keys: style
+    [map from:@"tt://style/edit?" toViewController:[StyleEditor class]];
     
-    // create the window and show everything
-    window = [[UIWindow alloc] initWithFrame:TTApplicationFrame()];
-    [window addSubview:[navigationController view]];
-    [window makeKeyAndVisible];
+    // Configure the settings for the live preview area.
+    // TTNavigator query keys: object
+    [map from:@"tt://style/preview/settings?" toModalViewController:[SettingsController class]];
+    
+    // Edit a TTStyle rendering pipeline (or create a new one)
+    [map from:@"tt://style/pipeline/edit?" toViewController:[StyleStructureController class]];          // TTNavigator query keys: style and, optionally, file path to style archive on disk
+    [map from:@"tt://style/pipeline/edit/(init)" toViewController:[StyleStructureController class]];    // plain init, create a new blank style.
+    
+    // List styles that can be edited
+    [map from:@"tt://styleSheet/browse" toViewController:[StyleSheetController class]];
+    [map from:@"tt://style/archives/browse" toViewController:[StyleBrowserController class]];
+    
+    [navigator openURL:@"tt://mainMenu" animated:NO];
 }
 
 #pragma mark -
@@ -68,8 +79,6 @@ NSString *StyleArchivesDir(void)
 
 - (void)dealloc
 {
-	[navigationController release];
-	[window release];
     [renderService release];
 	[super dealloc];
 }

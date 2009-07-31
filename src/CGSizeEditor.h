@@ -16,8 +16,8 @@
     NSString *propertyName;
     
     // CGSize editor specific
-    TTTextFieldTableField *widthField;
-    TTTextFieldTableField *heightField;
+    UITextField *widthField;
+    UITextField *heightField;
 }
 
 @end
